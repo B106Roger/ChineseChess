@@ -117,12 +117,14 @@
   <ItemGroup>
     <ClCompile Include="ChineseChess.cpp" />
     <ClCompile Include="GameBoard.cpp" />
+    <ClCompile Include="HintBoard.cpp" />
     <ClCompile Include="RecordBoard.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChineseChess.h" />
     <ClInclude Include="GameBoard.h" />
+    <ClInclude Include="HintBoard.h" />
     <ClInclude Include="RecordBoard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

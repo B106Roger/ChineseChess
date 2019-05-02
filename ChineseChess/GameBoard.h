@@ -4,8 +4,15 @@ using namespace std;
 class GameBoard
 {
 public:
-	vector<vector<int>> gameBoard;
+	// constructor
 	GameBoard();
 	~GameBoard();
+
+	// data member
+	vector<vector<int>> chessBoard;
+	vector<vector<int>> colorBoard;
+	
+	// member function
+	void printBoard();
 };
 

@@ -27,6 +27,9 @@
     <ClCompile Include="GameBoard.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="HintBoard.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChineseChess.h">
@@ -36,6 +39,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="GameBoard.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="HintBoard.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
