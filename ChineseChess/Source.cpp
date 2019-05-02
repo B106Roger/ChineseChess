@@ -11,7 +11,6 @@ int main(void)
 	locale loc("chs");
 	setlocale(LC_ALL, "chs");
 	wcout.imbue(loc);
-
 	
 	//wstring a(L"１　２　３　４　５　６　７　８");
 	//wstring b(L"●＝車＝車＝車＝車＝車＝車＝車＝●");

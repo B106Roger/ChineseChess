@@ -22,6 +22,7 @@ ChineseChess::~ChineseChess()
 void ChineseChess::gameStart(void)
 {
 	printFrame();
+	recordBoard.printBoard();
 	while (!gameOver)
 	{
 		if (_kbhit())
@@ -78,6 +79,7 @@ void ChineseChess::gameStart(void)
 			}
 		}
 	}
+
 }
 
 void ChineseChess::printFrame()
