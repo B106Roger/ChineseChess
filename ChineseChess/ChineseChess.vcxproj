@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chess.cpp" />
     <ClCompile Include="ChineseChess.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="HintBoard.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Chess.h" />
     <ClInclude Include="ChineseChess.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="HintBoard.h" />

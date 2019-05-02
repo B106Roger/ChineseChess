@@ -1,20 +1,18 @@
-#include "ChineseChess.h"
+Ôªø#include "ChineseChess.h"
 #include"RecordBoard.h"
-#include<iostream>
-#include<fstream>
-#include<conio.h>
-#include<Windows.h>
+
 using namespace std;
 
 ChineseChess::ChineseChess()
 	:gameOver(false),frameWidth(45),frameHeight(40)
 {
-	// ™Ï©l§∆¥—ΩL¨∞9*9∞}¶C
-	for (int i = 0; i < 9; i++)
+	// ÂàùÂßãÂåñÊ£ãÁõ§ÁÇ∫9*10Èô£Âàó
+	for (int i = 0; i < 10; i++)
 	{
 		gameBoard.chessBoard.push_back(vector<int>(0, 9));
 		gameBoard.colorBoard.push_back(vector<int>(0, 9));
 	}
+	//hintBoard = new HintBoard();
 }
 ChineseChess::~ChineseChess()
 {
@@ -28,13 +26,23 @@ void ChineseChess::gameStart(void)
 		if (_kbhit())
 		{
 			int ch = _getch();
+			/*if ( _getch() == enter )
+			{
+				
+			// ÂèñÂá∫ÁõÆÂâçÊ∏∏Ê®ô‰ΩçÁΩÆ
+			// ÂéªchessBoardÂà§Êñ∑ÊúâÊ≤íÊúâÊóóÂ≠ê continue
+			// colorBorad Âπ´ÁßªÂãï‰ΩçÁΩÆÂ°óÁÅ∞
+			//if(ch = _getch();)
+			// colorBoard 0:colorBoard => 0 // -1: colorBoard => 
+			}*/
+			// 
 			if (ch == 224)
 			{
 				ch = _getch();
-				// ®˙±o•ÿ´e¶Ï∏m
+				// ÂèñÂæóÁõÆÂâç‰ΩçÁΩÆ
 				CONSOLE_SCREEN_BUFFER_INFO consoleinfo;
 				GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleinfo);
-				// ≤æ∞ ®Ï20,20¶LÆyº–
+				// ÁßªÂãïÂà∞20,20Âç∞Â∫ßÊ®ô
 				COORD point;
 				point.X = 20;
 				point.Y = 20;
@@ -42,29 +50,29 @@ void ChineseChess::gameStart(void)
 				
 				switch(ch)
 				{
-				case 72: 
+				case 72: // ‰∏ä
 					point.Y = (consoleinfo.dwCursorPosition.Y <= 0 ? frameHeight : consoleinfo.dwCursorPosition.Y - 1);
 					point.X = consoleinfo.dwCursorPosition.X;
-					break;  // §W
-				case 80: 
+					break;  
+				case 80: // ‰∏ã
 					point.Y = (consoleinfo.dwCursorPosition.Y >= frameHeight ? 0 : consoleinfo.dwCursorPosition.Y + 1);
 					point.X = consoleinfo.dwCursorPosition.X;
-					break; // §U
-				case 75:
+					break; 
+				case 75: // Â∑¶
 					point.X = (consoleinfo.dwCursorPosition.X <= 0 ? frameWidth*3 : consoleinfo.dwCursorPosition.X - 1);
 					point.Y = consoleinfo.dwCursorPosition.Y;
-					break; // •™
-				case 77: 
+					break; 
+				case 77: // Âè≥
 					point.X = (consoleinfo.dwCursorPosition.X >= frameWidth*3 ? 0 : consoleinfo.dwCursorPosition.X + 1);
 					point.Y = consoleinfo.dwCursorPosition.Y;
-					break; // •k
+					break;
 				};
 				cout << "X: ";
 				cout.width(3);
 				cout << point.X << "    Y: ";
 				cout.width(3);
 				cout << point.Y;
-				// ¶^®Ï≠Ï•ª™∫Æyº–
+				// ÂõûÂà∞ÂéüÊú¨ÁöÑÂ∫ßÊ®ô
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			}
 		}
@@ -77,43 +85,43 @@ void ChineseChess::printFrame()
 	{
 		for (int j = 0; j < frameWidth; j++)
 		{
-			if (i == 0)
+			if (i == 0) 
 			{
-				if (j == 0)
+				if (j == 0) // Â∑¶‰∏äËßí
 				{
-					wcout << L"˘› ";
+					wcout << L"‚ïî ";
 				}
-				else if (j == frameWidth - 1)
+				else if (j == frameWidth - 1) // Âè≥‰∏äËßí
 				{
-					wcout << L"˘ﬂ";
+					wcout << L"‚ïó";
 				}
-				else
+				else // ‰∏äÊñπ
 				{
-					wcout << L" ˘˘ ";
+					wcout << L" ‚ïê ";
 				}
 			}
 			else if (i == frameHeight - 1)
 			{
-				if (j == 0)
+				if (j == 0) // Â∑¶‰∏ãËßí
 				{
-					wcout << L"˘„ ";
+					wcout << L"‚ïö ";
 				}
-				else if (j == frameWidth - 1)
+				else if (j == frameWidth - 1) // Âè≥‰∏ãËßí
 				{
-					wcout << L"˘Â ";
+					wcout << L"‚ïù ";
 				}
-				else
+				else // ‰∏ãÊñπ
 				{
-					wcout << L" ˘˘ ";
+					wcout << L" ‚ïê ";
 				}
 			}
 			else
 			{
-				if (j == 0 || j == frameWidth - 1)
+				if (j == 0 || j == frameWidth - 1) // ‰∏≠Èñì
 				{
-					wcout << L"˘¯ ";
+					wcout << L"‚ïë ";
 				}
-				else
+				else // 
 				{
 					wcout << "   ";
 				}
@@ -121,6 +129,7 @@ void ChineseChess::printFrame()
 		}
 		cout << endl;
 	}
+	// hintBoard->printBoard();
 }
 
 void ChineseChess::readAndSetBoard()
@@ -154,3 +163,9 @@ void ChineseChess::setCursor(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 }
 
+void ChineseChess::SetColor(int f, int b)
+{
+	unsigned short ForeColor = f + 16 * b;
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hCon, ForeColor);
+}
