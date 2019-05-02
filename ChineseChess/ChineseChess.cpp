@@ -47,7 +47,7 @@ void ChineseChess::gameStart(void)
 					point.X = consoleinfo.dwCursorPosition.X;
 					break;  // ¤W
 				case 80: 
-					point.Y = (consoleinfo.dwCursorPosition.Y <= frameHeight ? 0 : consoleinfo.dwCursorPosition.Y + 1);
+					point.Y = (consoleinfo.dwCursorPosition.Y >= frameHeight ? 0 : consoleinfo.dwCursorPosition.Y + 1);
 					point.X = consoleinfo.dwCursorPosition.X;
 					break; // ¤U
 				case 75:
