@@ -4,7 +4,7 @@
 using namespace std;
 
 ChineseChess::ChineseChess()
-	:gameOver(false),frameWidth(45),frameHeight(40)
+	:gameOver(false),frameWidth(65),frameHeight(35)
 {
 	// 初始化棋盤為9*10陣列
 	for (int i = 0; i < 10; i++)
@@ -60,11 +60,11 @@ void ChineseChess::gameStart(void)
 					point.X = consoleinfo.dwCursorPosition.X;
 					break; 
 				case 75: // 左
-					point.X = (consoleinfo.dwCursorPosition.X <= 0 ? frameWidth*3 : consoleinfo.dwCursorPosition.X - 1);
+					point.X = (consoleinfo.dwCursorPosition.X <= 0 ? frameWidth*2 : consoleinfo.dwCursorPosition.X - 2);
 					point.Y = consoleinfo.dwCursorPosition.Y;
 					break; 
 				case 77: // 右
-					point.X = (consoleinfo.dwCursorPosition.X >= frameWidth*3 ? 0 : consoleinfo.dwCursorPosition.X + 1);
+					point.X = (consoleinfo.dwCursorPosition.X >= frameWidth*2 ? 0 : consoleinfo.dwCursorPosition.X + 2);
 					point.Y = consoleinfo.dwCursorPosition.Y;
 					break;
 				};
@@ -90,41 +90,41 @@ void ChineseChess::printFrame()
 			{
 				if (j == 0) // 左上角
 				{
-					wcout << L"╔ ";
+					wcout << L"●";
 				}
 				else if (j == frameWidth - 1) // 右上角
 				{
-					wcout << L"╗";
+					wcout << L"●";
 				}
 				else // 上方
 				{
-					wcout << L" ═ ";
+					wcout << L"＝";
 				}
 			}
 			else if (i == frameHeight - 1)
 			{
 				if (j == 0) // 左下角
 				{
-					wcout << L"╚ ";
+					wcout << L"●";
 				}
 				else if (j == frameWidth - 1) // 右下角
 				{
-					wcout << L"╝ ";
+					wcout << L"●";
 				}
 				else // 下方
 				{
-					wcout << L" ═ ";
+					wcout << L"＝";
 				}
 			}
 			else
 			{
 				if (j == 0 || j == frameWidth - 1) // 中間
 				{
-					wcout << L"║ ";
+					wcout << L"∥";
 				}
 				else // 
 				{
-					wcout << "   ";
+					wcout << L"　";
 				}
 			}
 		}
