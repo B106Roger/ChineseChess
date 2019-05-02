@@ -13,31 +13,26 @@ int main(void)
 	wcout.imbue(loc);
 
 	
-	//wcout << L"╠ ═ ╬ ═ ╣╠ ═ ╬ ═ ╣╠ ═ ╬ ═ ╣╠ ═ ╬ ═ ╣╠ ═ ╬ ═ ╣" << endl;
-	//wcout << L"╠ ═ ╬ ═ ╣" << endl;
-	//wcout << L"╚ ═ ╩ ═ ╝" << endl;
-
-
-	//wcout << L"║   │   │   │　 │   │   │   │   ║" << endl;
 	//wstring a(L"１　２　３　４　５　６　７　８");
-	//wstring b(L"車═ 車═ 車═ 車═ 車═ 車═ 車═ 車═ 車");
-	//wstring c(L"║   │   │   │ ＼│ ／│   │   │   ║");
-	//wstring d(L"║ —┼ —┼ —┼ —┼ —┼ —┼ —┼ —║");
-	//wstring e(L"║   │   │   │　 │   │   │   │   ║");
-	//wstring f(L"║ —┼ —炮—┼ —┼ —┼ —炮—┼ —║");
-	//wstring g(L"║   │   │   │　 │   │   │   │   ║");
-	//wstring h(L"炮—┼ —┼ —┼ —┼ —┼ —┼ —┼ —║");
-	//wstring i(L"║   │   │   │　 │   │   │   │   ║");
-	//wstring j(L"║ —┴ —┴ —┴ —┴ —┴ —┴ —┴ —║");
-	//wstring k(L"║     楚 河            漢 界    ║ ");
-	//wstring l(L"║ —┬ —┬ —┬ —┬ —┬ —┬ —┬ —║");
-	//wstring m(L"║   │   │   │　 │   │   │   │   ║");
-	//wstring n(L"║ —┼ —┼ —┼ —┼ —┼ —┼ —┼ —║");
-	//wstring o(L"║   │   │   │　 │   │   │   │   ║");
-	//wstring p(L"║ —┴ —┴ —┴ —┴ —┴ —┴ —┴ —║");
-	//wstring q(L"║   │   │   │　 │   │   │   │   ║");
-	//wstring r(L"車═ 車═ 車═ 車═ 車═ 車═ 車═ 車═ 車");
+	//wstring b(L"●＝車＝車＝車＝車＝車＝車＝車＝●");
+	//wstring c(L"∥　｜　｜　｜＼｜／｜　｜　｜　∥");
+	//wstring d(L"∥—＋—＋—＋—＋—＋—＋—＋—∥");
+	//wstring e(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
+	//wstring f(L"∥—＋—炮—＋—＋—＋—炮—＋—∥");
+	//wstring g(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
+	//wstring h(L"∥—＋—炮—＋—＋—＋—炮—＋—∥");
+	//wstring i(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
+	//wstring j(L"∥———————————————∥");
+	//wstring k(L"∥    楚 河            漢 界    ∥");
+	//wstring l(L"∥———————————————∥");
+	//wstring m(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
+	//wstring n(L"∥—＋—炮—＋—＋—＋—炮—＋—∥");
+	//wstring o(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
+	//wstring p(L"∥—＋—炮—＋—＋—＋—炮—＋—∥");
+	//wstring q(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
+	//wstring r(L"●＝車＝車＝車＝車＝車＝車＝車＝●");
 	//wstring s(L"一　二　三　四　五　六　七　八");
+	////∥╔　╕１１└—└—∟┌３３３『╒
 	//wcout << a << endl;
 	//wcout << b << endl;
 	//wcout << c << endl;
@@ -57,7 +52,6 @@ int main(void)
 	//wcout << q << endl;
 	//wcout << r << endl;
 	//wcout << s << endl;
-	//
 
 	ChineseChess newGame;
 	newGame.gameStart();

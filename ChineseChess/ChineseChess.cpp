@@ -45,7 +45,7 @@ void ChineseChess::gameStart(void)
 				GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleinfo);
 				// 移動到20,20印座標
 				COORD point;
-				point.X = 20;
+				point.X = 70;
 				point.Y = 20;
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 				
