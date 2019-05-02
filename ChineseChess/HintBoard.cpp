@@ -1,8 +1,8 @@
 ﻿#include "HintBoard.h"
-
-HintBoard::HintBoard()
+#include "ChineseChess.h" // 必須在.cpp檔include
+/*HintBoard::HintBoard()
 {
-}
+}*/
 
 HintBoard::HintBoard(int cursorX, int cursorY, int sizeX, int sizeY)
 {
@@ -17,7 +17,7 @@ HintBoard::~HintBoard()
 
 void HintBoard::printBoard() {
 
-	int frameWidth = cursor[1] + size[1];
+	/*int frameWidth = cursor[1] + size[1];
 	int frameHeight = cursor[0] + size[0];
 	ChineseChess::setCursor(cursor[0], cursor[1]);
 
@@ -65,6 +65,6 @@ void HintBoard::printBoard() {
 				}
 			}
 		}
-	}
+	}*/
 
 }

@@ -1,15 +1,15 @@
 ﻿#pragma once
 #include <vector>
-//#include<conio.h>
-//#include<Windows.h>
-//#include <iostream>
-#include "ChineseChess.h"
+#include<conio.h>
+#include<Windows.h>
+#include <iostream>
+
 using namespace std;
 class HintBoard
 {
 public:
 	// constructor
-	HintBoard();
+	// HintBoard();
 	HintBoard(int cursorX = 86, int cursorY = 2, int sizeX = 42, int sizeY = 35);
 	
 	~HintBoard();

@@ -12,10 +12,11 @@ ChineseChess::ChineseChess()
 		gameBoard.chessBoard.push_back(vector<int>(0, 9));
 		gameBoard.colorBoard.push_back(vector<int>(0, 9));
 	}
-	//hintBoard = new HintBoard();
+	// hintBoard = new HintBoard();
 }
 ChineseChess::~ChineseChess()
 {
+
 }
 
 void ChineseChess::gameStart(void)
@@ -129,7 +130,7 @@ void ChineseChess::printFrame()
 		}
 		cout << endl;
 	}
-	// hintBoard->printBoard();
+	hintBoard.printBoard();
 }
 
 void ChineseChess::readAndSetBoard()
