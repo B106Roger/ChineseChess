@@ -12,7 +12,7 @@ int main(void)
 	setlocale(LC_ALL, "chs");
 	wcout.imbue(loc);
 	
-	//wstring a(L"１　２　３　４　５　６　７　８");
+	//wstring a(L"１　２　３　４　５　６　７　８　９");
 	//wstring b(L"●＝車＝車＝車＝車＝車＝車＝車＝●");
 	//wstring c(L"∥　｜　｜　｜＼｜／｜　｜　｜　∥");
 	//wstring d(L"∥—＋—＋—＋—＋—＋—＋—＋—∥");
@@ -30,7 +30,7 @@ int main(void)
 	//wstring p(L"∥—＋—炮—＋—＋—＋—炮—＋—∥");
 	//wstring q(L"∥　｜　｜　｜　｜　｜　｜　｜　∥");
 	//wstring r(L"●＝車＝車＝車＝車＝車＝車＝車＝●");
-	//wstring s(L"一　二　三　四　五　六　七　八");
+	//wstring s(L"九　八　七　六　五　四　三　二　一");
 	////∥╔　╕１１└—└—∟┌３３３『╒
 	//wcout << a << endl;
 	//wcout << b << endl;

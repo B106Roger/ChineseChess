@@ -37,3 +37,61 @@ void RecordBoard::printBoard()
 		}
 	}
 }
+
+void RecordBoard::writeMsg(record tmp)
+{
+	msgBoard.push_back(chessName[tmp.hunter]);
+	//msgBoard.push_back(tmp.)
+	if (tmp.deltaY > 0)
+		msgBoard.push_back(L"進");
+	else if (tmp.deltaY == 0)
+		msgBoard.push_back(L"平");
+	else if (tmp.deltaY < 0)
+		msgBoard.push_back(L"退");
+
+
+}
+
+wstring RecordBoard::RedNum(int Xpos)
+{
+	if (Xpos == 1)
+		return L"九";
+	else if (Xpos == 2)
+		return L"八";
+	else if (Xpos == 3)
+		return L"七";
+	else if (Xpos == 4)
+		return L"六";
+	else if (Xpos == 5)
+		return L"五";
+	else if (Xpos == 6)
+		return L"四";
+	else if (Xpos == 7)
+		return L"三";
+	else if (Xpos == 8)
+		return L"二";
+	else if (Xpos == 9)
+		return L"一";
+}
+
+wstring RecordBoard::BlkNum(int Xpos)
+{
+	if (Xpos == 1)
+		return L"１";
+	else if (Xpos == 2)
+		return L"２";
+	else if (Xpos == 3)
+		return L"３";
+	else if (Xpos == 4)
+		return L"４";
+	else if (Xpos == 5)
+		return L"５";
+	else if (Xpos == 6)
+		return L"四";
+	else if (Xpos == 7)
+		return L"三";
+	else if (Xpos == 8)
+		return L"二";
+	else if (Xpos == 9)
+		return L"一";
+}
