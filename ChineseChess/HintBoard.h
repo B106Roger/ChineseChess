@@ -10,18 +10,27 @@ class HintBoard
 public:
 	// constructor
 	// HintBoard();
-	HintBoard(int cursorX = 86, int cursorY = 2, int sizeX = 42, int sizeY = 35);
+	HintBoard(int cursorX = 130, int cursorY = 2, int sizeX = 28, int sizeY = 48);
 	
 	~HintBoard();
 
-
+	// member function
+	void printBoard();
+	
+	// when change order(black: 0/red: 1), call this
+	void printHint1(int order);
+	// when choose a chess, call this
+	void printHint2(int order, int chessIndex);
+	// when gameFinish, call this
+	void printHint3(int order);
+private:
 	// data member
 	vector<int> cursor;
 	vector<int> size;
-	
-
-	// member function
-	void printBoard();
-
+	vector<int> lowerBoardCursor;
+	vector<int> lowerBoardSize;
+	int order;
+	//helper function
+	void printLowerBoard();
 };
 

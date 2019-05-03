@@ -27,6 +27,7 @@ void ChineseChess::gameStart(void)
 	printFrame();
 	recordBoard.printBoard();
 	gameBoard.printBoard();
+	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
 	while (!gameOver)
 	{
 		if (_kbhit())
@@ -57,19 +58,19 @@ void ChineseChess::gameStart(void)
 				switch(ch)
 				{
 				case 72: // 上
-					point.Y = (consoleinfo.dwCursorPosition.Y <= 0 ? frameHeight : consoleinfo.dwCursorPosition.Y - 1);
+					point.Y = (consoleinfo.dwCursorPosition.Y <= gameBoard.startY ? gameBoard.startY + gameBoard.height - 1 : consoleinfo.dwCursorPosition.Y - 2);
 					point.X = consoleinfo.dwCursorPosition.X;
 					break;  
 				case 80: // 下
-					point.Y = (consoleinfo.dwCursorPosition.Y >= frameHeight ? 0 : consoleinfo.dwCursorPosition.Y + 1);
+					point.Y = (consoleinfo.dwCursorPosition.Y >= gameBoard.startY + gameBoard.height - 1 ? gameBoard.startY : consoleinfo.dwCursorPosition.Y + 2);
 					point.X = consoleinfo.dwCursorPosition.X;
 					break; 
 				case 75: // 左
-					point.X = (consoleinfo.dwCursorPosition.X <= 0 ? frameWidth*2 : consoleinfo.dwCursorPosition.X - 2);
+					point.X = (consoleinfo.dwCursorPosition.X <= gameBoard.startX ? (gameBoard.startX + (gameBoard.width- 1)*2 ) : consoleinfo.dwCursorPosition.X - 4);
 					point.Y = consoleinfo.dwCursorPosition.Y;
 					break; 
 				case 77: // 右
-					point.X = (consoleinfo.dwCursorPosition.X >= frameWidth*2 ? 0 : consoleinfo.dwCursorPosition.X + 2);
+					point.X = (consoleinfo.dwCursorPosition.X >= (gameBoard.startX + (gameBoard.width - 1)*2)? gameBoard.startX : consoleinfo.dwCursorPosition.X + 4);
 					point.Y = consoleinfo.dwCursorPosition.Y;
 					break;
 				};
