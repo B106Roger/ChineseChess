@@ -22,6 +22,10 @@ public:
 	bool gameOver;
 	const int frameWidth;   // 45 actual 135
 	const int frameHeight;  // 40 actual 40
+	const int startX = 0;
+	const int startY = 0;
+	const int width = 65;
+	const int height = 35;
 	GameBoard gameBoard;
 	RecordBoard recordBoard;
 	HintBoard hintBoard;

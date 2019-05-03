@@ -84,9 +84,10 @@ void ChineseChess::gameStart(void)
 
 void ChineseChess::printFrame()
 {
-	for (int i = 0; i < frameHeight; i++)
+	for (int i = 0; i < height; i++)
 	{
-		for (int j = 0; j < frameWidth; j++)
+		ChineseChess::setCursor(startX, startY + i);
+		for (int j = 0; j < width; j++)
 		{
 			if (i == 0) 
 			{
@@ -94,7 +95,7 @@ void ChineseChess::printFrame()
 				{
 					wcout << L"●";
 				}
-				else if (j == frameWidth - 1) // 右上角
+				else if (j == width - 1) // 右上角
 				{
 					wcout << L"●";
 				}
@@ -103,13 +104,13 @@ void ChineseChess::printFrame()
 					wcout << L"＝";
 				}
 			}
-			else if (i == frameHeight - 1)
+			else if (i == height - 1)
 			{
 				if (j == 0) // 左下角
 				{
 					wcout << L"●";
 				}
-				else if (j == frameWidth - 1) // 右下角
+				else if (j == width - 1) // 右下角
 				{
 					wcout << L"●";
 				}
@@ -120,7 +121,7 @@ void ChineseChess::printFrame()
 			}
 			else
 			{
-				if (j == 0 || j == frameWidth - 1) // 中間
+				if (j == 0 || j == width - 1) // 中間
 				{
 					wcout << L"∥";
 				}
@@ -130,7 +131,6 @@ void ChineseChess::printFrame()
 				}
 			}
 		}
-		cout << endl;
 	}
 	hintBoard.printBoard();
 }
