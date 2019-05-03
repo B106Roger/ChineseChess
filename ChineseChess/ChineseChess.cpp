@@ -21,8 +21,12 @@ ChineseChess::~ChineseChess()
 
 void ChineseChess::gameStart(void)
 {
+	system("PAUSE");
+	system("CLS");
+	readAndSetBoard();
 	printFrame();
 	recordBoard.printBoard();
+	gameBoard.printBoard();
 	while (!gameOver)
 	{
 		if (_kbhit())
@@ -82,6 +86,7 @@ void ChineseChess::gameStart(void)
 
 }
 
+// 印出邊框
 void ChineseChess::printFrame()
 {
 	for (int i = 0; i < height; i++)
@@ -135,15 +140,15 @@ void ChineseChess::printFrame()
 	hintBoard.printBoard();
 }
 
+// 讀取檔案
 void ChineseChess::readAndSetBoard()
 {
 	ifstream in;
-	string fileName;
-	cin >> fileName;
+	string fileName = "Test.txt";
 	in.open(fileName);
 	if (in.is_open())
 	{
-		for (int i = 0; i < 9; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			for (int j = 0; j < 9; j++)
 			{
@@ -159,6 +164,7 @@ void ChineseChess::readAndSetBoard()
 	}
 }
 
+// 設定座標
 void ChineseChess::setCursor(int x, int y)
 {
 	COORD point;
@@ -166,6 +172,7 @@ void ChineseChess::setCursor(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 }
 
+// 設定顏色
 void ChineseChess::SetColor(int f, int b)
 {
 	unsigned short ForeColor = f + 16 * b;
