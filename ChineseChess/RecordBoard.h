@@ -24,7 +24,7 @@ public:
 	void printBoard();
 	void writeMsg(record);
 private:
-	static map<int, wstring> chessName;
+	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
 	wstring BlkNum(int Xpos);
 };
@@ -32,10 +32,10 @@ private:
 struct record
 {
 	int hunter;			// 移動者
-	int startX;			// X起始點
-	int startY;			// Y起始點
+	int Xpos;			// X起始點
+	int Ypos;			// Y起始點
+	int whosTurn;		// 黑方or紅方 黑:0 紅:1
 	int deltaX;			// 移動X
 	int deltaY;			// 移動Y
 	int prey;			// 被吃的人 nullable
 };
-
