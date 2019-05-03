@@ -4,7 +4,7 @@
 
 
 RecordBoard::RecordBoard()
-	:startX(4),startY(1),width(27),height(31)
+	:startX(4), startY(1), width(27), height(31)
 {
 }
 
@@ -20,7 +20,7 @@ void RecordBoard::printBoard()
 	for (int i = 0; i < height; i++)
 	{
 		point.Y = startY + i;
-		for (int j = 0; j < width; j+=2)
+		for (int j = 0; j < width; j += 2)
 		{
 			point.X = startX + j;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
@@ -39,17 +39,27 @@ void RecordBoard::printBoard()
 }
 
 void RecordBoard::writeMsg(record tmp)
-{
-	msgBoard.push_back(chessName[tmp.hunter]);
-	//msgBoard.push_back(tmp.)
+{	//判斷棋種
+	wstring tmpString;
+	tmpString.insert(0, nameMap[tmp.hunter]);
+	//判斷紅黑和起始位置
+	if (tmp.whosTurn == 0)
+		tmpString.insert(1, BlkNum(tmp.Xpos));
+	else
+		tmpString.insert(1, RedNum(tmp.Xpos));
+	//判斷前進後退或橫向移動
 	if (tmp.deltaY > 0)
-		msgBoard.push_back(L"進");
+		tmpString.insert(2, L"進");
 	else if (tmp.deltaY == 0)
-		msgBoard.push_back(L"平");
+		tmpString.insert(2, L"平");
 	else if (tmp.deltaY < 0)
-		msgBoard.push_back(L"退");
-
-
+		tmpString.insert(2, L"退");
+	//判斷目的位置
+	if (tmp.whosTurn == 0)
+		tmpString.insert(3, BlkNum(tmp.Xpos + tmp.deltaX));
+	else
+		tmpString.insert(3, RedNum(tmp.Xpos + tmp.deltaX));
+	msgBoard.push_back(tmpString);
 }
 
 wstring RecordBoard::RedNum(int Xpos)
@@ -72,6 +82,8 @@ wstring RecordBoard::RedNum(int Xpos)
 		return L"二";
 	else if (Xpos == 9)
 		return L"一";
+	else
+		return L"";
 }
 
 wstring RecordBoard::BlkNum(int Xpos)
@@ -87,16 +99,17 @@ wstring RecordBoard::BlkNum(int Xpos)
 	else if (Xpos == 5)
 		return L"５";
 	else if (Xpos == 6)
-		return L"四";
+		return L"６";
 	else if (Xpos == 7)
-		return L"三";
+		return L"７";
 	else if (Xpos == 8)
-		return L"二";
+		return L"８";
 	else if (Xpos == 9)
-		return L"一";
+		return L"９";
+	else
+		return L"";
 }
-
-map<int, wstring>RecordBoard::chessName = {
+map<int, wstring>RecordBoard::nameMap = {
 	pair<int,wstring>(1,L"將"),
 	pair<int,wstring>(2,L"士"),
 	pair<int,wstring>(3,L"象"),
