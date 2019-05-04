@@ -33,17 +33,21 @@ void ChineseChess::gameStart(void)
 		if (_kbhit())
 		{
 			int ch = _getch();
-			/*if ( _getch() == enter )
+			if (ch == '\n') // Enter press
 			{
 				
-			// 取出目前游標位置
-			// 去chessBoard判斷有沒有旗子 continue
-			// colorBorad 幫移動位置塗灰
-			//if(ch = _getch();)
-			// colorBoard 0:colorBoard => 0 // -1: colorBoard => 
-			}*/
-			// 
-			if (ch == 224)
+				// 取出目前游標位置
+				int x, y;
+				getCursor(x, y);
+				x = (x - gameBoard.startX) / 4;
+				y = (y - gameBoard.startY) / 2;
+				cout << x << y << endl;
+				// 去chessBoard判斷有沒有旗子 continue
+				// colorBorad 幫移動位置塗灰
+				//if(ch = _getch();)
+				// colorBoard 0:colorBoard => 0 // -1: colorBoard => 
+			} 
+			else if (ch == 224)
 			{
 				ch = _getch();
 				// 取得目前位置
@@ -179,4 +183,13 @@ void ChineseChess::SetColor(int f, int b)
 	unsigned short ForeColor = f + 16 * b;
 	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hCon, ForeColor);
+}
+
+// 取得目前游標位置
+void ChineseChess::getCursor(int &x, int &y)
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	x = csbi.dwCursorPosition.X;
+	y = csbi.dwCursorPosition.Y;
 }

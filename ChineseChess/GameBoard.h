@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<vector>
 using namespace std;
 class GameBoard
@@ -23,5 +23,7 @@ private:
 	void printRow(int y);
 	wstring getPrintedChar(int x, int y);
 	int getPrintedColor(int x, int y);
+
+
 };
 
