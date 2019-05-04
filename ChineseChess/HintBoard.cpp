@@ -3,6 +3,10 @@
 #include "Chess.h"
 /*HintBoard::HintBoard()
 {
+	//cursor.push_back(cursorX); cursor.push_back(cursorY);
+	//size.push_back(sizeX); size.push_back(sizeY);
+	//lowerBoardCursor.push_back(cursorX); lowerBoardCursor.push_back((cursorY + sizeY * 2 / 3));
+	//lowerBoardSize.push_back(sizeX); lowerBoardSize.push_back(sizeY / 3);
 }*/
 
 HintBoard::HintBoard(int cursorX, int cursorY, int sizeX, int sizeY)
@@ -62,25 +66,57 @@ void HintBoard::printHint2(int order, int chessIndex) {
 
 void HintBoard::printHint3(int order) {
 	if (order == 0) {
-		ChineseChess::SetColor(9, 4);
-		ChineseChess::setCursor(cursor[0] + 4, cursor[1] + 12);
-		for(int i = 0; i < size[0]; i++) wcout <<  "　";
-		ChineseChess::setCursor(cursor[0] + 4, cursor[1] + 14);
-		for (int i = 0; i < size[0]; i++) wcout << "　";
-		ChineseChess::setCursor(cursor[0] + 4, cursor[1] + 14);
-		for (int i = 0; i < size[0]; i++) wcout << "　";
-		ChineseChess::SetColor(9, 0);
-		wcout << L"您選擇了　　";
-		ChineseChess::SetColor(8, 0);
+		ChineseChess::SetColor(0, 8); // 黑字灰底
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 12);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 13);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 14);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 15);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 16);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+
+		ChineseChess::SetColor(7, 0); // 白字黑底
+		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
+		wcout << L"　　　　　被將軍　！";
+
+		ChineseChess::SetColor(8, 0); // 灰字黑底
+		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
+		wcout << L"　　黑方";
+		
+		ChineseChess::SetColor(7, 0); // 白字黑底
+		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
+		wcout << L"！";
 
 
 	}
 	else if (order == 1) {
-		ChineseChess::setCursor(cursor[0] + 4, cursor[1] + 12);
-		ChineseChess::SetColor(9, 0);
-		wcout << L"您選擇了　　";
-		ChineseChess::SetColor(4, 0);
 		
+		ChineseChess::SetColor(0, 4); // 黑字紅底
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 12);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 13);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 14);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 15);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + 16);
+		for (int i = 0; i < size[0] - 2; i++) wcout << L"　";
+
+		ChineseChess::SetColor(7, 0); // 白字黑底
+		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
+		wcout << L"　　　　　被將軍　！";
+
+		ChineseChess::SetColor(4, 0); // 紅字黑底
+		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
+		wcout << L"　　紅方";
+
+		ChineseChess::SetColor(7, 0); // 白字黑底
+		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
+		wcout << L"！";
 	}
 }
 
@@ -173,4 +209,5 @@ void HintBoard::printBoard() {
 	printLowerBoard();
 	printHint1(0);
 	printHint2(0, 5);
+	printHint3(1);
 }
