@@ -48,6 +48,19 @@ void ChineseChess::gameStart(void)
 				cout.width(3);
 				cout << y << endl;
 				ChineseChess::setCursor(4 * x + gameBoard.startX, 2 * y + gameBoard.startY);
+
+				if (gameBoard.colorBoard[y][x] == 1)
+				{
+					// 不做事
+				}
+				else if (gameBoard.colorBoard[y][x] == -1)
+				{
+					// 移動棋子
+				}
+				else if (gameBoard.colorBoard[y][x] == -2)
+				{
+					// 座標上的旗子被吃
+				}
 				// 去chessBoard判斷有沒有旗子 continue
 				// colorBorad 幫移動位置塗灰
 				//if(ch = _getch();)
