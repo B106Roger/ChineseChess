@@ -61,6 +61,10 @@ void ChineseChess::gameStart(void)
 				{
 					// 座標上的旗子被吃
 				}
+				else if (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] != 0)
+				{
+					// 判斷棋子可移動的範圍並替colorBoard著色
+				}
 				// 去chessBoard判斷有沒有旗子 continue
 				// colorBorad 幫移動位置塗灰
 				//if(ch = _getch();)
