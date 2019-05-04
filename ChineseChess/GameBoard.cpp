@@ -162,10 +162,10 @@ wstring GameBoard::getPrintedChar(int i, int j)
 			{
 				return L"¡ş";
 			}
-			return  L"¡@";
+			
 		}
-
+		
 	}
-
+	return  L"¡@";
 }
 

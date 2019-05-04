@@ -23,10 +23,12 @@ public:
 	// member function
 	void printBoard();
 	void writeMsg(record);
+	void printMsg();
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
 	wstring BlkNum(int Xpos);
+	int recordIndex;			//指向目前的recordBoard索引值
 };
 
 struct record
@@ -34,7 +36,7 @@ struct record
 	int hunter;			// 移動者
 	int Xpos;			// X起始點
 	int Ypos;			// Y起始點
-	int whosTurn;		// 黑方or紅方 黑:0 紅:1
+	int whosTurn;		// 黑方or紅方 黑:0 紅:1			// = (hunter < 8 && hunter > 0? 0 : 1)
 	int deltaX;			// 移動X
 	int deltaY;			// 移動Y
 	int prey;			// 被吃的人 nullable
