@@ -13,8 +13,8 @@ HintBoard::HintBoard(int cursorX, int cursorY, int sizeX, int sizeY)
 {
 	cursor.push_back(cursorX); cursor.push_back(cursorY);
 	size.push_back(sizeX); size.push_back(sizeY);
-	lowerBoardCursor.push_back(cursorX); lowerBoardCursor.push_back((cursorY + sizeY * 2 / 3));
-	lowerBoardSize.push_back(sizeX); lowerBoardSize.push_back(sizeY / 3);
+	lowerBoardCursor.push_back(cursorX); lowerBoardCursor.push_back((cursorY + sizeY * 3 / 5));
+	lowerBoardSize.push_back(sizeX); lowerBoardSize.push_back(sizeY * 2 / 5);
 }
 
 
@@ -123,7 +123,7 @@ void HintBoard::printHint3(int order) {
 void HintBoard::printLowerBoard() {
 	int frameWidth = lowerBoardSize[0];
 	int frameHeight = lowerBoardSize[1];
-	cout << lowerBoardCursor[1] << endl;
+	// cout << lowerBoardCursor[1] << endl;
 	for (int i = 0; i < frameHeight; i++) {
 		ChineseChess::setCursor(lowerBoardCursor[0], lowerBoardCursor[1] + i);
 		for (int j = 0; j < frameWidth; j++) {
@@ -136,10 +136,10 @@ void HintBoard::printLowerBoard() {
 			}
 			else if (i == frameHeight - 1) // 下
 			{
-				if (j == 0 || j == frameWidth - 1) // 左下角
-					wcout << L"●";
-				else // 下方
-					wcout << L"＝";
+				//if (j == 0 || j == frameWidth - 1) // 左下角
+				//	wcout << L"●";
+				//else // 下方
+				//	wcout << L"＝";
 			}
 			else // 中
 			{
@@ -209,5 +209,5 @@ void HintBoard::printBoard() {
 	printLowerBoard();
 	printHint1(0);
 	printHint2(0, 5);
-	printHint3(1);
+	printHint3(0);
 }

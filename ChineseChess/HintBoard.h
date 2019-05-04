@@ -10,7 +10,7 @@ class HintBoard
 public:
 	// constructor
 	//HintBoard();
-	HintBoard(int cursorX = 130, int cursorY = 2, int sizeX = 28, int sizeY = 48); // this is bigger one position
+	HintBoard(int cursorX = 76, int cursorY = 1, int sizeX = 26, int sizeY = 32); // this is bigger one position
 	//HintBoard(int cursorX, int cursorY, int sizeX, int sizeY);
 	~HintBoard();
 
