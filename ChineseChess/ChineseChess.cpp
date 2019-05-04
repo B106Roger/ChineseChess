@@ -56,10 +56,17 @@ void ChineseChess::gameStart(void)
 				else if (gameBoard.colorBoard[y][x] == -1)
 				{
 					// 移動棋子
+
+					// 下一回合
+					order = !order;
 				}
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
 					// 座標上的旗子被吃
+
+					// 下一回合
+					order = !order;
+
 				}
 				else if (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] != 0)
 				{
