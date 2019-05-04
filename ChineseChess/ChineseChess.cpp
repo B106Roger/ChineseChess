@@ -33,15 +33,34 @@ void ChineseChess::gameStart(void)
 		if (_kbhit())
 		{
 			int ch = _getch();
-			if (ch == '\n') // Enter press
+			if (ch == '\r') // Enter press
 			{
-				
 				// 取出目前游標位置
 				int x, y;
 				getCursor(x, y);
 				x = (x - gameBoard.startX) / 4;
 				y = (y - gameBoard.startY) / 2;
-				cout << x << y << endl;
+				ChineseChess::setCursor(40, 30);
+				cout << "X: ";
+				cout.width(3);
+				cout << x;
+				cout << "  Y: ";
+				cout.width(3);
+				cout << y << endl;
+				ChineseChess::setCursor(4 * x + gameBoard.startX, 2 * y + gameBoard.startY);
+
+				if (gameBoard.colorBoard[y][x] == 1)
+				{
+					// 不做事
+				}
+				else if (gameBoard.colorBoard[y][x] == -1)
+				{
+					// 移動棋子
+				}
+				else if (gameBoard.colorBoard[y][x] == -2)
+				{
+					// 座標上的旗子被吃
+				}
 				// 去chessBoard判斷有沒有旗子 continue
 				// colorBorad 幫移動位置塗灰
 				//if(ch = _getch();)
