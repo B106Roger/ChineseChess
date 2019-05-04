@@ -64,6 +64,11 @@ void ChineseChess::gameStart(void)
 				else if (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] != 0)
 				{
 					// 判斷棋子可移動的範圍並替colorBoard著色
+					// order = 0 黑色移動    order = 1 紅色移動
+					if ((order == 0 && gameBoard.chessBoard[y][x] <= 7) || (order == 1 && gameBoard.chessBoard[y][x] >= 8))
+					{
+						moveChess(x, y);
+					}
 				}
 				// 去chessBoard判斷有沒有旗子 continue
 				// colorBorad 幫移動位置塗灰
@@ -112,6 +117,12 @@ void ChineseChess::gameStart(void)
 		}
 	}
 
+}
+
+// 旗子走
+void ChineseChess::moveChess(int x, int y)
+{
+	// 這種if else 呼叫 其他移動一子的function
 }
 
 // 印出邊框
