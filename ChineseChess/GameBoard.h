@@ -18,7 +18,7 @@ public:
 
 	// member function
 	void printBoard();
-
+	void moveChess(int x, int y);
 private:
 	void printRow(int y);
 	wstring getPrintedChar(int x, int y);
