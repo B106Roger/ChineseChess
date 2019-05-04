@@ -109,11 +109,24 @@ void RecordBoard::printMsg()
 {
 	COORD point;
 	point.X = startX + 4;
-	for (int i = 0; i < recordIndex; i++) {
-		point.Y = startY + i + 2;
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-		wcout << msgBoard[i] << endl;
+	if (recordIndex <= 5) {
+		for (int i = 0; i < recordIndex; i++) {
+			point.Y = startY + i + 2;
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+			wcout << msgBoard[i] << endl;
+		}
 	}
+	else{
+		for (int i = recordIndex - 5; i < recordIndex; i++) {
+			point.Y = startY + i + 2;
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+			wcout << msgBoard[i] << endl;
+		}
+	}
+}
+
+void RecordBoard::writeDetail(record tmpRecord) {
+	detailBoard.push_back(tmpRecord);
 }
 
 wstring RecordBoard::RedNum(int Xpos)

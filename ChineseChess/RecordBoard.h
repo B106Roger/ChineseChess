@@ -24,6 +24,7 @@ public:
 	void printBoard();
 	void writeMsg(record);
 	void printMsg();
+	void writeDetail(record);
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
