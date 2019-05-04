@@ -4,7 +4,7 @@
 using namespace std;
 
 ChineseChess::ChineseChess()
-	:gameOver(false),frameWidth(65),frameHeight(35)
+	:gameOver(false),frameWidth(65),frameHeight(35), order(0)
 {
 	// 初始化棋盤為9*10陣列
 	for (int i = 0; i < 10; i++)
@@ -27,6 +27,8 @@ void ChineseChess::gameStart(void)
 	printFrame();
 	recordBoard.printBoard();
 	gameBoard.printBoard();
+	hintBoard.printBoard();
+	hintBoard.printHint1(order);
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
 	while (!gameOver)
 	{
@@ -47,6 +49,7 @@ void ChineseChess::gameStart(void)
 				cout << "  Y: ";
 				cout.width(3);
 				cout << y << endl;
+				// cout << order << endl;
 				if (gameBoard.colorBoard[y][x] == 1)
 				{
 					// 不做事
@@ -57,6 +60,7 @@ void ChineseChess::gameStart(void)
 
 					// 下一回合
 					order = !order;
+					hintBoard.printHint1(order);
 				}
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
@@ -64,7 +68,7 @@ void ChineseChess::gameStart(void)
 
 					// 下一回合
 					order = !order;
-
+					hintBoard.printHint1(order);
 				}
 				else if (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] != 0)
 				{
@@ -72,6 +76,7 @@ void ChineseChess::gameStart(void)
 					// order = 0 黑色移動    order = 1 紅色移動
 					if ((order == 0 && gameBoard.chessBoard[y][x] <= 7) || (order == 1 && gameBoard.chessBoard[y][x] >= 8))
 					{
+						// cout << order;
 						hintBoard.printHint2(order, gameBoard.chessBoard[y][x]);
 						gameBoard.moveChess(x, y);
 					}
@@ -178,7 +183,7 @@ void ChineseChess::printFrame()
 			}
 		}
 	}
-	hintBoard.printBoard();
+
 }
 
 // 讀取檔案

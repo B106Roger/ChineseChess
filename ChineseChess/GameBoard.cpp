@@ -1,4 +1,4 @@
-#include "GameBoard.h"
+ï»¿#include "GameBoard.h"
 #include"ChineseChess.h"
 #include<Windows.h>
 #include"Chess.h"
@@ -17,7 +17,7 @@ GameBoard::~GameBoard()
 {
 }
 
-// ¦L¥X¾ã­Ó´Ñ½L
+// å°å‡ºæ•´å€‹æ£‹ç›¤
 void GameBoard::printBoard()
 {
 	for (int i = 0; i < height; i++)
@@ -26,52 +26,52 @@ void GameBoard::printBoard()
 	}
 }
 
-// ¦L¥X´Ñ½Lªº¨C¤@¦æ + ÃC¦â  
+// å°å‡ºæ£‹ç›¤çš„æ¯ä¸€è¡Œ + é¡è‰²  
 void GameBoard::printRow(int rowIndex)
 {
-	// ·¡ªeº~¬É
+	// æ¥šæ²³æ¼¢ç•Œ
 	ChineseChess::setCursor(startX, startY + rowIndex);
 	if (rowIndex == 9)
 	{
 		ChineseChess::SetColor(0, 15);
-		wcout << L"¡ü¡@¡@¡@·¡ªe¡@¡@¡@¡@¡@º~¬É¡@¡@¡@¡ü";
+		wcout << L"âˆ¥ã€€ã€€ã€€æ¥šæ²³ã€€ã€€ã€€ã€€ã€€æ¼¢ç•Œã€€ã€€ã€€âˆ¥";
 		return;
 	}
-	// ¨ä¥Lrow
+	// å…¶ä»–row
 	for (int j = 0; j < width; j++)
 	{
-		// ¤£¥i¯à¦³´Ñ¤lªºª¬ªp
+		// ä¸å¯èƒ½æœ‰æ£‹å­çš„ç‹€æ³
 		if (rowIndex % 2 == 1 || j % 2 == 1)
 		{
 			ChineseChess::SetColor(0, 15);
 		}
-		// ¦³¥i¯à¦³´Ñ¤lªºª¬ªp
+		// æœ‰å¯èƒ½æœ‰æ£‹å­çš„ç‹€æ³
 		else
 		{
 			int x = j / 2, y = rowIndex / 2;
 			int fontColor, backgroundColor;
-			// ¦pªG¤W­±¦³ºX¤l
+			// å¦‚æœä¸Šé¢æœ‰æ——å­
 			if (chessBoard[y][x] != 0)
 			{
-				// ¦Ó¥B¬O¥i¥H³Q¦Y±¼ªººX¤l
+				// è€Œä¸”æ˜¯å¯ä»¥è¢«åƒæ‰çš„æ——å­
 				if (colorBoard[y][x] != 0)
 				{
-					//                         ¦Ç©³¬õ¦r:¦Ç©³¶Â¦r
+					//                         ç°åº•ç´…å­—:ç°åº•é»‘å­—
 					backgroundColor = 9;
 					fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
 				}
-				// ¦pªG¬O¤£¯à³Q¦Y±¼ªººX¤l
+				// å¦‚æœæ˜¯ä¸èƒ½è¢«åƒæ‰çš„æ——å­
 				else
 				{
-					// ¥¿±`ªº´Ñ¤l              ¦Ç©³¬õ¦r:¦Ç©³¶Â¦â
+					// æ­£å¸¸çš„æ£‹å­              ç°åº•ç´…å­—:ç°åº•é»‘è‰²
 					backgroundColor = 7;
 					fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
 				}
 			}
-			// ¦pªG¤W­±¨S´Ñ¤l
+			// å¦‚æœä¸Šé¢æ²’æ£‹å­
 			else if (colorBoard[y][x] == 0)
 			{
-				// ªÅ¥Õ³¡¤À ¥Õ©³¶Â¦r
+				// ç©ºç™½éƒ¨åˆ† ç™½åº•é»‘å­—
 				fontColor = 0;
 				backgroundColor = 15;
 			}
@@ -79,9 +79,10 @@ void GameBoard::printRow(int rowIndex)
 		}
 		wcout << getPrintedChar(rowIndex, j);
 	}
+	ChineseChess::SetColor();
 }
 
-// ¨ú±o´Ñ½L¤WÀ³¸Ó­n¦Lªº¦r
+// å–å¾—æ£‹ç›¤ä¸Šæ‡‰è©²è¦å°çš„å­—
 wstring GameBoard::getPrintedChar(int i, int j)
 {
 	if (i % 2 == 0)
@@ -92,30 +93,30 @@ wstring GameBoard::getPrintedChar(int i, int j)
 			{
 				return Chess::chessName[chessBoard[i / 2][j / 2]];
 			}
-			// ¨¤¸¨
+			// è§’è½
 			if ((i == 0 || i == height - 1) && (j == 0 || j == width - 1))
 			{
-				return L"¡´";
+				return L"â—";
 			}
-			// ²Ä¤@¦C¡A³Ì«á¤@¦C
+			// ç¬¬ä¸€åˆ—ï¼Œæœ€å¾Œä¸€åˆ—
 			if (j == 0 || j == width - 1)
 			{
-				return L"¡ü";
+				return L"âˆ¥";
 			}
-			// ²Ä¤@¦æ¡A³Ì«á¤@¦æ
+			// ç¬¬ä¸€è¡Œï¼Œæœ€å¾Œä¸€è¡Œ
 			if (i == 0 || i == height - 1)
 			{
-				return L"¡×";
+				return L"ï¼";
 			}
-			// ·¡ªeº~¬É
+			// æ¥šæ²³æ¼¢ç•Œ
 			if (i == 8 || i == 10)
 			{
-				return L"¡X";
+				return L"â€”";
 			}
-			// ¥æ¤eÂI
+			// äº¤å‰é»
 			if (i != 0 && i != height - 1 && j != 0 && j != width - 1)
 			{
-				return L"¡Ï";
+				return L"ï¼‹";
 			}
 
 		}
@@ -123,11 +124,11 @@ wstring GameBoard::getPrintedChar(int i, int j)
 		{
 			if (i == 0 || i == height - 1)
 			{
-				return L"¡×";
+				return L"ï¼";
 			}
 			else if (j % 2 == 1)
 			{
-				return L"¡X";
+				return L"â€”";
 			}
 		}
 	}
@@ -137,40 +138,40 @@ wstring GameBoard::getPrintedChar(int i, int j)
 		{
 			if (j == 0 || j == width - 1)
 			{
-				return L"¡ü";
+				return L"âˆ¥";
 			}
 			else
 			{
-				return L"¡U";
+				return L"ï½œ";
 			}
 		}
 		else
 		{
 			if (j == 7 && (i == 1 || i == 15))
 			{
-				return L"¢@";
+				return L"ï¼¼";
 			}
 			else if (j == 9 && (i == 3 || i == 17))
 			{
-				return L"¢@";
+				return L"ï¼¼";
 			}
 			else if (j == 7 && (i == 3 || i == 17))
 			{
-				return L"¡ş";
+				return L"ï¼";
 			}
 			else if (j == 9 && (i == 1 || i == 15))
 			{
-				return L"¡ş";
+				return L"ï¼";
 			}
 			
 		}
 		
 	}
-	return  L"¡@";
+	return  L"ã€€";
 }
 
-// ºX¤l¨«
+// æ——å­èµ°
 void GameBoard::moveChess(int x, int y)
 {
-	// ³oºØif else ©I¥s ¨ä¥L²¾°Ê¤@¤lªºfunction
+	// é€™ç¨®if else å‘¼å« å…¶ä»–ç§»å‹•ä¸€å­çš„function
 }

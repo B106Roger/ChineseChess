@@ -29,7 +29,7 @@ void HintBoard::printHint1(int order) {
 		ChineseChess::SetColor(9, 0);
 		wcout << L"現在輪到　";
 		ChineseChess::SetColor(8, 0);
-		wcout << L"黑色方 ";
+		wcout << L"黑色方　";
 		ChineseChess::SetColor(9, 0);
 		wcout << L"下棋";
 	}
@@ -38,10 +38,11 @@ void HintBoard::printHint1(int order) {
 		ChineseChess::SetColor(9, 0);
 		wcout << L"現在輪到　";
 		ChineseChess::SetColor(4, 0);
-		wcout << L"紅色方 ";
+		wcout << L"紅色方　";
 		ChineseChess::SetColor(9, 0);
 		wcout << L"下棋";
 	}
+	ChineseChess::SetColor();
 }
 
 
@@ -62,6 +63,7 @@ void HintBoard::printHint2(int order, int chessIndex) {
 		wcout << Chess::chessName[chessIndex];
 		
 	}
+	ChineseChess::SetColor();
 }
 
 void HintBoard::printHint3(int order) {
@@ -118,12 +120,14 @@ void HintBoard::printHint3(int order) {
 		ChineseChess::setCursor(cursor[0] + 10, cursor[1] + 14);
 		wcout << L"！";
 	}
+	ChineseChess::SetColor();
 }
 
 void HintBoard::printLowerBoard() {
 	int frameWidth = lowerBoardSize[0];
 	int frameHeight = lowerBoardSize[1];
 	// cout << lowerBoardCursor[1] << endl;
+	ChineseChess::SetColor();
 	for (int i = 0; i < frameHeight; i++) {
 		ChineseChess::setCursor(lowerBoardCursor[0], lowerBoardCursor[1] + i);
 		for (int j = 0; j < frameWidth; j++) {
@@ -159,7 +163,7 @@ void HintBoard::printBoard() {
 
 	int frameWidth = size[0];
 	int frameHeight = size[1];
-
+	ChineseChess::SetColor();
 	for (int i = 0; i < frameHeight; i++) {
 		ChineseChess::setCursor(cursor[0], cursor[1] + i);
 		for (int j = 0; j < frameWidth; j++) {
@@ -207,7 +211,7 @@ void HintBoard::printBoard() {
 		}
 	}
 	printLowerBoard();
-	printHint1(0);
-	printHint2(0, 5);
-	printHint3(0);
+	// printHint1(0);
+	// printHint2(0, 5);
+	// printHint3(0);
 }

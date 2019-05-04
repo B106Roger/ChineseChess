@@ -18,7 +18,7 @@ public:
 
 	// data member
 	int mode;
-	int order;
+	int order = 0;
 	bool gameOver;
 	const int frameWidth;   // 45 actual 135
 	const int frameHeight;  // 40 actual 40
