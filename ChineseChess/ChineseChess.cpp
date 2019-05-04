@@ -47,8 +47,6 @@ void ChineseChess::gameStart(void)
 				cout << "  Y: ";
 				cout.width(3);
 				cout << y << endl;
-				ChineseChess::setCursor(4 * x + gameBoard.startX, 2 * y + gameBoard.startY);
-
 				if (gameBoard.colorBoard[y][x] == 1)
 				{
 					// 不做事
@@ -74,9 +72,11 @@ void ChineseChess::gameStart(void)
 					// order = 0 黑色移動    order = 1 紅色移動
 					if ((order == 0 && gameBoard.chessBoard[y][x] <= 7) || (order == 1 && gameBoard.chessBoard[y][x] >= 8))
 					{
-						moveChess(x, y);
+						hintBoard.printHint2(order, gameBoard.chessBoard[y][x]);
+						gameBoard.moveChess(x, y);
 					}
 				}
+				ChineseChess::setCursor(4 * x + gameBoard.startX, 2 * y + gameBoard.startY);
 				// 去chessBoard判斷有沒有旗子 continue
 				// colorBorad 幫移動位置塗灰
 				//if(ch = _getch();)
@@ -126,11 +126,6 @@ void ChineseChess::gameStart(void)
 
 }
 
-// 旗子走
-void ChineseChess::moveChess(int x, int y)
-{
-	// 這種if else 呼叫 其他移動一子的function
-}
 
 // 印出邊框
 void ChineseChess::printFrame()

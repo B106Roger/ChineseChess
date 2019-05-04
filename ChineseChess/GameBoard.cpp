@@ -169,3 +169,8 @@ wstring GameBoard::getPrintedChar(int i, int j)
 	return  L"　";
 }
 
+// 旗子走
+void GameBoard::moveChess(int x, int y)
+{
+	// 這種if else 呼叫 其他移動一子的function
+}
