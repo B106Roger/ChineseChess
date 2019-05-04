@@ -2,6 +2,7 @@
 #include<string>
 #include<vector>
 #include<map>
+#include<Windows.h>
 using namespace std;
 
 struct record;
@@ -25,6 +26,7 @@ public:
 	void writeMsg(record);
 	void printMsg();
 	void writeDetail(record);
+	void setRecord(COORD endPoint, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//從chinessChess呼叫傳資料給recordBoard
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
@@ -40,5 +42,5 @@ struct record
 	int whosTurn;		// 黑方or紅方 黑:0 紅:1			// = (hunter < 8 && hunter > 0? 0 : 1)
 	int deltaX;			// 移動X
 	int deltaY;			// 移動Y
-	int prey;			// 被吃的人 nullable
+	int prey = 0;		// 被吃的人 nullable
 };

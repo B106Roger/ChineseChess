@@ -8,7 +8,6 @@ RecordBoard::RecordBoard()
 {
 }
 
-
 RecordBoard::~RecordBoard()
 {
 }
@@ -39,20 +38,6 @@ void RecordBoard::printBoard()
 				wcout << L"＝";
 		}
 	}
-	record test1, test2;
-	test1.hunter = 2;
-	test1.deltaX = 1;
-	test1.deltaY = 1;
-	test1.Xpos = 5;
-	test1.Ypos = 2;
-	writeMsg(test1);
-	test2.hunter = 12;
-	test2.deltaX = 1;
-	test2.deltaY = -2;
-	test2.Xpos = 2;
-	test2.Ypos = 10;
-	writeMsg(test2);
-	printMsg();
 }
 
 void RecordBoard::writeMsg(record tmp)
@@ -129,25 +114,55 @@ void RecordBoard::writeDetail(record tmpRecord) {
 	detailBoard.push_back(tmpRecord);
 }
 
+void RecordBoard::setRecord(COORD endPoint, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard)
+{		//endPoint從0開始
+	COORD startPoint, enemyPoint;
+	record newRecord;
+	for (int i = 0; i < colorBoard.size(); i++) {
+		for (int j = 0; j < colorBoard[i].size(); j++) {
+			if (colorBoard[i][j] == 1) {
+				startPoint.X = j;
+				startPoint.Y = i;
+			}
+			if (colorBoard[i][j] == -2 && endPoint.X == i && endPoint.Y == j) {
+				enemyPoint.X = endPoint.X;
+				enemyPoint.Y = endPoint.Y;
+				newRecord.prey = chessBoard[enemyPoint.X][enemyPoint.Y];
+			}
+		}
+	}
+	newRecord.Xpos = startPoint.X;
+	newRecord.Ypos = startPoint.Y;
+	newRecord.deltaX = endPoint.X - startPoint.X;
+	newRecord.deltaY = endPoint.Y - startPoint.Y;
+	newRecord.hunter = chessBoard[startPoint.X][startPoint.Y];
+	newRecord.whosTurn = (newRecord.hunter <= 7 && newRecord.hunter >= 0) ? 0 : 1;
+	writeMsg(newRecord);
+	printMsg();
+	writeDetail(newRecord);
+}
+
+
+
 wstring RecordBoard::RedNum(int Xpos)
 {
-	if (Xpos == 1)
+	if (Xpos == 0)
 		return L"九";
-	else if (Xpos == 2)
+	else if (Xpos == 1)
 		return L"八";
-	else if (Xpos == 3)
+	else if (Xpos == 2)
 		return L"七";
-	else if (Xpos == 4)
+	else if (Xpos == 3)
 		return L"六";
-	else if (Xpos == 5)
+	else if (Xpos == 4)
 		return L"五";
-	else if (Xpos == 6)
+	else if (Xpos == 5)
 		return L"四";
-	else if (Xpos == 7)
+	else if (Xpos == 6)
 		return L"三";
-	else if (Xpos == 8)
+	else if (Xpos == 7)
 		return L"二";
-	else if (Xpos == 9)
+	else if (Xpos == 8)
 		return L"一";
 	else
 		return L"";
@@ -155,23 +170,23 @@ wstring RecordBoard::RedNum(int Xpos)
 
 wstring RecordBoard::BlkNum(int Xpos)
 {
-	if (Xpos == 1)
+	if (Xpos == 0)
 		return L"１";
-	else if (Xpos == 2)
+	else if (Xpos == 1)
 		return L"２";
-	else if (Xpos == 3)
+	else if (Xpos == 2)
 		return L"３";
-	else if (Xpos == 4)
+	else if (Xpos == 3)
 		return L"４";
-	else if (Xpos == 5)
+	else if (Xpos == 4)
 		return L"５";
-	else if (Xpos == 6)
+	else if (Xpos == 5)
 		return L"６";
-	else if (Xpos == 7)
+	else if (Xpos == 6)
 		return L"７";
-	else if (Xpos == 8)
+	else if (Xpos == 7)
 		return L"８";
-	else if (Xpos == 9)
+	else if (Xpos == 8)
 		return L"９";
 	else
 		return L"";
