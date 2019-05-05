@@ -186,6 +186,7 @@ void GameBoard::moveChess(int x, int y)
 {
 	int targetChess = chessBoard[y][x];
 	resetColorBoard();
+	int deltaChess = 7;
 	// 黑士  紅士
 	if (targetChess == 2 || targetChess == 9)
 	{
@@ -201,7 +202,26 @@ void GameBoard::moveChess(int x, int y)
 	{
 		moveHorse(x, y);
 	}
-
+	// 將
+	else if (targetChess == 1 || targetChess == 1 + deltaChess)
+	{
+		moveGeneral(x, y);
+	}
+	// 車
+	else if (targetChess == 4 || targetChess == 4 + deltaChess)
+	{
+		moveTank(x, y);
+	}
+	// 炮
+	else if (targetChess == 6 || targetChess == 6 + deltaChess)
+	{
+		moveCannon(x, y);
+	}
+	// 卒
+	else if (targetChess == 7 || targetChess == 7 + deltaChess)
+	{
+		moveSolider(x, y);
+	}
 	printBoard();
 
 }
@@ -360,4 +380,17 @@ void GameBoard::moveElephant(int x, int y)
 			}
 		}
 	}
+}
+
+void GameBoard::moveGeneral(int x, int y) {
+	int targetChess = chessBoard[y][x];
+}
+void GameBoard::moveTank(int x, int  y) {
+
+}
+void GameBoard::moveCannon(int x, int y) {
+
+}
+void GameBoard::moveSolider(int x, int y) {
+
 }

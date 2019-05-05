@@ -27,7 +27,10 @@ private:
 	void moveKnight(int x, int y);
 	void moveElephant(int x, int y);
 	void moveHorse(int x, int y);
-	
+	void moveGeneral(int x, int y);
+	void moveTank(int x, int  y);
+	void moveCannon(int x, int y);
+	void moveSolider(int x, int y);
 	
 };
 

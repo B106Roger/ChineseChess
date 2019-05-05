@@ -66,6 +66,12 @@ void HintBoard::printHint2(int order, int chessIndex) {
 	ChineseChess::SetColor();
 }
 
+void HintBoard::hideHint2() {
+	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 8);
+	ChineseChess::SetColor(9, 0);
+	wcout << L"　　　　　　　";
+}
+
 void HintBoard::printHint3(int order) {
 	if (order == 0) {
 		ChineseChess::SetColor(0, 8); // 黑字灰底

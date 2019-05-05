@@ -21,6 +21,7 @@ public:
 	void printHint1(int order);
 	// when choose a chess, call this
 	void printHint2(int order, int chessIndex);
+	void hideHint2();
 	// when gameFinish, call this
 	void printHint3(int order);
 private:
