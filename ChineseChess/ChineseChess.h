@@ -36,7 +36,6 @@ public:
 	void printFrame();
 	void readAndSetBoard();
 	static void setCursor(int x, int y);
-	void moveChess(int x, int y);
 	// 0 黑, 1 藍, 2 綠, 4 紅, 5 紫, 7 白灰, 8 灰, 9 藍, 15 白, 12 紅
 	static void SetColor(int fontColor = 7, int backgroundColor = 0);
 	void getCursor(int &x, int &y);

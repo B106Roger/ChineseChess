@@ -19,11 +19,15 @@ public:
 	// member function
 	void printBoard();
 	void moveChess(int x, int y);
+	void movingChess(int x, int y);
+	void resetColorBoard(void);
 private:
 	void printRow(int y);
 	wstring getPrintedChar(int x, int y);
-	int getPrintedColor(int x, int y);
-
-
+	void moveKnight(int x, int y);
+	void moveElephant(int x, int y);
+	void moveHorse(int x, int y);
+	
+	
 };
 

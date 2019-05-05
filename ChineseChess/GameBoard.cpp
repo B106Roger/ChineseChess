@@ -2,7 +2,7 @@
 #include"ChineseChess.h"
 #include<Windows.h>
 #include"Chess.h"
-
+#include<algorithm>
 GameBoard::GameBoard()
 {
 	for (int i = 0; i < 10; i++)
@@ -54,14 +54,14 @@ void GameBoard::printRow(int rowIndex)
 			if (chessBoard[y][x] != 0)
 			{
 				// 而且是可以被吃掉的旗子
-				if (colorBoard[y][x] != 0)
+				if (colorBoard[y][x] == -2)
 				{
 					//                         灰底紅字:灰底黑字
 					backgroundColor = 9;
 					fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
 				}
 				// 如果是不能被吃掉的旗子
-				else
+				else// if (colorBoard[y][x] == 0)
 				{
 					// 正常的棋子              灰底紅字:灰底黑色
 					backgroundColor = 7;
@@ -69,11 +69,22 @@ void GameBoard::printRow(int rowIndex)
 				}
 			}
 			// 如果上面沒棋子
-			else if (colorBoard[y][x] == 0)
+			else
 			{
-				// 空白部分 白底黑字
-				fontColor = 0;
-				backgroundColor = 15;
+				// 可移動的格子
+				if (colorBoard[y][x] == -1)
+				{
+					// 空白部分 白底灰字
+					fontColor = 0;
+					backgroundColor = 7;
+				}
+				// 不可移動的格子
+				else
+				{
+					// 空白部分 白底黑字
+					fontColor = 0;
+					backgroundColor = 15;
+				}
 			}
 			ChineseChess::SetColor(fontColor, backgroundColor);
 		}
@@ -170,8 +181,183 @@ wstring GameBoard::getPrintedChar(int i, int j)
 	return  L"　";
 }
 
-// 旗子走
+// 提示旗子可移動位置 + 重印GameBoard
 void GameBoard::moveChess(int x, int y)
 {
-	// 這種if else 呼叫 其他移動一子的function
+	int targetChess = chessBoard[y][x];
+	resetColorBoard();
+	// 黑士  紅士
+	if (targetChess == 2 || targetChess == 9)
+	{
+		moveKnight(x, y);
+	}
+	// 黑象  紅象
+	else if (targetChess == 3 || targetChess == 10)
+	{
+		moveElephant(x, y);
+	}
+	// 黑馬  紅馬
+	else if (targetChess == 5 || targetChess == 12)
+	{
+		moveHorse(x, y);
+	}
+
+	printBoard();
+
+}
+
+// 重設colorBoard顏色
+void GameBoard::resetColorBoard(void)
+{
+	for (int i = 0; i < colorBoard.size(); i++)
+	{
+		for (int j = 0; j < colorBoard[0].size(); j++)
+		{
+			colorBoard[i][j] = 0;
+		}
+	}
+}
+
+// 移動棋子 + 重印GameBoard
+void GameBoard::movingChess(int x, int y)
+{
+	for (int i = 0; i < colorBoard.size(); i++)
+	{
+		for (int j = 0; j < colorBoard[0].size(); j++)
+		{
+			if (colorBoard[i][j] == 1)
+			{
+				chessBoard[y][x] = chessBoard[i][j];
+				chessBoard[i][j] = 0;
+				resetColorBoard();
+				printBoard();
+				return;
+			}
+		}
+	}
+}
+
+// 移動士
+void GameBoard::moveKnight(int x, int y)
+{
+	int targetChess = chessBoard[y][x];
+	colorBoard[y][x] = 1;
+	// 黑士
+	if (targetChess == 2)
+	{
+		for (int boardY = 0; boardY <= 2; boardY++)
+		{
+			for (int boardX = 3; boardX <= 5; boardX++)
+			{
+				if (abs(boardX - x) == 1 && abs(boardY - y) == 1)
+				{
+					if (chessBoard[boardY][boardX] == 0)
+					{
+						colorBoard[boardY][boardX] = -1;
+					}
+					else if (chessBoard[boardY][boardX] > 7)
+					{
+						colorBoard[boardY][boardX] = -2;
+					}
+				}
+			}
+		}
+	}
+	// 紅士
+	else if (targetChess == 9)
+	{
+		for (int boardY = 7; boardY <= 9; boardY++)
+		{
+			for (int boardX = 3; boardX <= 5; boardX++)
+			{
+				if (abs(boardX - x) == 1 && abs(boardY - y) == 1)
+				{
+					if (chessBoard[boardY][boardX] == 0)
+					{
+						colorBoard[boardY][boardX] = -1;
+					}
+					else if (chessBoard[boardY][boardX] <= 7)
+					{
+						colorBoard[boardY][boardX] = -2;
+					}
+				}
+			}
+		}
+	}
+}
+
+// 移動馬
+void GameBoard::moveHorse(int x, int y)
+{
+	// 呼叫此function 前必須確認棋子馬
+	// 大於7表示紅色，否則為黑色
+	int targetChessColor = chessBoard[y][x] > 7;
+	colorBoard[y][x] = 1;
+	// 決定for loop 範圍
+	const int positionStartX = max(0, x - 2), positionStartY = max(0, y - 2);
+	const int positionEndX = min(8, x + 2), positionEndY = min(9, y + 2);
+
+	for (int positionY = positionStartY; positionY <= positionEndY; positionY++)
+	{
+		for (int positionX = positionStartX; positionX <= positionEndX; positionX++)
+		{
+			if (chessBoard[positionY][positionX] != 0 && ((chessBoard[positionY][positionX] > 7) == targetChessColor))
+			{
+				// 如果跟自己同色的棋字就跳過此次判斷
+				continue;
+			}
+			// 可移動的位置
+			if (abs(positionX - x) == 1 && abs(positionY - y) == 2)
+			{
+				// 檢查拐馬腳
+				if ((positionY > y && chessBoard[positionY - 1][x] == 0) 
+					|| (positionY < y && chessBoard[positionY + 1][x] == 0))
+				{
+					colorBoard[positionY][positionX] = (chessBoard[positionY][positionX] == 0 ? -1 : -2);
+				}
+			}
+			else if (abs(positionX - x) == 2 && abs(positionY - y) == 1)
+			{
+				// 檢查拐馬腳
+				if ((positionX > x && chessBoard[y][positionX - 1] == 0)
+					|| (positionX < x && chessBoard[y][positionX + 1] == 0))
+				{
+					colorBoard[positionY][positionX] = (chessBoard[positionY][positionX] == 0 ? -1 : -2);
+				}
+			}
+		}
+	}
+}
+
+// 移動象
+void GameBoard::moveElephant(int x, int y)
+{
+	int targetChessColor = chessBoard[y][x] > 7;
+	int region = targetChessColor == 1 ? 5 : 0;
+	colorBoard[y][x] = 1;
+	// 決定for loop 範圍
+	const int positionStartX =0, positionStartY =0 + region;
+	const int positionEndX = 8, positionEndY = 4 + region;
+
+	for (int positionY = positionStartY; positionY <= positionEndY; positionY++)
+	{
+		for (int positionX = positionStartX; positionX <= positionEndX; positionX++)
+		{
+			if (chessBoard[positionY][positionX] != 0 && ((chessBoard[positionY][positionX] > 7) == targetChessColor))
+			{
+				// 如果跟自己同色的棋字就跳過此次判斷
+				continue;
+			}
+			if (abs(positionX - x) == 2 && abs(positionY - y) == 2)
+			{
+				// 檢查拐象眼
+				int middleX = (x + positionX) / 2;
+				int middleY = (y + positionY) / 2;
+				if (chessBoard[middleY][middleX] == 0)
+				{
+					colorBoard[positionY][positionX] = (chessBoard[positionY][positionX] == 0 ? -1 : -2);
+				}
+			}
+		}
+	}
 }

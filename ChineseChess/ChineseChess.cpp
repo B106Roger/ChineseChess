@@ -6,13 +6,6 @@ using namespace std;
 ChineseChess::ChineseChess()
 	:gameOver(false),frameWidth(65),frameHeight(35), order(0)
 {
-	// 初始化棋盤為9*10陣列
-	for (int i = 0; i < 10; i++)
-	{
-		gameBoard.chessBoard.push_back(vector<int>(0, 9));
-		gameBoard.colorBoard.push_back(vector<int>(0, 9));
-	}
-	// hintBoard = new HintBoard();
 }
 ChineseChess::~ChineseChess()
 {
@@ -42,23 +35,26 @@ void ChineseChess::gameStart(void)
 				getCursor(x, y);
 				x = (x - gameBoard.startX) / 4;
 				y = (y - gameBoard.startY) / 2;
-				ChineseChess::setCursor(40, 30);
+				ChineseChess::setCursor(40, 25);
 				cout << "X: ";
 				cout.width(3);
 				cout << x;
 				cout << "  Y: ";
 				cout.width(3);
 				cout << y << endl;
-				// cout << order << endl;
-				if (gameBoard.colorBoard[y][x] == 1)
+				
+				if (gameBoard.colorBoard[y][x] == 1 || (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] == 0))
 				{
 					// 不做事
+					gameBoard.resetColorBoard();
+					gameBoard.printBoard();
 				}
 				else if (gameBoard.colorBoard[y][x] == -1)
 				{
 					// 移動棋子
 
 					// 下一回合
+					gameBoard.movingChess(x, y);
 					order = !order;
 					hintBoard.printHint1(order);
 				}
@@ -67,6 +63,7 @@ void ChineseChess::gameStart(void)
 					// 座標上的旗子被吃
 
 					// 下一回合
+					gameBoard.movingChess(x, y);
 					order = !order;
 					hintBoard.printHint1(order);
 				}
@@ -76,7 +73,6 @@ void ChineseChess::gameStart(void)
 					// order = 0 黑色移動    order = 1 紅色移動
 					if ((order == 0 && gameBoard.chessBoard[y][x] <= 7) || (order == 1 && gameBoard.chessBoard[y][x] >= 8))
 					{
-						// cout << order;
 						hintBoard.printHint2(order, gameBoard.chessBoard[y][x]);
 						gameBoard.moveChess(x, y);
 					}
@@ -95,9 +91,7 @@ void ChineseChess::gameStart(void)
 				GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleinfo);
 				// 移動到20,20印座標
 				COORD point;
-				point.X = 70;
-				point.Y = 20;
-				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+				ChineseChess::setCursor(40, 30);
 				
 				switch(ch)
 				{
