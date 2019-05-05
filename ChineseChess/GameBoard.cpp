@@ -384,6 +384,105 @@ void GameBoard::moveElephant(int x, int y)
 
 void GameBoard::moveGeneral(int x, int y) {
 	int targetChess = chessBoard[y][x];
+	colorBoard[y][x] = 1;
+
+	// 只能在九宮內行走(直行或橫行)
+	// 王見王
+
+	if (targetChess == 1) { // 黑方(上方)
+		for (int boardY = 0; boardY <= 2; boardY++) // 由下到上
+		{
+			for (int boardX = 3; boardX <= 5; boardX++) // 由左到右
+			{
+				// 若該格子在將的上/下
+				if (abs(boardX - x) == 1 && abs(boardY - y) == 0) {
+					// 沒人(0)，灰色
+					if (chessBoard[boardY][boardX] == 0)
+					{
+						colorBoard[boardY][boardX] = -1;
+					}
+					// 敵人(8-14)，藍色
+					else if (chessBoard[boardY][boardX] > 7) // 0被排除了
+					{
+						colorBoard[boardY][boardX] = -2;
+					}
+					// 其他：我方(1-7)
+				}
+				// 格子在將的左/右
+				else if (abs(boardX - x) == 0 && abs(boardY - y) == 1) {
+					// 沒人(0)，灰色
+					if (chessBoard[boardY][boardX] == 0)
+					{
+						colorBoard[boardY][boardX] = -1;
+					}
+					// 敵人(8-14)，就為藍色
+					else if (chessBoard[boardY][boardX] > 7)
+					{
+						colorBoard[boardY][boardX] = -2;
+					}
+					// 其他：我方(1-7)
+				}
+			}// inner-for
+		}// outer-for
+
+		//若可以直視紅帥(從黑將到紅帥上整條路上沒棋子)，則紅帥格子為藍色
+		for (int boardY = y; boardY <= 9; boardY++) {
+			if (chessBoard[boardY][x] == 1) continue; // 黑將，繼續
+			else if (chessBoard[boardY][x] == 8) { // 找到紅帥了，塗色，結束
+				colorBoard[boardY][x] = -2;
+				break;
+			}
+			else if(chessBoard[boardY][x] != 0) break; // 有棋子，結束判斷
+			// 其他，沒任何棋子
+		}
+	}//黑方
+	else if(targetChess == 8){ // 紅方(下方)
+		for (int boardY = 7; boardY <= 9; boardY++)
+		{
+			for (int boardX = 3; boardX <= 5; boardX++)
+			{
+				// 格子在將的上/下
+				if (abs(boardX - x) == 1 && abs(boardY - y) == 0) {
+					// 沒人(0)，灰色
+					if (chessBoard[boardY][boardX] == 0)
+					{
+						colorBoard[boardY][boardX] = -1;
+					}
+					// 敵人(1-7)，藍色
+					else if (chessBoard[boardY][boardX] <= 7)
+					{
+						colorBoard[boardY][boardX] = -2;
+					}
+					// 其他：我方(8-14)
+				}
+				// 格子在將的左/右
+				else if (abs(boardX - x) == 0 && abs(boardY - y) == 1) {
+					// 沒人(0)，灰色
+					if (chessBoard[boardY][boardX] == 0)
+					{
+						colorBoard[boardY][boardX] = -1;
+					}
+					// 敵人(1-7)，藍色
+					else if (chessBoard[boardY][boardX] <= 7)
+					{
+						colorBoard[boardY][boardX] = -2;
+					}
+					// 其他：我方(8-14)
+				}
+			}// inner-for
+		}//outer-for
+
+		//若可以直視黑將(從紅帥到黑將上整條路上沒棋子)，則黑將格子為藍色
+		for (int boardY = y; boardY >= 0; boardY--) {
+			if (chessBoard[boardY][x] == 8) continue; // 紅帥，繼續
+			else if (chessBoard[boardY][x] == 1) { // 找到黑將了，塗色，結束
+				colorBoard[boardY][x] = -2;
+				break;
+			}
+			else if (chessBoard[boardY][x] != 0) break; // 有棋子，結束判斷
+			// 其他，沒任何棋子
+		}
+	}//紅方
 }
 void GameBoard::moveTank(int x, int  y) {
 
