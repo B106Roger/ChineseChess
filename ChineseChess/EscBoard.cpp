@@ -1,7 +1,6 @@
 ﻿#include "EscBoard.h"
 #include "ChineseChess.h"
 
-
 EscBoard::EscBoard(int cursorX, int cursorY, int sizeX, int sizeY, int iniMode)
 	:mode(iniMode), breakOut(false)
 {
