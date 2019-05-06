@@ -21,7 +21,6 @@ public:
 	void moveChess(int x, int y);
 	void movingChess(int x, int y);
 	void resetColorBoard(void);
-	bool isGeneral(int order); // 偵測order方(0黑1紅)是否被將軍
 private:
 	void printRow(int y);
 	wstring getPrintedChar(int x, int y);
@@ -32,6 +31,6 @@ private:
 	void moveTank(int x, int  y);
 	void moveCannon(int x, int y);
 	void moveSolider(int x, int y);
-	void moveChessWithoutPrintBoard(int x, int y); // 給isGeneral()使用
+	
 };
 

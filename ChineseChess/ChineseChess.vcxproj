@@ -117,7 +117,6 @@
   <ItemGroup>
     <ClCompile Include="Chess.cpp" />
     <ClCompile Include="ChineseChess.cpp" />
-    <ClCompile Include="EscBoard.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="HintBoard.cpp" />
     <ClCompile Include="RecordBoard.cpp" />
@@ -126,11 +125,9 @@
   <ItemGroup>
     <ClInclude Include="Chess.h" />
     <ClInclude Include="ChineseChess.h" />
-    <ClInclude Include="EscBoard.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="HintBoard.h" />
     <ClInclude Include="RecordBoard.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
