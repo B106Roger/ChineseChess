@@ -826,10 +826,95 @@ void GameBoard::moveSolider(int x, int y) {
 bool GameBoard::isGeneral(int order) {
 
 	if (order == 0) { // 黑方被將軍了嗎？
-
+		int generalY = -1, generalX = -1;
+		for (int boardY = 0; boardY <= 2 && generalY == -1; boardY++){ // 步驟一：找到將
+			for (int boardX = 3; boardX <= 5 && generalX == -1; boardX++){
+				if (chessBoard[boardY][boardX] == 1) {
+					generalY = boardY;
+					generalX = boardX;
+					break;
+				}
+			}
+		}
+		for (int boardY = 0; boardY <= 9; boardY++) { // 步驟二：將敵方掃過一輪
+			for (int boardX = 0; boardX <= 8; boardX++) {
+				if (chessBoard[boardY][boardX] > 7) {
+					moveChessWithoutPrintBoard(boardX, boardY);
+					if (colorBoard[generalY][generalX] == -2) {
+						resetColorBoard();
+						return true;
+					}
+					resetColorBoard();
+				}
+			}
+		}
+		return false;
 	}
 	
 	else if (order == 1) { // 紅方被將軍了嗎？
+		int generalY = -1, generalX = -1;
+		for (int boardY = 7; boardY <= 9 && generalY == -1; boardY++) { // 步驟一：找到將
+			for (int boardX = 3; boardX <= 5 && generalX == -1; boardX++) {
+				if (chessBoard[boardY][boardX] == 8) {
+					generalY = boardY;
+					generalX = boardX;
+					break;
+				}
+			}
+		}
+		for (int boardY = 0; boardY <= 9; boardY++) { // 步驟二：將敵方掃過一輪
+			for (int boardX = 0; boardX <= 8; boardX++) {
+				if (0 < chessBoard[boardY][boardX] && chessBoard[boardY][boardX] <= 7) {
+					moveChessWithoutPrintBoard(boardX, boardY);
+					if (colorBoard[generalY][generalX] == -2) {
+						resetColorBoard();
+						return true;
+					}
+					resetColorBoard();
+				}
+			}
+		}
+		return false;
+	}
+}
 
+void GameBoard::moveChessWithoutPrintBoard(int x, int y) {
+	int targetChess = chessBoard[y][x];
+	resetColorBoard();
+	int deltaChess = 7;
+	// 黑士  紅士
+	if (targetChess == 2 || targetChess == 9)
+	{
+		moveKnight(x, y);
+	}
+	// 黑象  紅象
+	else if (targetChess == 3 || targetChess == 10)
+	{
+		moveElephant(x, y);
+	}
+	// 黑馬  紅馬
+	else if (targetChess == 5 || targetChess == 12)
+	{
+		moveHorse(x, y);
+	}
+	// 將
+	else if (targetChess == 1 || targetChess == 1 + deltaChess)
+	{
+		moveGeneral(x, y);
+	}
+	// 車
+	else if (targetChess == 4 || targetChess == 4 + deltaChess)
+	{
+		moveTank(x, y);
+	}
+	// 炮
+	else if (targetChess == 6 || targetChess == 6 + deltaChess)
+	{
+		moveCannon(x, y);
+	}
+	// 卒
+	else if (targetChess == 7 || targetChess == 7 + deltaChess)
+	{
+		moveSolider(x, y);
 	}
 }

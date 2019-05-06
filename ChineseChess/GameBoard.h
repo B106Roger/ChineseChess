@@ -32,6 +32,6 @@ private:
 	void moveTank(int x, int  y);
 	void moveCannon(int x, int y);
 	void moveSolider(int x, int y);
-	
+	void moveChessWithoutPrintBoard(int x, int y); // 給isGeneral()使用
 };
 

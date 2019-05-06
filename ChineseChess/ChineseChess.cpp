@@ -20,8 +20,11 @@ void ChineseChess::gameStart(void)
 	printFrame();
 	recordBoard.printBoard();
 	gameBoard.printBoard();
-	hintBoard.printBoard();
-	hintBoard.printHint1(order);
+	hintBoard.printBoard(); // hintBoard基本框
+	hintBoard.printHint1(order); // 輪到誰
+	if (gameBoard.isGeneral(order)) { // 有被將軍嗎？
+		hintBoard.printHint3(order);
+	}
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
 	// printStartWindow()
 
@@ -52,13 +55,17 @@ void ChineseChess::gameStart(void)
 					// 如果選到自己 或是 選到不能移動的空白格子，就取消選取
 					gameBoard.resetColorBoard();
 					gameBoard.printBoard();
+					hintBoard.hideHint2();
 				}
 				else if (gameBoard.colorBoard[y][x] == -1)
 				{
 					// 移動棋子 ，輪下一回合
 					gameBoard.movingChess(x, y);
 					order = !order;
-					hintBoard.printHint1(order);
+					hintBoard.printHint1(order); // 輪轉時，hint1換方，hint2隱藏，hint3判斷
+					hintBoard.hideHint2();
+					if(gameBoard.isGeneral(order)) hintBoard.printHint3(order);
+					else hintBoard.hideHint3();
 				}
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
@@ -66,6 +73,9 @@ void ChineseChess::gameStart(void)
 					gameBoard.movingChess(x, y);
 					order = !order;
 					hintBoard.printHint1(order);
+					hintBoard.hideHint2();
+					if (gameBoard.isGeneral(order)) hintBoard.printHint3(order);
+					else hintBoard.hideHint3();
 				}
 				else if (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] != 0)
 				{
