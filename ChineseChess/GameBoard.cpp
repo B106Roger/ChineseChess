@@ -773,5 +773,48 @@ void GameBoard::moveCannon(int x, int y) {
 	}
 }
 void GameBoard::moveSolider(int x, int y) {
+	int targetChess = chessBoard[y][x];
+	colorBoard[y][x] = 1;
 
+	if (targetChess == 7) {
+		if (y < 5) { // 河內
+			if (chessBoard[y + 1][x] > 7) { // 8-14敵方
+				colorBoard[y + 1][x] = -2;
+			}
+			else if (chessBoard[y + 1][x] == 0) { // 無人
+				colorBoard[y + 1][x] = -1;
+			}
+		}
+		else if (y >= 5) { //過河
+			for (int boardY = y; boardY <= y + 1; boardY++) { // 向前
+				for (int boardX = x - 1; boardX <= x + 1; boardX++) { // 左1右1
+					if ((boardY == y && boardX == x) || (boardY < 0) || (boardX < 0) || (boardY > 9) || (boardX > 8) || (boardY == y+1 && (boardX == x-1||boardX == x+1))) continue; // 自己或是在棋盤外或是斜行
+					else if(chessBoard[boardY][boardX] == 0) colorBoard[boardY][boardX] = -1;
+					else if (chessBoard[boardY][boardX] <= 7) continue;
+					else if(chessBoard[boardY][boardX] <= 14) colorBoard[boardY][boardX] = -2;
+				}
+			}
+		}
+	}
+	else if (targetChess == 14) {
+		if (y >= 5) { // 河內
+			if (chessBoard[y - 1][x] == 0) { // 無人
+				colorBoard[y - 1][x] = -1;
+			}
+			else if (chessBoard[y - 1][x] <= 7) { // 1-7敵方
+				colorBoard[y - 1][x] = -2;
+			}
+			
+		}
+		else if (y < 5) { //過河
+			for (int boardY = y; boardY >= y - 1; boardY--) { // 向前↑(負)
+				for (int boardX = x - 1; boardX <= x + 1; boardX++) { // 左1右1
+					if ((boardY == y && boardX == x) || (boardY < 0) || (boardX < 0) || (boardY > 9) || (boardX > 8) || (boardY == y - 1 && (boardX == x - 1 || boardX == x + 1))) continue; // 自己或是在棋盤外或是斜行
+					else if (chessBoard[boardY][boardX] == 0) colorBoard[boardY][boardX] = -1;
+					else if (chessBoard[boardY][boardX] <= 7) colorBoard[boardY][boardX] = -2;
+					else if (chessBoard[boardY][boardX] <= 14) continue;
+				}
+			}
+		}
+	}
 }
