@@ -20,16 +20,8 @@ void ChineseChess::gameStart(void)
 	printFrame();
 	recordBoard.printBoard();
 	gameBoard.printBoard();
-<<<<<<< HEAD
 	hintBoard.printBoard();
 	hintBoard.printHint1(order);
-=======
-	hintBoard.printBoard(); // hintBoard基本框
-	hintBoard.printHint1(order); // 輪到誰
-	if (gameBoard.isGeneral(order)) { // 有被將軍嗎？
-		hintBoard.printHint3(order);
-	}
->>>>>>> parent of 32d9b3f... escMenu and modify chinesechess member func/data
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
 	// printStartWindow()
 
