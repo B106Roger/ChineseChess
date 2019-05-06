@@ -485,10 +485,292 @@ void GameBoard::moveGeneral(int x, int y) {
 	}//紅方
 }
 void GameBoard::moveTank(int x, int  y) {
+	int targetChess = chessBoard[y][x];
+	colorBoard[y][x] = 1;
 
+	if (targetChess == 4) { // 黑方(1-7上方)
+		// 上下左右
+		for (int boardY = y; boardY >= 0; boardY--) { // 上
+			if (chessBoard[boardY][x] == targetChess) {
+				if(colorBoard[boardY][x] == 1) continue; //自己
+				else if (colorBoard[boardY][x] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[boardY][x] == 0) { // 無人
+				colorBoard[boardY][x] = -1;
+			}
+			else if (chessBoard[boardY][x] <= 7) { //我方擋
+				break;
+			}
+			else if (chessBoard[boardY][x] <= 14) {// 敵方擋
+				colorBoard[boardY][x] = -2;
+				break;
+			}
+			
+		}
+		for (int boardY = y; boardY <= 9; boardY++) { // 下
+			if (chessBoard[boardY][x] == targetChess) {
+				if (colorBoard[boardY][x] == 1) continue; //自己
+				else if (colorBoard[boardY][x] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[boardY][x] == 0) { // 無人(0)
+				colorBoard[boardY][x] = -1;
+			}
+			else if (chessBoard[boardY][x] <= 7) { //我方擋(1-7)
+				break;
+			}
+			else if (chessBoard[boardY][x] <= 14) {// 敵方擋(8-14)
+				colorBoard[boardY][x] = -2;
+				break;
+			}
+		}
+		for (int boardX = x; boardX >= 0; boardX--) { // 左
+			if (chessBoard[y][boardX] == targetChess) {
+				if (colorBoard[y][boardX] == 1) continue; //自己
+				else if (colorBoard[y][boardX] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[y][boardX] == 0) { // 無人
+				colorBoard[y][boardX] = -1;
+			}
+			else if (chessBoard[y][boardX] <= 7) { //我方擋
+				break;
+			}
+			else if (chessBoard[y][boardX] <= 14) {// 敵方擋
+				colorBoard[y][boardX] = -2;
+				break;
+			}
+
+		}
+		for (int boardX = x; boardX <= 8; boardX++) { // 右
+			if (chessBoard[y][boardX] == targetChess) {
+				if (colorBoard[y][boardX] == 1) continue; //自己
+				else if (colorBoard[y][boardX] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[y][boardX] == 0) { // 無人(0)
+				colorBoard[y][boardX] = -1;
+			}
+			else if (chessBoard[y][boardX] <= 7) { //我方擋(1-7)
+				break;
+			}
+			else if (chessBoard[y][boardX] <= 14) {// 敵方擋(8-14)
+				colorBoard[y][boardX] = -2;
+				break;
+			}
+
+		}
+	}
+	else if (targetChess == 11) { // 紅方(8-14下方)
+		for (int boardY = y; boardY >= 0; boardY--) { // 上
+			if (chessBoard[boardY][x] == targetChess) {
+				if (colorBoard[boardY][x] == 1) continue; //自己
+				else if (colorBoard[boardY][x] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[boardY][x] == 0) { // 無人
+				colorBoard[boardY][x] = -1;
+			}
+			else if (chessBoard[boardY][x] <= 7) { // 敵方擋
+				colorBoard[boardY][x] = -2;
+				break;
+			}
+			else if (chessBoard[boardY][x] <= 14) {// 我方擋
+				
+				break;
+			}
+
+		}
+		for (int boardY = y; boardY <= 9; boardY++) { // 下
+			if (chessBoard[boardY][x] == targetChess) {
+				if (colorBoard[boardY][x] == 1) continue; //自己
+				else if (colorBoard[boardY][x] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[boardY][x] == 0) { // 無人(0)
+				colorBoard[boardY][x] = -1;
+			}
+			else if (chessBoard[boardY][x] <= 7) { // 敵方擋(1-7)
+				colorBoard[boardY][x] = -2;
+				break;
+			}
+			else if (chessBoard[boardY][x] <= 14) {//我方擋(8-14)
+				break;
+			}
+		}
+		for (int boardX = x; boardX >= 0; boardX--) { // 左
+			if (chessBoard[y][boardX] == targetChess) {
+				if (colorBoard[y][boardX] == 1) continue; //自己
+				else if (colorBoard[y][boardX] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[y][boardX] == 0) { // 無人
+				colorBoard[y][boardX] = -1;
+			}
+			else if (chessBoard[y][boardX] <= 7) { // 敵方擋
+				colorBoard[y][boardX] = -2;
+				break;
+			}
+			else if (chessBoard[y][boardX] <= 14) { //我方擋
+				break;
+			}
+
+		}
+		for (int boardX = x; boardX <= 8; boardX++) { // 右
+			if (chessBoard[y][boardX] == targetChess) {
+				if (colorBoard[y][boardX] == 1) continue; //自己
+				else if (colorBoard[y][boardX] == 0) break; // 同樣是車
+			}
+			else if (chessBoard[y][boardX] == 0) { // 無人(0)
+				colorBoard[y][boardX] = -1;
+			}
+			else if (chessBoard[y][boardX] <= 7) { // 敵方擋(1-7)
+				colorBoard[y][boardX] = -2;
+				break;
+			}
+			else if (chessBoard[y][boardX] <= 14) {// 我方擋(8-14)
+				
+				break;
+			}
+
+		}
+	}
 }
 void GameBoard::moveCannon(int x, int y) {
+	int targetChess = chessBoard[y][x];
+	colorBoard[y][x] = 1;
 
+	if (targetChess == 6) { // 黑方(1-7上方)
+		// 上下左右
+		int turret = 0; // 炮架
+		for (int boardY = y; boardY >= 0; boardY--) { // 上
+			if (turret == 0) { // 無炮架
+				if(chessBoard[boardY][x] == 0) colorBoard[boardY][x] = -1; // 無人
+				else if (chessBoard[boardY][x] != 0 && colorBoard[boardY][x] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[boardY][x] == 0) continue; // 無人
+				else if (chessBoard[boardY][x] <= 7) break; // 我方
+				else if (chessBoard[boardY][x] <= 14) { // 敵方
+					colorBoard[boardY][x] = -2;
+					break;
+				}
+			}
+		}
+		turret = 0; // 炮架
+		for (int boardY = y; boardY <= 9; boardY++) { // 下
+			if (turret == 0) { // 無炮架
+				if (chessBoard[boardY][x] == 0) colorBoard[boardY][x] = -1; // 無人
+				else if (chessBoard[boardY][x] != 0 && colorBoard[boardY][x] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[boardY][x] == 0) continue; // 無人
+				else if (chessBoard[boardY][x] <= 7) break; // 我方
+				else if (chessBoard[boardY][x] <= 14) { // 敵方
+					colorBoard[boardY][x] = -2;
+					break;
+				}
+			}
+		}
+		turret = 0; // 炮架
+		for (int boardX = x; boardX >= 0; boardX--) { // 左
+			if (turret == 0) { // 無炮架
+				if (chessBoard[y][boardX] == 0) colorBoard[y][boardX] = -1; // 無人
+				else if (chessBoard[y][boardX] != 0 && colorBoard[y][boardX] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[y][boardX] == 0) continue; // 無人
+				else if (chessBoard[y][boardX] <= 7) break; // 我方
+				else if (chessBoard[y][boardX] <= 14) { // 敵方
+					colorBoard[y][boardX] = -2;
+					break;
+				}
+			}
+		}
+		turret = 0; // 炮架
+		for (int boardX = x; boardX <= 8; boardX++) { // 右
+			if (turret == 0) { // 無炮架
+				if (chessBoard[y][boardX] == 0) colorBoard[y][boardX] = -1; // 無人
+				else if (chessBoard[y][boardX] != 0 && colorBoard[y][boardX] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[y][boardX] == 0) continue; // 無人
+				else if (chessBoard[y][boardX] <= 7) break; // 我方
+				else if (chessBoard[y][boardX] <= 14) { // 敵方
+					colorBoard[y][boardX] = -2;
+					break;
+				}
+			}
+		}
+	}
+	else if (targetChess == 13) { // 紅方(8-14下方)
+		int turret = 0; // 炮架
+		for (int boardY = y; boardY >= 0; boardY--) { // 上
+			if (turret == 0) { // 無炮架
+				if (chessBoard[boardY][x] == 0) colorBoard[boardY][x] = -1; // 無人
+				else if (chessBoard[boardY][x] != 0 && colorBoard[boardY][x] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[boardY][x] == 0) continue; // 無人
+				else if (chessBoard[boardY][x] <= 7) { // 敵方
+					colorBoard[boardY][x] = -2;
+					break;
+				}
+				else if (chessBoard[boardY][x] <= 14) { // 我方
+					break;
+				}
+			}
+
+		}
+		turret = 0; // 炮架
+		for (int boardY = y; boardY <= 9; boardY++) { // 下
+			if (turret == 0) { // 無炮架
+				if (chessBoard[boardY][x] == 0) colorBoard[boardY][x] = -1; // 無人
+				else if (chessBoard[boardY][x] != 0 && colorBoard[boardY][x] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[boardY][x] == 0) continue; // 無人
+				else if (chessBoard[boardY][x] <= 7) { // 敵方
+					colorBoard[boardY][x] = -2;
+					break;
+				}
+				else if (chessBoard[boardY][x] <= 14) { // 我方
+					break;
+				}
+			}
+		}
+		turret = 0; // 炮架
+		for (int boardX = x; boardX >= 0; boardX--) { // 左
+			if (turret == 0) { // 無炮架
+				if (chessBoard[y][boardX] == 0) colorBoard[y][boardX] = -1; // 無人
+				else if (chessBoard[y][boardX] != 0 && colorBoard[y][boardX] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[y][boardX] == 0) continue; // 無人
+				else if (chessBoard[y][boardX] <= 7) {// 敵方
+					colorBoard[y][boardX] = -2;
+					break; 
+				}
+				else if (chessBoard[y][boardX] <= 14) { // 我方
+					
+					break;
+				}
+			}
+
+		}
+		turret = 0; // 炮架
+		for (int boardX = x; boardX <= 8; boardX++) { // 右
+			if (turret == 0) { // 無炮架
+				if (chessBoard[y][boardX] == 0) colorBoard[y][boardX] = -1; // 無人
+				else if (chessBoard[y][boardX] != 0 && colorBoard[y][boardX] != 1) turret = 1; // 有任何不是自己的人
+			}
+			else if (turret == 1) { // 有炮架
+				if (chessBoard[y][boardX] == 0) continue; // 無人
+				else if (chessBoard[y][boardX] <= 7) {// 敵方
+					colorBoard[y][boardX] = -2;
+					break;
+				}
+				else if (chessBoard[y][boardX] <= 14) { // 我方
+
+					break;
+				}
+			}
+		}
+	}
 }
 void GameBoard::moveSolider(int x, int y) {
 
