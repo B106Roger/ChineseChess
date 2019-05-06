@@ -16,7 +16,7 @@ EscBoard::~EscBoard()
 {
 }
 
-void EscBoard::escMenu() {
+int EscBoard::escMenu() {
 	breakOut = false; // 迴圈開始
 	printBoard(); // 印出選單
 	while (!breakOut) {
@@ -26,8 +26,11 @@ void EscBoard::escMenu() {
 			// 按下Enter鍵後
 			if (ch == '\r')
 			{
+				int returnValue = 4;
 				switch (mode) {
 				case 0:
+					returnValue = 1;
+					break;
 				case 1:
 				case 2:
 				case 3:
@@ -35,9 +38,11 @@ void EscBoard::escMenu() {
 					ChineseChess::setCursorSize(true, 0); // 歸還游標
 					ChineseChess::gameBoard.printBoard();
 					ChineseChess::setCursor(ChineseChess::gameBoard.startX, ChineseChess::gameBoard.startY);
+					returnValue = 0; // ChineseChess的MenuMode
 					breakOut = true; // 跳出迴圈
 					break;
 				}
+				return returnValue;
 			}
 			// 按下方向鍵後
 			else if (ch == 224)

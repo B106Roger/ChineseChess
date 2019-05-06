@@ -3,11 +3,14 @@
 #include "RecordBoard.h"
 #include "HintBoard.h"
 #include "EscBoard.h"
+#include "MenuBoard.h"
 #include<iostream>
 #include<fstream>
 #include<conio.h>
 #include<Windows.h>
 using namespace std;
+
+enum MODE { MenuMode = 0, GameMode, EscMode, ExitMode ,BackMode, ForwardMode };
 
 class ChineseChess
 {
@@ -16,9 +19,8 @@ public:
 	ChineseChess();
 	~ChineseChess();
 
-
 	// data member
-	int mode;                 // [ GameMode , MainMenuMode , EscMode , BackMode, ForwardMode ]
+	int mode;                 // [  MenuMode , GameMode , EscMode , BackMode, ForwardMode , ExitMode ]
 	// int subMode
 	int order = 0;
 	bool gameOver;
@@ -32,8 +34,10 @@ public:
 	static RecordBoard recordBoard;
 	static HintBoard hintBoard;
 	static EscBoard escBoard;
+	static MenuBoard maenuBoard;
 
 	// member function
+	void gameLoop(void);
 	void gameStart(void);
 	void printFrame();
 	void readAndSetBoard();

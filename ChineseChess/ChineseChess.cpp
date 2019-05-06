@@ -7,21 +7,43 @@ GameBoard ChineseChess::gameBoard = GameBoard();
 RecordBoard ChineseChess::recordBoard = RecordBoard();
 HintBoard ChineseChess::hintBoard = HintBoard();
 EscBoard ChineseChess::escBoard = EscBoard();
+MenuBoard ChineseChess::maenuBoard = MenuBoard();
+
 ChineseChess::ChineseChess()
 	:gameOver(false),frameWidth(65),frameHeight(35), order(0)
 {
+	mode = 0;  // 一開始設為主選單模式
 }
 ChineseChess::~ChineseChess()
 {
 
 }
-
+void ChineseChess::gameLoop(void)
+{
+	
+	while (mode != 3)
+	{
+		if (mode == 0)
+		{
+			//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤)  3. 重播棋局  4. 離開遊戲
+			printFrame();
+			mode = maenuBoard.mainMenu();
+		}
+		else if (mode == 1)
+		{
+			gameStart();
+		}
+		else if (mode == 2)
+		{
+			mode = escBoard.escMenu();
+			//  1. 繼續遊戲  2. 重新開始(捨棄當前所有資料)   3. 投降(儲存record 輸了也要儲存record) 4. 儲存遊戲  5. 主選單
+		}
+	}
+}
 void ChineseChess::gameStart(void)
 {
-	system("PAUSE");
-	system("CLS");
+	printFrame(); // 要將其他不需要的東西刷掉
 	readAndSetBoard();
-	printFrame();
 	recordBoard.printBoard();
 	gameBoard.printBoard();
 	hintBoard.printBoard(); // hintBoard基本框
@@ -30,12 +52,10 @@ void ChineseChess::gameStart(void)
 		hintBoard.printHint3(order);
 	}
 	// testing
-	escBoard.escMenu();
-
+	// escBoard.escMenu();
+	// maenuBoard.mainMenu();
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
-	// printStartWindow()
-
-	while (!gameOver)
+	while (mode == 1) // 1 是ChineseChess的GameMode
 	{
 		if (_kbhit())
 		{
@@ -140,7 +160,7 @@ void ChineseChess::gameStart(void)
 			// 按下Esc鍵後
 			else if (ch == 27)
 			{
-				escBoard.escMenu();
+				mode = 2;
 			}
 			//// 悔棋
 			//else if (ch == '<')
@@ -179,78 +199,28 @@ void ChineseChess::gameStart(void)
 			//}
 		}
 	}
-	/*while (true)
-	{
-		if (mode == GameMode)
-		{
-			detectKB();
-		}
-		else if (mode == MainMenuMode)
-		{
-			//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤) 3. 退出遊戲 	
-		}
-		else if (mode == EscMode)
-		{
-			//  1. 繼續遊戲  2. 重新開始(捨棄當前所有資料)   3. 投降(儲存record 輸了也要儲存record) 4. 儲存遊戲  5. 主選單
-		}
-		else if (mode = ExitMode)
-		{
-			break;
-		}
-	}*/
-
+	
 }
 
 
 // 印出邊框
 void ChineseChess::printFrame()
 {
+	wstring edge(width - 2, L'＝'),side(width - 2, L'　');
+	edge = L"●" + edge;
+	edge.push_back(L'●');
+	side = L"∥" + side;
+	side.push_back(L'∥');
 	for (int i = 0; i < height; i++)
 	{
 		ChineseChess::setCursor(startX, startY + i);
-		for (int j = 0; j < width; j++)
+		if (i == 0 || i == height - 1)
 		{
-			if (i == 0) 
-			{
-				if (j == 0) // 左上角
-				{
-					wcout << L"●";
-				}
-				else if (j == width - 1) // 右上角
-				{
-					wcout << L"●";
-				}
-				else // 上方
-				{
-					wcout << L"＝";
-				}
-			}
-			else if (i == height - 1)
-			{
-				if (j == 0) // 左下角
-				{
-					wcout << L"●";
-				}
-				else if (j == width - 1) // 右下角
-				{
-					wcout << L"●";
-				}
-				else // 下方
-				{
-					wcout << L"＝";
-				}
-			}
-			else
-			{
-				if (j == 0 || j == width - 1) // 中間
-				{
-					wcout << L"∥";
-				}
-				else // 
-				{
-					wcout << L"　";
-				}
-			}
+			wcout << edge;
+		}
+		else
+		{
+			wcout << side;
 		}
 	}
 
