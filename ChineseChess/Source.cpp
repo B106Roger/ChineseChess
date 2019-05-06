@@ -4,14 +4,16 @@
 #include<Windows.h>
 #include"ChineseChess.h"
 #include"RecordBoard.h"
+#include<Filesystem>
 using namespace std;
+//namespace fs = std::experimental::filesystem;
 
 int main(void)
 {
 	locale loc("chs");
 	setlocale(LC_ALL, "chs");
 	wcout.imbue(loc);
-	
+	//std::cout << "Current root name is: " << fs::current_path() << '\n';
 	//wstring a(L"１　２　３　４　５　６　７　８　９");
 	//wstring b(L"●＝車＝車＝車＝車＝車＝車＝車＝●");
 	//wstring c(L"∥　｜　｜　｜＼｜／｜　｜　｜　∥");

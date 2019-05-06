@@ -23,6 +23,8 @@ void ChineseChess::gameStart(void)
 	hintBoard.printBoard();
 	hintBoard.printHint1(order);
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
+	// printStartWindow()
+
 	while (!gameOver)
 	{
 		if (_kbhit())
@@ -115,16 +117,70 @@ void ChineseChess::gameStart(void)
 				cout.width(3);
 				cout << point.Y;
 				// 回到原本的座標
-				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 				/* end 印出棋子在window的座標 */
+				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			}
 			// 按下Esc鍵後
-			else if (ch == 27)
-			{
+			//else if (ch == 27)
+			//{
 
-			}
+			//}
+			//// 悔棋
+			//else if (ch == '<')
+			//{
+			//	// 印悔棋小視窗(member function)  default 否
+			//	while (true)
+			//	{
+			//		// 切換是否
+			//		if (_kbhit())
+			//		{
+			//			int ch = _getch();
+			//			if (ch == 224)
+			//			{
+			//				ch = _getch();
+			//				switch (ch)
+			//				{
+			//				case 75: // 左
+			//				case 77: // 右
+			//				default:
+			//				}
+			//			}
+			//			else if (ch == '\r')
+			//			{
+			//				// 悔棋
+			//				// gameboard.printBoard()
+			//				// hintBoard.printHint1()
+			//				// hintBoard.printHint2()
+			//				// break;
+			//			}
+			//		}
+			//	}
+			//}
+			//// 還原
+			//else if (ch == '>')
+			//{
+			//}
 		}
 	}
+	/*while (true)
+	{
+		if (mode == GameMode)
+		{
+			detectKB();
+		}
+		else if (mode == MainMenuMode)
+		{
+			//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤) 3. 退出遊戲 	
+		}
+		else if (mode == EscMode)
+		{
+			//  1. 繼續遊戲  2. 重新開始   3. 投降  4.  
+		}
+		else if (mode = ExitMode)
+		{
+			break;
+		}
+	}*/
 
 }
 

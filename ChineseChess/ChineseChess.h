@@ -17,7 +17,8 @@ public:
 
 
 	// data member
-	int mode;
+	int mode;                 // [ GameMode , MainMenuMode , EscMode , BackMode, ForwardMode ]
+	// int subMode
 	int order = 0;
 	bool gameOver;
 	const int frameWidth;   // 45 actual 135
