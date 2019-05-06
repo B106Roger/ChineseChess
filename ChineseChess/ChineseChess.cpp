@@ -174,7 +174,7 @@ void ChineseChess::gameStart(void)
 		}
 		else if (mode == EscMode)
 		{
-			//  1. 繼續遊戲  2. 重新開始   3. 投降  4.  
+			//  1. 繼續遊戲  2. 重新開始(捨棄當前所有資料)   3. 投降(儲存record 輸了也要儲存record) 4. 儲存遊戲  5. 主選單
 		}
 		else if (mode = ExitMode)
 		{
