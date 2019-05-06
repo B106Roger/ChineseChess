@@ -129,6 +129,13 @@ void HintBoard::printHint3(int order) {
 	ChineseChess::SetColor();
 }
 
+void HintBoard::hideHint3() {
+	for (int i = 12; i <= 16; i++) {
+		ChineseChess::setCursor(cursor[0] + 2, cursor[1] + i);
+		for (int j = 0; j < size[0] - 2; j++) wcout << L"　";
+	}
+}
+
 void HintBoard::printLowerBoard() {
 	int frameWidth = lowerBoardSize[0];
 	int frameHeight = lowerBoardSize[1];
@@ -219,5 +226,7 @@ void HintBoard::printBoard() {
 	printLowerBoard();
 	// printHint1(0);
 	// printHint2(0, 5);
+	// hideHint2();
 	// printHint3(0);
+	// hideHint3();
 }

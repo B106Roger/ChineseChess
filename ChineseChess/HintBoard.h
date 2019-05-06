@@ -22,8 +22,9 @@ public:
 	// when choose a chess, call this
 	void printHint2(int order, int chessIndex);
 	void hideHint2();
-	// when gameFinish, call this
+	// when General will be eaten, call this
 	void printHint3(int order);
+	void hideHint3();
 private:
 	// data member
 	vector<int> cursor;

@@ -381,7 +381,7 @@ void GameBoard::moveElephant(int x, int y)
 		}
 	}
 }
-
+// 移動(顯示可走位置)將軍
 void GameBoard::moveGeneral(int x, int y) {
 	int targetChess = chessBoard[y][x];
 	colorBoard[y][x] = 1;
@@ -484,6 +484,7 @@ void GameBoard::moveGeneral(int x, int y) {
 		}
 	}//紅方
 }
+// 移動(顯示可走位置)車
 void GameBoard::moveTank(int x, int  y) {
 	int targetChess = chessBoard[y][x];
 	colorBoard[y][x] = 1;
@@ -630,6 +631,7 @@ void GameBoard::moveTank(int x, int  y) {
 		}
 	}
 }
+// 移動(顯示可走位置)炮
 void GameBoard::moveCannon(int x, int y) {
 	int targetChess = chessBoard[y][x];
 	colorBoard[y][x] = 1;
@@ -772,6 +774,7 @@ void GameBoard::moveCannon(int x, int y) {
 		}
 	}
 }
+// 移動(顯示可走位置)卒
 void GameBoard::moveSolider(int x, int y) {
 	int targetChess = chessBoard[y][x];
 	colorBoard[y][x] = 1;
@@ -816,5 +819,17 @@ void GameBoard::moveSolider(int x, int y) {
 				}
 			}
 		}
+	}
+}
+
+
+bool GameBoard::isGeneral(int order) {
+
+	if (order == 0) { // 黑方被將軍了嗎？
+
+	}
+	
+	else if (order == 1) { // 紅方被將軍了嗎？
+
 	}
 }
