@@ -20,6 +20,7 @@ void ChineseChess::gameStart(void)
 	printFrame();
 	recordBoard.printBoard();
 	gameBoard.printBoard();
+
 	hintBoard.printBoard();
 	hintBoard.printHint1(order);
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
