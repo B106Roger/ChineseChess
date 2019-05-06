@@ -3,6 +3,10 @@
 
 using namespace std;
 
+GameBoard ChineseChess::gameBoard = GameBoard();
+RecordBoard ChineseChess::recordBoard = RecordBoard();
+HintBoard ChineseChess::hintBoard = HintBoard();
+EscBoard ChineseChess::escBoard = EscBoard();
 ChineseChess::ChineseChess()
 	:gameOver(false),frameWidth(65),frameHeight(35), order(0)
 {
@@ -25,6 +29,9 @@ void ChineseChess::gameStart(void)
 	if (gameBoard.isGeneral(order)) { // 有被將軍嗎？
 		hintBoard.printHint3(order);
 	}
+	// testing
+	escBoard.escMenu();
+
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
 	// printStartWindow()
 
@@ -131,10 +138,10 @@ void ChineseChess::gameStart(void)
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			}
 			// 按下Esc鍵後
-			//else if (ch == 27)
-			//{
-
-			//}
+			else if (ch == 27)
+			{
+				escBoard.escMenu();
+			}
 			//// 悔棋
 			//else if (ch == '<')
 			//{
@@ -296,4 +303,17 @@ void ChineseChess::getCursor(int &x, int &y)
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 	x = csbi.dwCursorPosition.X;
 	y = csbi.dwCursorPosition.Y;
+}
+
+void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible = 0 - invisible, bool visible = 1 - visible
+{
+	if (size == 0)
+	{
+		size = 20;	// default cursor size Changing to numbers from 1 to 20, decreases cursor width
+	}
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO lpCursor;
+	lpCursor.bVisible = visible;
+	lpCursor.dwSize = size;
+	SetConsoleCursorInfo(console, &lpCursor);
 }
