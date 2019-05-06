@@ -28,9 +28,10 @@ void ChineseChess::gameStart(void)
 		if (_kbhit())
 		{
 			int ch = _getch();
-			if (ch == '\r') // Enter press
+			// 按下Enter鍵後
+			if (ch == '\r') 
 			{
-				// 取出目前游標位置
+				/* start 取出目前游標在棋盤的位置 */
 				int x, y;
 				getCursor(x, y);
 				x = (x - gameBoard.startX) / 4;
@@ -42,27 +43,24 @@ void ChineseChess::gameStart(void)
 				cout << "  Y: ";
 				cout.width(3);
 				cout << y << endl;
-				
+				/* end 取出目前游標在棋盤的位置 */
+
 				if (gameBoard.colorBoard[y][x] == 1 || (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] == 0))
 				{
-					// 不做事
+					// 如果選到自己 或是 選到不能移動的空白格子，就取消選取
 					gameBoard.resetColorBoard();
 					gameBoard.printBoard();
 				}
 				else if (gameBoard.colorBoard[y][x] == -1)
 				{
-					// 移動棋子
-
-					// 下一回合
+					// 移動棋子 ，輪下一回合
 					gameBoard.movingChess(x, y);
 					order = !order;
 					hintBoard.printHint1(order);
 				}
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
-					// 座標上的旗子被吃
-
-					// 下一回合
+					// 座標上的旗子被吃 ，輪下一回合
 					gameBoard.movingChess(x, y);
 					order = !order;
 					hintBoard.printHint1(order);
@@ -77,12 +75,10 @@ void ChineseChess::gameStart(void)
 						gameBoard.moveChess(x, y);
 					}
 				}
+				// 設定成原本的cursor 位置
 				ChineseChess::setCursor(4 * x + gameBoard.startX, 2 * y + gameBoard.startY);
-				// 去chessBoard判斷有沒有旗子 continue
-				// colorBorad 幫移動位置塗灰
-				//if(ch = _getch();)
-				// colorBoard 0:colorBoard => 0 // -1: colorBoard => 
-			} 
+			}
+			// 按下方向鍵後
 			else if (ch == 224)
 			{
 				ch = _getch();
@@ -112,6 +108,7 @@ void ChineseChess::gameStart(void)
 					point.Y = consoleinfo.dwCursorPosition.Y;
 					break;
 				};
+				/* start 印出棋子在window的座標 */
 				cout << "X: ";
 				cout.width(3);
 				cout << point.X << "    Y: ";
@@ -119,6 +116,12 @@ void ChineseChess::gameStart(void)
 				cout << point.Y;
 				// 回到原本的座標
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+				/* end 印出棋子在window的座標 */
+			}
+			// 按下Esc鍵後
+			else if (ch == 27)
+			{
+
 			}
 		}
 	}
