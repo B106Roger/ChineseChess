@@ -223,7 +223,7 @@ void ChineseChess::gameStart(void)
 			// 按下 < 鍵後
 			else if (ch == '<')
 			{
-				// 悔棋
+				// 悔棋 
 				recordBoard.printMsg();
 			}
 			// 按下 < 鍵後
@@ -233,12 +233,12 @@ void ChineseChess::gameStart(void)
 				recordBoard.printMsg();
 			}
 			//// 悔棋
-			//else if (ch == '<')
+			//else if (ch == '<' || ch == '>')
 			//{
-			//	// 印悔棋小視窗(member function)  default 否
+			//	 印悔棋小視窗(member function)  default 否
 			//	while (true)
 			//	{
-			//		// 切換是否
+			//		 切換是否
 			//		if (_kbhit())
 			//		{
 			//			int ch = _getch();
@@ -254,20 +254,21 @@ void ChineseChess::gameStart(void)
 			//			}
 			//			else if (ch == '\r')
 			//			{
-			//				// 悔棋
-			//				// gameboard.printBoard()
-			//				// hintBoard.printHint1()
-			//				// hintBoard.printHint2()
-			//				// break;
+			//				 悔棋
+			//				 gameboard.printBoard()
+			//				 hintBoard.printHint1()
+			//				 hintBoard.printHint2()
+			//				 break;
 			//			}
 			//		}
 			//	}
 			//}
-			//// 還原
+			// 還原
 			//else if (ch == '>')
 			//{
 			//}
 		}
+		// b 
 	}
 	
 }
