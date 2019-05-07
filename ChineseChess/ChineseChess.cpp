@@ -119,7 +119,7 @@ void ChineseChess::gameStart(void)
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
 					// 座標上的旗子被吃 ，輪下一回合
-					//gameBoard.movingChess(x, y);
+					gameBoard.movingChess(x, y);
 					//
 					//if (gameBoard.movingChess(x, y) == true)
 					//{
@@ -309,17 +309,17 @@ void ChineseChess::readAndSetBoard()
 		setCursor(cursorX, cursorY + i);
 		if (i == 0)
 		{
-			wcout << L"●";
-			wcout.width(leftSpace);
-			wcout << L'＝';
-			wcout << title;
-			wcout.width(rightSpace);
-			wcout << L'＝';
-			wcout << L"●";
+			wcout << L"●" << leftSpace << title << rightSpace << L"●";
 		}
 		else if (i == gameBoard.height / 3 - 1)
 		{
-			wcout << L"●";
+			wstring tmp1(width - 2, L'＝');
+			wcout << L"●" << tmp1 << L"●";
+		}
+		else
+		{
+			wstring tmp2(width - 2, L'　');
+			wcout << L'∥' << tmp2 << L'∥';
 		}
 	}
 	system("PAUSE");
