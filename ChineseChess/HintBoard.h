@@ -3,6 +3,7 @@
 #include<conio.h>
 #include<Windows.h>
 #include <iostream>
+#include "WinBoard.h"
 
 using namespace std;
 class HintBoard
@@ -25,12 +26,15 @@ public:
 	// when General will be eaten, call this
 	void printHint3(int order);
 	void hideHint3();
+
+	int winMenu(int order);
 private:
 	// data member
 	vector<int> cursor;
 	vector<int> size;
 	vector<int> lowerBoardCursor;
 	vector<int> lowerBoardSize;
+	WinBoard winBoard;
 	int order;
 	//helper function
 	void printLowerBoard();

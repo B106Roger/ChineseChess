@@ -230,3 +230,7 @@ void HintBoard::printBoard() {
 	// printHint3(0);
 	// hideHint3();
 }
+
+int HintBoard::winMenu(int order) {
+	return winBoard.winMenu(order);
+};
