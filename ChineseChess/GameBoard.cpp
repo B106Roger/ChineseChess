@@ -829,7 +829,7 @@ void GameBoard::moveSolider(int x, int y) {
 	}
 }
 
-// 是否將軍
+// 是否將軍，若將軍已經被吃，仍然回傳false
 bool GameBoard::isGeneral(int order) {
 
 	if (order == 0) { // 黑方被將軍了嗎？
@@ -843,6 +843,7 @@ bool GameBoard::isGeneral(int order) {
 				}
 			}
 		}
+		if (generalY == -1 && generalX == -1) return false;
 		for (int boardY = 0; boardY <= 9; boardY++) { // 步驟二：將敵方掃過一輪
 			for (int boardX = 0; boardX <= 8; boardX++) {
 				if (chessBoard[boardY][boardX] > 7) {
