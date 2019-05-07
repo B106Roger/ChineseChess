@@ -55,7 +55,9 @@ int main(void)
 	//wcout << s << endl;
 
 	ChineseChess newGame;
-	newGame.gameStart();
+	system("PAUSE");
+	system("CLS");
+	newGame.gameLoop();
 
 	return 0;
 }

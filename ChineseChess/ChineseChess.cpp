@@ -7,21 +7,60 @@ GameBoard ChineseChess::gameBoard = GameBoard();
 RecordBoard ChineseChess::recordBoard = RecordBoard();
 HintBoard ChineseChess::hintBoard = HintBoard();
 EscBoard ChineseChess::escBoard = EscBoard();
+MenuBoard ChineseChess::maenuBoard = MenuBoard();
+string ChineseChess::fileName;
 ChineseChess::ChineseChess()
-	:gameOver(false),frameWidth(65),frameHeight(35), order(0)
+	:gameOver(false), order(0)
 {
+	mode = 0;  // 一開始設為主選單模式
 }
 ChineseChess::~ChineseChess()
 {
 
 }
-
+void ChineseChess::gameLoop(void)
+{
+	
+	while (mode != 3)    //  ExitMode
+	{
+		if (mode == 0)   // MenuMode
+		{
+			printFrame();
+			int menuValue = maenuBoard.mainMenu();
+			//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤)  3. 重播棋局  4. 離開遊戲
+			if (menuValue == 1)       
+			{
+				newGame();
+				mode = 1;
+			}
+			else if (menuValue == 2)
+			{
+				readAndSetBoard();
+				mode = 1;
+			}
+			else if (menuValue == 3)
+			{
+				mode = 0;
+			}
+			else if (menuValue == 4)
+			{
+				mode = 3;
+			}
+		}
+		else if (mode == 1)   // GameMode
+		{
+			
+			gameStart();
+		}
+		else if (mode == 3)    // ReplayMode
+		{
+			//  replayBoard.replay()
+		}
+	}
+}
 void ChineseChess::gameStart(void)
 {
-	system("PAUSE");
-	system("CLS");
-	readAndSetBoard();
-	printFrame();
+	printFrame(); // 要將其他不需要的東西刷掉
 	recordBoard.printBoard();
 	gameBoard.printBoard();
 	hintBoard.printBoard(); // hintBoard基本框
@@ -30,12 +69,10 @@ void ChineseChess::gameStart(void)
 		hintBoard.printHint3(order);
 	}
 	// testing
-	escBoard.escMenu();
-
+	// escBoard.escMenu();
+	// maenuBoard.mainMenu();
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
-	// printStartWindow()
-
-	while (!gameOver)
+	while (mode == 1) // 1 是ChineseChess的GameMode
 	{
 		if (_kbhit())
 		{
@@ -137,10 +174,33 @@ void ChineseChess::gameStart(void)
 				/* end 印出棋子在window的座標 */
 				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			}
-			// 按下Esc鍵後
+			// 按下Esc鍵後     
 			else if (ch == 27)
 			{
-				escBoard.escMenu();
+				int escModeValue = escBoard.escMenu();
+				if (escModeValue == 0)      // 1繼續遊戲
+				{
+					gameBoard.printBoard();
+				}
+				else if (escModeValue == 1) // 2重新開始
+				{
+					newGame();
+					break;
+				}
+				else if (escModeValue == 2) // 3投降
+				{
+					// 印出投降提示
+					// 決定儲存遊戲 或 回主選單
+				}
+				else if (escModeValue == 3) // 4儲存遊戲
+				{
+					// 儲存遊戲
+					gameBoard.printBoard();
+				}
+				else if (escModeValue == 4) // 5回主選單
+				{
+					mode = 0;
+				}
 			}
 			//// 悔棋
 			//else if (ch == '<')
@@ -179,88 +239,48 @@ void ChineseChess::gameStart(void)
 			//}
 		}
 	}
-	/*while (true)
-	{
-		if (mode == GameMode)
-		{
-			detectKB();
-		}
-		else if (mode == MainMenuMode)
-		{
-			//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤) 3. 退出遊戲 	
-		}
-		else if (mode == EscMode)
-		{
-			//  1. 繼續遊戲  2. 重新開始(捨棄當前所有資料)   3. 投降(儲存record 輸了也要儲存record) 4. 儲存遊戲  5. 主選單
-		}
-		else if (mode = ExitMode)
-		{
-			break;
-		}
-	}*/
-
+	
 }
 
 
 // 印出邊框
 void ChineseChess::printFrame()
 {
+	wstring edge(width - 2, L'＝'),side(width - 2, L'　');
+	edge = L"●" + edge;
+	edge.push_back(L'●');
+	side = L"∥" + side;
+	side.push_back(L'∥');
 	for (int i = 0; i < height; i++)
 	{
 		ChineseChess::setCursor(startX, startY + i);
-		for (int j = 0; j < width; j++)
+		if (i == 0 || i == height - 1)
 		{
-			if (i == 0) 
-			{
-				if (j == 0) // 左上角
-				{
-					wcout << L"●";
-				}
-				else if (j == width - 1) // 右上角
-				{
-					wcout << L"●";
-				}
-				else // 上方
-				{
-					wcout << L"＝";
-				}
-			}
-			else if (i == height - 1)
-			{
-				if (j == 0) // 左下角
-				{
-					wcout << L"●";
-				}
-				else if (j == width - 1) // 右下角
-				{
-					wcout << L"●";
-				}
-				else // 下方
-				{
-					wcout << L"＝";
-				}
-			}
-			else
-			{
-				if (j == 0 || j == width - 1) // 中間
-				{
-					wcout << L"∥";
-				}
-				else // 
-				{
-					wcout << L"　";
-				}
-			}
+			wcout << edge;
+		}
+		else
+		{
+			wcout << side;
 		}
 	}
 
+}
+
+// 新遊戲
+void ChineseChess::newGame()
+{
+	order = 0;
+	gameBoard.resetColorBoard();
+	gameBoard.resetChessBoard();
+	recordBoard.msgBoard.clear();
+	recordBoard.detailBoard.clear();
 }
 
 // 讀取檔案
 void ChineseChess::readAndSetBoard()
 {
 	ifstream in;
-	string fileName = "Test.txt";
+	fileName = "Test.txt";
 	in.open(fileName);
 	if (in.is_open())
 	{
@@ -273,6 +293,8 @@ void ChineseChess::readAndSetBoard()
 			}
 		}
 		in >> order;
+		in.clear();
+		in.close();
 	}
 	else
 	{

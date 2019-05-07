@@ -24,6 +24,7 @@ void GameBoard::printBoard()
 	{
 		printRow(i);
 	}
+	ChineseChess::setCursor(startX, startY);
 }
 
 // 印出棋盤的每一行 + 顏色  
@@ -257,7 +258,7 @@ void GameBoard::movingChess(int x, int y)
 	}
 }
 
-// 移動士
+// 移動(顯示可走位置)士
 void GameBoard::moveKnight(int x, int y)
 {
 	int targetChess = chessBoard[y][x];
@@ -306,7 +307,7 @@ void GameBoard::moveKnight(int x, int y)
 	}
 }
 
-// 移動馬
+// 移動(顯示可走位置)馬
 void GameBoard::moveHorse(int x, int y)
 {
 	// 呼叫此function 前必須確認棋子馬
@@ -349,7 +350,7 @@ void GameBoard::moveHorse(int x, int y)
 	}
 }
 
-// 移動象
+// 移動(顯示可走位置)象
 void GameBoard::moveElephant(int x, int y)
 {
 	int targetChessColor = chessBoard[y][x] > 7;
@@ -381,6 +382,7 @@ void GameBoard::moveElephant(int x, int y)
 		}
 	}
 }
+
 // 移動(顯示可走位置)將軍
 void GameBoard::moveGeneral(int x, int y) {
 	int targetChess = chessBoard[y][x];
@@ -484,6 +486,7 @@ void GameBoard::moveGeneral(int x, int y) {
 		}
 	}//紅方
 }
+
 // 移動(顯示可走位置)車
 void GameBoard::moveTank(int x, int  y) {
 	int targetChess = chessBoard[y][x];
@@ -631,6 +634,7 @@ void GameBoard::moveTank(int x, int  y) {
 		}
 	}
 }
+
 // 移動(顯示可走位置)炮
 void GameBoard::moveCannon(int x, int y) {
 	int targetChess = chessBoard[y][x];
@@ -774,6 +778,7 @@ void GameBoard::moveCannon(int x, int y) {
 		}
 	}
 }
+
 // 移動(顯示可走位置)卒
 void GameBoard::moveSolider(int x, int y) {
 	int targetChess = chessBoard[y][x];
@@ -822,7 +827,7 @@ void GameBoard::moveSolider(int x, int y) {
 	}
 }
 
-
+// 是否將軍
 bool GameBoard::isGeneral(int order) {
 
 	if (order == 0) { // 黑方被將軍了嗎？
@@ -877,7 +882,6 @@ bool GameBoard::isGeneral(int order) {
 		return false;
 	}
 }
-
 void GameBoard::moveChessWithoutPrintBoard(int x, int y) {
 	int targetChess = chessBoard[y][x];
 	resetColorBoard();
@@ -917,4 +921,20 @@ void GameBoard::moveChessWithoutPrintBoard(int x, int y) {
 	{
 		moveSolider(x, y);
 	}
+}
+
+// 新遊戲
+void GameBoard::resetChessBoard()
+{
+	chessBoard[0] = { 5,4,3,2,1,2,3,4,5 };
+	chessBoard[1] = { 0,0,0,0,0,0,0,0,0 };;
+	chessBoard[2] = { 0,6,0,0,0,0,0,6,0 };
+	chessBoard[3] = { 7,0,7,0,7,0,7,0,7 };
+	chessBoard[4] = { 0,0,0,0,0,0,0,0,0 };
+	chessBoard[5] = { 0,0,0,0,0,0,0,0,0 };
+	chessBoard[6] = { 14,0,14,0,14,0,14,0,14 };
+	chessBoard[7] = { 0,13,0,0,0,0,0,13,0 };
+	chessBoard[8] = { 0,0,0,0,0,0,0,0,0 };
+	chessBoard[9] = { 11,12,10,9,8,9,10,12,11 };
+
 }
