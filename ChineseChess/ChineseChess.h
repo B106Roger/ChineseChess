@@ -21,7 +21,7 @@ public:
 	~ChineseChess();
 
 	// data member
-	int mode;                 // [  MenuMode , GameMode , EscMode , BackMode, ForwardMode , ExitMode ]
+	int mode;                 // [  MenuMode , GameMode , EscMode , ReplayMode , ExitMode ]
 	// int subMode
 	int order = 0;
 	bool gameOver;

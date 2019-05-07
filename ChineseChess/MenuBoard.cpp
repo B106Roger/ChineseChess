@@ -26,7 +26,7 @@ int MenuBoard::mainMenu()
 			int ch = _getch();
 			// 按下Enter鍵後
 			if (ch == '\r')
-			{
+			{ 
 				int returnValue = mode;
 				ChineseChess::setCursorSize(true, 0);
 				return returnValue;
@@ -38,11 +38,11 @@ int MenuBoard::mainMenu()
 				switch (ch)
 				{
 				case 72: // 上
-					if (mode == 1) mode = 4;
+					if (mode == 0) mode = 3;
 					else --mode;
 					break;
 				case 80: // 下
-					if (mode == 4) mode = 1;
+					if (mode == 3) mode = 0;
 					else ++mode;
 					break;
 				};
@@ -84,22 +84,22 @@ void MenuBoard::printBoard()
 void MenuBoard::printSelect() {
 
 	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 1);
-	if (mode == 1) ChineseChess::SetColor(0, 15);
+	if (mode == 0) ChineseChess::SetColor(0, 15);
 	else ChineseChess::SetColor();
 	wcout << L"雙人遊戲";
 
 	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 3);
-	if (mode == 2) ChineseChess::SetColor(0, 15);
+	if (mode == 1) ChineseChess::SetColor(0, 15);
 	else ChineseChess::SetColor();
 	wcout << L"繼續遊戲";
 
 	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 5);
-	if (mode == 3) ChineseChess::SetColor(0, 15);
+	if (mode == 2) ChineseChess::SetColor(0, 15);
 	else ChineseChess::SetColor();
 	wcout << L"重播棋局";
 
 	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 7);
-	if (mode == 4) ChineseChess::SetColor(0, 15);
+	if (mode == 3) ChineseChess::SetColor(0, 15);
 	else ChineseChess::SetColor();
 	wcout << L"離開遊戲";
 }

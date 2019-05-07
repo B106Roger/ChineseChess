@@ -21,40 +21,43 @@ ChineseChess::~ChineseChess()
 void ChineseChess::gameLoop(void)
 {
 	
-	while (mode != 3)    //  ExitMode
+	while (mode != 4)    //  ExitMode
 	{
 		if (mode == 0)   // MenuMode
 		{
 			printFrame();
 			int menuValue = maenuBoard.mainMenu();
-			//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤)  3. 重播棋局  4. 離開遊戲
-			if (menuValue == 1)       
+			//  0. 雙人遊戲  1. 繼續遊戲(讀取棋盤)  2. 重播棋局  3. 離開遊戲
+			if (menuValue == 0)       
 			{
 				newGame();
-				mode = 1;
+				mode = 1; // GameMode
+			}
+			else if (menuValue == 1)
+			{
+				// 未完成
+				readAndSetBoard();
+				mode = 1;  // GameMode
 			}
 			else if (menuValue == 2)
 			{
-				readAndSetBoard();
-				mode = 1;
+				// 未完成
+				mode = 3;  // ReplayMode
 			}
 			else if (menuValue == 3)
 			{
-				mode = 0;
-			}
-			else if (menuValue == 4)
-			{
-				mode = 3;
+				mode = 4;  // ExitMode 
 			}
 		}
 		else if (mode == 1)   // GameMode
 		{
-			
 			gameStart();
 		}
 		else if (mode == 3)    // ReplayMode
 		{
-			//  replayBoard.replay()
+			// 未完成
+			// 先換成menuMode，因為還沒做完
+			mode = 0;
 		}
 	}
 }
@@ -68,9 +71,7 @@ void ChineseChess::gameStart(void)
 	if (gameBoard.isGeneral(order)) { // 有被將軍嗎？
 		hintBoard.printHint3(order);
 	}
-	// testing
-	// escBoard.escMenu();
-	// maenuBoard.mainMenu();
+	
 	ChineseChess::setCursor(gameBoard.startX, gameBoard.startY);
 	while (mode == 1) // 1 是ChineseChess的GameMode
 	{
@@ -178,26 +179,29 @@ void ChineseChess::gameStart(void)
 			else if (ch == 27)
 			{
 				int escModeValue = escBoard.escMenu();
-				if (escModeValue == 0)      // 1繼續遊戲
+				if (escModeValue == 0)      // 0.繼續遊戲
 				{
 					gameBoard.printBoard();
 				}
-				else if (escModeValue == 1) // 2重新開始
+				else if (escModeValue == 1) // 1.重新開始
 				{
 					newGame();
 					break;
 				}
-				else if (escModeValue == 2) // 3投降
+				else if (escModeValue == 2) // 2.投降
 				{
 					// 印出投降提示
 					// 決定儲存遊戲 或 回主選單
-				}
-				else if (escModeValue == 3) // 4儲存遊戲
-				{
-					// 儲存遊戲
+					// 未完成
 					gameBoard.printBoard();
 				}
-				else if (escModeValue == 4) // 5回主選單
+				else if (escModeValue == 3) // 3.儲存遊戲
+				{
+					// 儲存遊戲
+					// 未完成
+					gameBoard.printBoard();
+				}
+				else if (escModeValue == 4) // 4.回主選單
 				{
 					mode = 0;
 				}

@@ -18,5 +18,5 @@ private:
 	vector<int> size;     // 0 => width, 1 => height
 	int mode;
 	bool breakOut;
-	//  1. 雙人遊戲  2. 繼續遊戲(讀取棋盤)  3. 重播棋局  4. 離開遊戲 	
+	// 0. 雙人遊戲  1. 繼續遊戲(讀取棋盤)  2. 重播棋局  3. 離開遊戲 	
 };
