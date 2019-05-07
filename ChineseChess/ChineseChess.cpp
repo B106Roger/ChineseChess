@@ -220,6 +220,18 @@ void ChineseChess::gameStart(void)
 					mode = 0;
 				}
 			}
+			// 按下 < 鍵後
+			else if (ch == '<')
+			{
+				// 悔棋
+				recordBoard.printMsg();
+			}
+			// 按下 < 鍵後
+			else if (ch == '>')
+			{
+				// 還原
+				recordBoard.printMsg();
+			}
 			//// 悔棋
 			//else if (ch == '<')
 			//{
