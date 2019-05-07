@@ -8,6 +8,7 @@ MenuBoard::MenuBoard(int cursorX, int cursorY, int arg_width, int arg_height, in
 	cursor.push_back(cursorY);
 	size.push_back(arg_width);
 	size.push_back(arg_height);
+	mode = 0;
 }
 
 
@@ -26,21 +27,7 @@ int MenuBoard::mainMenu()
 			// 按下Enter鍵後
 			if (ch == '\r')
 			{
-				int returnValue;
-				switch (mode) {
-				case 1:        // 雙人遊戲
-					returnValue =  1;             // ChineseChess.mode 的GameMode
-					break;
-				case 2:        // 繼續遊戲(讀取棋盤)
-					returnValue = 1;              // ChineseChess.mode 的GameMode
-					break;
-				case 3:        // 重播賽局
-					returnValue = 1;
-					break;
-				case 4:        // 離開遊戲
-					ChineseChess::setCursorSize(true, 0); // 歸還游標
-					returnValue = 3; 
-				}
+				int returnValue = mode;
 				ChineseChess::setCursorSize(true, 0);
 				return returnValue;
 			}
