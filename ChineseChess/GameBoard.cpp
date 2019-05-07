@@ -242,12 +242,14 @@ void GameBoard::resetColorBoard(void)
 // 移動棋子 + 重印GameBoard
 void GameBoard::movingChess(int x, int y)
 {
+	// 1 => 帥被吃  2 => 將被吃  0 => 遊戲還沒結束
 	for (int i = 0; i < colorBoard.size(); i++)
 	{
 		for (int j = 0; j < colorBoard[0].size(); j++)
 		{
 			if (colorBoard[i][j] == 1)
 			{
+				int returnValue;
 				chessBoard[y][x] = chessBoard[i][j];
 				chessBoard[i][j] = 0;
 				resetColorBoard();

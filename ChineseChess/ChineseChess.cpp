@@ -18,6 +18,7 @@ ChineseChess::~ChineseChess()
 {
 
 }
+// 流程迴圈
 void ChineseChess::gameLoop(void)
 {
 	
@@ -61,6 +62,8 @@ void ChineseChess::gameLoop(void)
 		}
 	}
 }
+
+// 遊戲迴圈
 void ChineseChess::gameStart(void)
 {
 	printFrame(); // 要將其他不需要的東西刷掉
@@ -115,7 +118,17 @@ void ChineseChess::gameStart(void)
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
 					// 座標上的旗子被吃 ，輪下一回合
-					gameBoard.movingChess(x, y);
+					//gameBoard.movingChess(x, y);
+					//
+					//if (gameBoard.movingChess(x, y) == true)
+					//{
+					//	if (hintBoard.memberfunction(order) == 1)
+					//	{
+					//		saveGame();
+					//	}
+					//	mode = 0;
+					//}
+					//
 					order = !order;
 					hintBoard.printHint1(order);
 					hintBoard.hideHint2();
@@ -246,7 +259,6 @@ void ChineseChess::gameStart(void)
 	
 }
 
-
 // 印出邊框
 void ChineseChess::printFrame()
 {
@@ -278,13 +290,39 @@ void ChineseChess::newGame()
 	gameBoard.resetChessBoard();
 	recordBoard.msgBoard.clear();
 	recordBoard.detailBoard.clear();
+	fileName = "";
 }
 
 // 讀取檔案
 void ChineseChess::readAndSetBoard()
 {
 	ifstream in;
-	fileName = "Test.txt";
+	int cursorX = gameBoard.startX, cursorY = gameBoard.startY;
+	wstring title = L"請　輸　入　檔　名";
+	int leftSpace = (gameBoard.width - 2 - title.size()) / 2;
+	int rightSpace = gameBoard.width - leftSpace - 2 - title.size();
+	wstring left(leftSpace, L'＝'), right(rightSpace, L'＝');
+	//   gameBoard.height / 3 = 6
+	for (int i = 0; i < gameBoard.height / 3; i++)
+	{
+		setCursor(cursorX, cursorY + i);
+		if (i == 0)
+		{
+			wcout << L"●";
+			wcout.width(leftSpace);
+			wcout << L'＝';
+			wcout << title;
+			wcout.width(rightSpace);
+			wcout << L'＝';
+			wcout << L"●";
+		}
+		else if (i == gameBoard.height / 3 - 1)
+		{
+			wcout << L"●";
+		}
+	}
+	system("PAUSE");
+
 	in.open(fileName);
 	if (in.is_open())
 	{
@@ -331,6 +369,7 @@ void ChineseChess::getCursor(int &x, int &y)
 	y = csbi.dwCursorPosition.Y;
 }
 
+// 設定座標visible
 void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible = 0 - invisible, bool visible = 1 - visible
 {
 	if (size == 0)
