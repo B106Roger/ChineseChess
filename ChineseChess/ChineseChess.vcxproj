@@ -123,6 +123,7 @@
     <ClCompile Include="MenuBoard.cpp" />
     <ClCompile Include="RecordBoard.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="WinBoard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chess.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="MenuBoard.h" />
     <ClInclude Include="RecordBoard.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="WinBoard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

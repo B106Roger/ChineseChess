@@ -4,6 +4,7 @@
 #include "HintBoard.h"
 #include "EscBoard.h"
 #include "MenuBoard.h"
+#include "WinBoard.h"
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -34,6 +35,7 @@ public:
 	static HintBoard hintBoard;
 	static EscBoard escBoard;
 	static MenuBoard maenuBoard;
+	static WinBoard winBoard;
 	static string fileName;
 	// member function
 	void gameLoop(void);
@@ -42,7 +44,7 @@ public:
 	void readAndSetBoard();
 	void newGame();
 	static void setCursor(int x, int y);
-	// 0 黑, 1 藍, 2 綠, 4 紅, 5 紫, 7 白灰, 8 灰, 9 藍, 15 白, 12 紅
+	// 0 黑, 1 藍, 2 綠, 3淺藍, 4 紅, 5 紫, 6土黃, 7 白灰, 8 灰, 9 亮藍,10亮綠, 11亮淺藍, 12淺紅, 13淺粉, 14淺黃 15 白
 	static void SetColor(int fontColor = 7, int backgroundColor = 0);
 	void getCursor(int &x, int &y);
 	static void setCursorSize(bool visible, DWORD size); // visible = 0/1

@@ -8,6 +8,7 @@ RecordBoard ChineseChess::recordBoard = RecordBoard();
 HintBoard ChineseChess::hintBoard = HintBoard();
 EscBoard ChineseChess::escBoard = EscBoard();
 MenuBoard ChineseChess::maenuBoard = MenuBoard();
+WinBoard ChineseChess::winBoard = WinBoard();
 string ChineseChess::fileName;
 ChineseChess::ChineseChess()
 	:gameOver(false), order(0)
