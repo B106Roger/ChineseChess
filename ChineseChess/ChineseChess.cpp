@@ -24,7 +24,6 @@ ChineseChess::~ChineseChess()
 // 流程迴圈
 void ChineseChess::gameLoop(void)
 {
-	
 	while (mode != 4)    //  ExitMode
 	{
 		if (mode == 0)   // MenuMode
@@ -39,8 +38,7 @@ void ChineseChess::gameLoop(void)
 			}
 			else if (menuValue == 1)
 			{
-				// 未完成
-				
+				// 依據檔按讀取成功與失敗決定GameMode或MenuMode
 				mode = fileWindow();
 			}
 			else if (menuValue == 2)
@@ -295,7 +293,7 @@ void ChineseChess::printFrame()
 		}
 	}
 }
-
+// 印出邊框(可調參數)
 void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring title)
 {
 	wstring upper;
@@ -349,7 +347,7 @@ void ChineseChess::newGame()
 }
 
 
-// 讀取視窗     //
+// 讀取視窗
 int ChineseChess::fileWindow()
 {
 	// 設定視窗大小
@@ -387,7 +385,7 @@ int ChineseChess::fileWindow()
 
 }
 
-// 讀取檔案     //
+// 讀取檔案
 bool ChineseChess::readAndSetBoard(string name)
 {
 	ifstream in;
