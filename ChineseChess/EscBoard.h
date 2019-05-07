@@ -15,6 +15,5 @@ private:
 	vector<int> cursor;
 	vector<int> size;
 	int mode;
-	bool breakOut;
 };
 
