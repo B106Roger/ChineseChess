@@ -489,10 +489,10 @@ void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible =
 
 void ChineseChess::saveGame() {
 	if (fileName == "") { // 
-		time_t t = time(0);
-		char tmp[64];
-		strftime(tmp, sizeof(tmp), "%Y_%m_%d_%X", localtime(&t));
-		fileName = tmp;
+		//time_t t = time(0);
+		//char tmp[64];
+		//strftime_s(tmp, sizeof(tmp), "%Y_%m_%d_%X", localtime(&t));
+		//fileName = tmp;
 	}
 	else {
 
