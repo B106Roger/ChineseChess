@@ -235,6 +235,9 @@ void ChineseChess::gameStart(void)
 			else if (ch == ',')
 			{
 				// 悔棋 
+
+				recordBoard.regret(gameBoard.chessBoard);
+
 				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
 				setCursor(subWindow[0] + 2, subWindow[1] + 2);
 				while (true)
@@ -248,11 +251,15 @@ void ChineseChess::gameStart(void)
 					}
 				}
 				//recordBoard.regret(gameBoard.chessBoard);			//還在debug
+
 			}
 			// 按下 > 鍵後
 			else if (ch == '.')
 			{
 				// 還原
+
+				recordBoard.reduction(gameBoard.chessBoard);
+
 				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　還 原");
 				while (true)
 				{
@@ -265,6 +272,7 @@ void ChineseChess::gameStart(void)
 					}
 				}
 				//recordBoard.reduction(gameBoard.chessBoard);
+
 			}
 
 			
