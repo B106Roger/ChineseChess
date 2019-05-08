@@ -93,12 +93,15 @@ void RecordBoard::writeMsg(record tmp)
 void RecordBoard::clearBoard()
 {
 	COORD point;
-	point.X = startX + 4;
-	point.Y = startY + 4;
-	for (int i = 0; i < 25; i++) {
-		for (int j = 0; j < 27; j++) {
+	
+	point.Y = startY + 1;
+	for (int i = 0; i < 10; i++) {
+		point.X = startX + 3;
+		point.Y++;
+		for (int j = 0; j < 20; j++) {
+			point.X ++;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-			cout << " ";
+			cout << "¡@";
 		}
 	}
 }
@@ -107,7 +110,7 @@ void RecordBoard::printMsg()
 {
 	COORD point;
 	point.X = startX + 4;
-	if (recordIndex <= 5) {
+	if (recordIndex <= 10) {
 		for (int i = 0; i < recordIndex; i++) {
 			point.Y = startY + i + 2;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
@@ -116,7 +119,7 @@ void RecordBoard::printMsg()
 	}
 	else{
 		int j = 0;
-		for (int i = recordIndex - 5; i < recordIndex; i++) {
+		for (int i = recordIndex - 10; i < recordIndex; i++) {
 			point.Y = startY + j + 2;
 			j++;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
@@ -128,20 +131,22 @@ void RecordBoard::printMsg()
 void RecordBoard::regret(vector<vector<int>>& chessBoard)
 {
 	COORD endPoint, startPoint;
+	int detailIndex = recordIndex - 1;
+	endPoint.X = detailBoard[detailIndex].deltaX + detailBoard[detailIndex].Xpos;
+	endPoint.Y = detailBoard[detailIndex].deltaY + detailBoard[detailIndex].Ypos;
+	startPoint.X = detailBoard[detailIndex].Xpos;
+	startPoint.Y = detailBoard[detailIndex].Ypos;
+	chessBoard[endPoint.Y][endPoint.X] = detailBoard[detailIndex].prey;
+	chessBoard[startPoint.Y][startPoint.X] = detailBoard[detailIndex].hunter;
 	recordIndex--;
-	endPoint.X = detailBoard[recordIndex].deltaX + detailBoard[recordIndex].Xpos;
-	endPoint.Y = detailBoard[recordIndex].deltaY + detailBoard[recordIndex].Ypos;
-	startPoint.X = detailBoard[recordIndex].Xpos;
-	startPoint.Y = detailBoard[recordIndex].Ypos;
-	chessBoard[endPoint.Y][endPoint.X] = detailBoard[recordIndex].prey;
-	chessBoard[startPoint.Y][startPoint.X] = detailBoard[recordIndex].hunter;
+	detailIndex = recordIndex - 1;
+	endPoint.X = detailBoard[detailIndex].deltaX + detailBoard[detailIndex].Xpos;
+	endPoint.Y = detailBoard[detailIndex].deltaY + detailBoard[detailIndex].Ypos;
+	startPoint.X = detailBoard[detailIndex].Xpos;
+	startPoint.Y = detailBoard[detailIndex].Ypos;
+	chessBoard[endPoint.Y][endPoint.X] = detailBoard[detailIndex].prey;
+	chessBoard[startPoint.Y][startPoint.X] = detailBoard[detailIndex].hunter;
 	recordIndex--;
-	endPoint.X = detailBoard[recordIndex].deltaX + detailBoard[recordIndex].Xpos;
-	endPoint.Y = detailBoard[recordIndex].deltaY + detailBoard[recordIndex].Ypos;
-	startPoint.X = detailBoard[recordIndex].Xpos;
-	startPoint.Y = detailBoard[recordIndex].Ypos;
-	chessBoard[endPoint.Y][endPoint.X] = detailBoard[recordIndex].prey;
-	chessBoard[startPoint.Y][startPoint.X] = detailBoard[recordIndex].hunter;
 	clearBoard();
 	printMsg();
 }

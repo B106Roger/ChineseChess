@@ -233,7 +233,7 @@ void ChineseChess::gameStart(void)
 			else if (ch == '<')
 			{
 				// 悔棋 
-				//recordBoard.regret(gameBoard.chessBoard);			還在debug
+				recordBoard.regret(gameBoard.chessBoard);			//還在debug
 			}
 			// 按下 > 鍵後
 			else if (ch == '>')
