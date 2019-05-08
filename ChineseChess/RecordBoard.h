@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<string>
 #include<vector>
 #include<map>
@@ -25,8 +25,11 @@ public:
 	void printBoard();
 	void regret(vector<vector<int>>& chessBoard);
 	void reduction(vector<vector<int>>& chessBoard);
-	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//±qchinessChess©I¥s¶Ç¸ê®Æµ¹recordBoard
+
 	void resetRecordBoard();
+	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//å¾chinessChesså‘¼å«å‚³è³‡æ–™çµ¦recordBoard
+	void saveRecord(string fileName, int finished);
+
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
@@ -35,16 +38,16 @@ private:
 	void writeMsg(record);
 	void clearBoard();
 	void printMsg();
-	int recordIndex;			//«ü¦V¥Ø«eªºrecordBoard¯Á¤Ş­È
+	int recordIndex;			//æŒ‡å‘ç›®å‰çš„recordBoardç´¢å¼•å€¼
 };
 
 struct record
 {
-	int hunter;			// ²¾°ÊªÌ
-	int Xpos;			// X°_©lÂI
-	int Ypos;			// Y°_©lÂI
-	int whosTurn;		// ¶Â¤èor¬õ¤è ¶Â:0 ¬õ:1			// = (hunter < 8 && hunter > 0? 0 : 1)
-	int deltaX;			// ²¾°ÊX
-	int deltaY;			// ²¾°ÊY
-	int prey = 0;		// ³Q¦Yªº¤H nullable
+	int hunter;			// ç§»å‹•è€…
+	int Xpos;			// Xèµ·å§‹é»
+	int Ypos;			// Yèµ·å§‹é»
+	int whosTurn;		// é»‘æ–¹orç´…æ–¹ é»‘:0 ç´…:1			// = (hunter < 8 && hunter > 0? 0 : 1)
+	int deltaX;			// ç§»å‹•X
+	int deltaY;			// ç§»å‹•Y
+	int prey = 0;		// è¢«åƒçš„äºº nullable
 };

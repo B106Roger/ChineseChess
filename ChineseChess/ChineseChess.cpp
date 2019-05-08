@@ -127,17 +127,16 @@ void ChineseChess::gameStart(void)
 				{
 					// 座標上的旗子被吃 ，輪下一回合
 					recordBoard.setRecord(x, y, gameBoard.chessBoard, gameBoard.colorBoard);
-					gameBoard.movingChess(x, y);
-					//
-					//if (gameBoard.movingChess(x, y) == true)
-					//{
-					//	if (hintBoard.winMenu(order) == 1)
-					//	{
-					//		saveGame();
-					//	}
-					//	mode = 0;
-					//}
-					//
+					
+					if (gameBoard.movingChess(x, y) == 1) // 敵對王被吃了
+					{
+						if (hintBoard.winMenu(order) == 1) // 印出本方勝利，如果儲存
+						{
+							saveGame(1);
+						}
+						mode = 0; // 儲存或回主選單都要mode = 0(跳回主選單)
+					}
+					
 					order = !order;
 					hintBoard.printHint1(order);
 					hintBoard.hideHint2();
@@ -212,13 +211,10 @@ void ChineseChess::gameStart(void)
 				}
 				else if (escModeValue == 2) // 2.投降
 				{
-					if (hintBoard.winMenu(!order) == 0) { // 回主選單
-						mode = 0;
+					if (hintBoard.winMenu(!order) == 1) { //儲存遊戲
+						saveGame(0);
 					}
-					else { // 儲存遊戲，然後在回主選單
-						saveGame();
-						mode = 0;
-					}
+					mode = 0; // +回主選單
 					// 印出投降提示
 					// 決定儲存遊戲 或 回主選單
 					// 未完成
@@ -227,6 +223,7 @@ void ChineseChess::gameStart(void)
 				else if (escModeValue == 3) // 3.儲存遊戲
 				{
 					// 儲存遊戲
+					saveGame(0);
 					// 未完成
 					gameBoard.printBoard();
 				}
@@ -583,14 +580,19 @@ void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible =
 	SetConsoleCursorInfo(console, &lpCursor);
 }
 
-void ChineseChess::saveGame() {
+void ChineseChess::saveGame(int finished) {
 	if (fileName == "") { // 
-		//time_t t = time(0);
-		//char tmp[64];
-		//strftime_s(tmp, sizeof(tmp), "%Y_%m_%d_%X", localtime(&t));
-		//fileName = tmp;
+		char tmp[20];
+		time_t time_seconds = time(0);
+		tm now_time;
+		localtime_s(&now_time, &time_seconds);
+		strftime(tmp, sizeof(tmp), "%Y_%m_%d_%H_%M_%S", &now_time);
+		fileName = tmp + static_cast<string>(".txt");
+		gameBoard.saveChessBoard(fileName, order);
+		recordBoard.saveRecord(fileName, finished);
 	}
 	else {
-
+		gameBoard.saveChessBoard(fileName, order);
+		recordBoard.saveRecord(fileName, finished);
 	}
 }

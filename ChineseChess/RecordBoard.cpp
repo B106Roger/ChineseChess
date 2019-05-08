@@ -1,10 +1,11 @@
-#include "RecordBoard.h"
+ï»¿#include "RecordBoard.h"
+#include "ChineseChess.h"
 #include<Windows.h>
 #include<iostream>
 
 
 RecordBoard::RecordBoard()
-	:startX(4), startY(1), width(29), height(31), recordIndex(0)		//±q(4,1)¶}©lµe¨ì(30, 32)
+	:startX(4), startY(1), width(29), height(31), recordIndex(0)		//å¾(4,1)é–‹å§‹ç•«åˆ°(30, 32)
 {
 }
 
@@ -15,12 +16,12 @@ RecordBoard::~RecordBoard()
 void RecordBoard::printBoard()
 {
 	COORD point;
-	//¦L²Ä¤@¦C
+	//å°ç¬¬ä¸€åˆ—
 	point.Y = startY;
 	point.X = startX;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-	wcout << L"¡´¡Ğ¡Ğ¡Ğ¾Ô¡@ªp¡@Åã¡@¥Ü¡Ğ¡Ğ¡Ğ¡´";
-	//¦L²Ä¤G¦C¨ì³Ì«á¤@¦C
+	wcout << L"â—ï¼ï¼ï¼æˆ°ã€€æ³ã€€é¡¯ã€€ç¤ºï¼ï¼ï¼â—";
+	//å°ç¬¬äºŒåˆ—åˆ°æœ€å¾Œä¸€åˆ—
 	for (int i = 1; i < height; i++)
 	{
 		point.Y = startY + i;
@@ -29,13 +30,13 @@ void RecordBoard::printBoard()
 			point.X = startX + j;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			if (j == 0 || j == width - 1) {
-				if (i == 0 || i == height - 1)		//¥|­Ó¨¤¸¨
-					wcout << L"¡´";
+				if (i == 0 || i == height - 1)		//å››å€‹è§’è½
+					wcout << L"â—";
 				else
-					wcout << L"¡ü";					//¥ª¥k¨â°¼
+					wcout << L"âˆ¥";					//å·¦å³å…©å´
 			}
-			else if(i == height - 1)				//¤U°¼
-				wcout << L"¡×";
+			else if(i == height - 1)				//ä¸‹å´
+				wcout << L"ï¼";
 		}
 	}
 }
@@ -44,50 +45,50 @@ void RecordBoard::printBoard()
 void RecordBoard::writeMsg(record tmp)
 {	
 	wstring tmpString;
-	//§PÂ_²Ä´X¨B
-	tmpString.insert(0, BlkNum(recordIndex));		//BlkNum·|±NnÂà¦¨n+1ªº¤¤¤å¼Æ¦r¿é¥X
-	tmpString.insert(1, L" ¡@");
-	//§PÂ_¬õ¶Â¤è
+	//åˆ¤æ–·ç¬¬å¹¾æ­¥
+	tmpString.insert(0, BlkNum(recordIndex));		//BlkNumæœƒå°‡nè½‰æˆn+1çš„ä¸­æ–‡æ•¸å­—è¼¸å‡º
+	tmpString.insert(1, L" ã€€");
+	//åˆ¤æ–·ç´…é»‘æ–¹
 	tmp.whosTurn = (tmp.hunter < 8 && tmp.hunter > 0 ? 0 : 1);
-	tmpString.insert(2, tmp.whosTurn == 0 ? L"¶Â" : L"¬õ");
-	tmpString.insert(3, L"¡G");
-	//§PÂ_´ÑºØ
+	tmpString.insert(2, tmp.whosTurn == 0 ? L"é»‘" : L"ç´…");
+	tmpString.insert(3, L"ï¼š");
+	//åˆ¤æ–·æ£‹ç¨®
 	tmpString.insert(4, nameMap[tmp.hunter]);
 	tmpString.insert(5, L" ");
-	//§PÂ_¬õ¶Â©M°_©l¦ì¸m
+	//åˆ¤æ–·ç´…é»‘å’Œèµ·å§‹ä½ç½®
 	if (tmp.whosTurn == 0)
 		tmpString.insert(6, BlkNum(tmp.Xpos));
 	else
 		tmpString.insert(6, RedNum(tmp.Xpos));
 	tmpString.insert(7, L" ");
-	//§PÂ_«e¶i«á°h©Î¾î¦V²¾°Ê
-	if (tmp.whosTurn == 0) {				//¶Â¤è©¹¤U¨«¬O¶i¡A©¹¤W¨«¬O°h¡A¬G¶·©M¬õ¤è¤À¶}§PÂ_
+	//åˆ¤æ–·å‰é€²å¾Œé€€æˆ–æ©«å‘ç§»å‹•
+	if (tmp.whosTurn == 0) {				//é»‘æ–¹å¾€ä¸‹èµ°æ˜¯é€²ï¼Œå¾€ä¸Šèµ°æ˜¯é€€ï¼Œæ•…é ˆå’Œç´…æ–¹åˆ†é–‹åˆ¤æ–·
 		if (tmp.deltaY > 0)
-			tmpString.insert(8, L"¶i");
+			tmpString.insert(8, L"é€²");
 		else if (tmp.deltaY == 0)
-			tmpString.insert(8, L"¥­");
+			tmpString.insert(8, L"å¹³");
 		else if (tmp.deltaY < 0)
-			tmpString.insert(8, L"°h");
+			tmpString.insert(8, L"é€€");
 		tmpString.insert(9, L" ");
 	}
 	else {
 		if (tmp.deltaY < 0)
-			tmpString.insert(8, L"¶i");
+			tmpString.insert(8, L"é€²");
 		else if (tmp.deltaY == 0)
-			tmpString.insert(8, L"¥­");
+			tmpString.insert(8, L"å¹³");
 		else if (tmp.deltaY > 0)
-			tmpString.insert(8, L"°h");
+			tmpString.insert(8, L"é€€");
 		tmpString.insert(9, L" ");
 	}
 
-	//§PÂ_¥Øªº¦ì¸m
+	//åˆ¤æ–·ç›®çš„ä½ç½®
 	if (tmp.whosTurn == 0)
 		tmpString.insert(10, BlkNum(tmp.Xpos + tmp.deltaX));
 	else
 		tmpString.insert(10, RedNum(tmp.Xpos + tmp.deltaX));
-	//±N²Õ¦X§¹¦¨ªº¬ö¿ı¦s¤JmsgBoard
+	//å°‡çµ„åˆå®Œæˆçš„ç´€éŒ„å­˜å…¥msgBoard
 	msgBoard.push_back(tmpString);
-	//recordªº¯Á¤Ş­È¦b¦s¤J«á+1
+	//recordçš„ç´¢å¼•å€¼åœ¨å­˜å…¥å¾Œ+1
 	recordIndex++;
 }
 
@@ -103,7 +104,7 @@ void RecordBoard::clearBoard()
 		for (int j = 0; j < 20; j++) {
 			point.X ++;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
-			cout << "¡@";
+			cout << "ã€€";
 		}
 	}
 }
@@ -174,16 +175,16 @@ void RecordBoard::writeDetail(record tmpRecord) {
 }
 
 void RecordBoard::setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard)
-{	//endPoint±q0¶}©l
+{	//endPointå¾0é–‹å§‹
 	COORD startPoint, enemyPoint;
 	record newRecord;
 	for (int i = 0; i < colorBoard.size(); i++) {
 		for (int j = 0; j < colorBoard[i].size(); j++) {
-			if (colorBoard[i][j] == 1) {	//§ä¨ì²¾°Ê«eªº¦ì¸m
+			if (colorBoard[i][j] == 1) {	//æ‰¾åˆ°ç§»å‹•å‰çš„ä½ç½®
 				startPoint.X = j;
 				startPoint.Y = i;
 			}
-			if (colorBoard[i][j] == -2 && x == j && y == i) {	//¦³¦Y±¼¼Ä¤H
+			if (colorBoard[i][j] == -2 && x == j && y == i) {	//æœ‰åƒæ‰æ•µäºº
 				enemyPoint.X = x;
 				enemyPoint.Y = y;
 				newRecord.prey = chessBoard[enemyPoint.Y][enemyPoint.X];
@@ -197,7 +198,7 @@ void RecordBoard::setRecord(int x, int y, const vector<vector<int>>& chessBoard,
 	newRecord.hunter = chessBoard[startPoint.Y][startPoint.X];
 	newRecord.whosTurn = (newRecord.hunter <= 7 && newRecord.hunter >= 0) ? 0 : 1;
 	writeDetail(newRecord);
-	writeMsg(newRecord);		//recordIndex·|+1
+	writeMsg(newRecord);		//recordIndexæœƒ+1
 	printMsg();
 
 }
@@ -207,23 +208,23 @@ void RecordBoard::setRecord(int x, int y, const vector<vector<int>>& chessBoard,
 wstring RecordBoard::RedNum(int Xpos)
 {
 	if (Xpos == 0)
-		return L"¤E";
+		return L"ä¹";
 	else if (Xpos == 1)
-		return L"¤K";
+		return L"å…«";
 	else if (Xpos == 2)
-		return L"¤C";
+		return L"ä¸ƒ";
 	else if (Xpos == 3)
-		return L"¤»";
+		return L"å…­";
 	else if (Xpos == 4)
-		return L"¤­";
+		return L"äº”";
 	else if (Xpos == 5)
-		return L"¥|";
+		return L"å››";
 	else if (Xpos == 6)
-		return L"¤T";
+		return L"ä¸‰";
 	else if (Xpos == 7)
-		return L"¤G";
+		return L"äºŒ";
 	else if (Xpos == 8)
-		return L"¤@";
+		return L"ä¸€";
 	else
 		return L"";
 }
@@ -231,40 +232,59 @@ wstring RecordBoard::RedNum(int Xpos)
 wstring RecordBoard::BlkNum(int Xpos)
 {
 	if (Xpos == 0)
-		return L"¢°";
+		return L"ï¼‘";
 	else if (Xpos == 1)
-		return L"¢±";
+		return L"ï¼’";
 	else if (Xpos == 2)
-		return L"¢²";
+		return L"ï¼“";
 	else if (Xpos == 3)
-		return L"¢³";
+		return L"ï¼”";
 	else if (Xpos == 4)
-		return L"¢´";
+		return L"ï¼•";
 	else if (Xpos == 5)
-		return L"¢µ";
+		return L"ï¼–";
 	else if (Xpos == 6)
-		return L"¢¶";
+		return L"ï¼—";
 	else if (Xpos == 7)
-		return L"¢·";
+		return L"ï¼˜";
 	else if (Xpos == 8)
-		return L"¢¸";
+		return L"ï¼™";
 	else
 		return L"";
 }
 
 map<int, wstring>RecordBoard::nameMap = {
-	pair<int,wstring>(1,L"±N"),
-	pair<int,wstring>(2,L"¤h"),
-	pair<int,wstring>(3,L"¶H"),
-	pair<int,wstring>(4,L"¨®"),
-	pair<int,wstring>(5,L"°¨"),
-	pair<int,wstring>(6,L"¥]"),
-	pair<int,wstring>(7,L"¨ò"),
-	pair<int,wstring>(8,L"«Ó"),
-	pair<int,wstring>(9,L"¥K"),
-	pair<int,wstring>(10,L"¬Û"),
-	pair<int,wstring>(11,L"¨®"),
-	pair<int,wstring>(12,L"ØX"),
-	pair<int,wstring>(13,L"¬¶"),
-	pair<int,wstring>(14,L"§L"),
+	pair<int,wstring>(1,L"å°‡"),
+	pair<int,wstring>(2,L"å£«"),
+	pair<int,wstring>(3,L"è±¡"),
+	pair<int,wstring>(4,L"è»Š"),
+	pair<int,wstring>(5,L"é¦¬"),
+	pair<int,wstring>(6,L"åŒ…"),
+	pair<int,wstring>(7,L"å’"),
+	pair<int,wstring>(8,L"å¸¥"),
+	pair<int,wstring>(9,L"ä»•"),
+	pair<int,wstring>(10,L"ç›¸"),
+	pair<int,wstring>(11,L"è»Š"),
+	pair<int,wstring>(12,L"å‚Œ"),
+	pair<int,wstring>(13,L"ç‚®"),
+	pair<int,wstring>(14,L"å…µ"),
 };
+
+void RecordBoard::saveRecord(string fileName, int finished) {
+	size_t index = fileName.find(".txt");
+	if (index != string::npos) fileName.insert(index, "Rec");
+	
+	fstream outputFile(fileName, ios::out);
+	outputFile << finished << " ";
+	for (int i = 0; i < detailBoard.size(); i++) {
+		outputFile << detailBoard[i].hunter << " " 
+			<< detailBoard[i].Xpos << " " 
+			<< detailBoard[i].Ypos << " " 
+			<< detailBoard[i].whosTurn << " " 
+			<< detailBoard[i].deltaX << " " 
+			<< detailBoard[i].deltaY << " " 
+			<< detailBoard[i].prey << " ";
+	}
+
+	outputFile.close();
+}

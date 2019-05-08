@@ -946,3 +946,16 @@ void GameBoard::resetChessBoard()
 	chessBoard[9] = { 11,12,10,9,8,9,10,12,11 };
 
 }
+
+// 讓chineseChess的saveGame()呼叫
+void GameBoard::saveChessBoard(string fileName, int order) {
+	fstream outputFile(fileName, ios::out);
+	if (!outputFile.is_open()) cout << "fail open" << endl;
+	for (int i = 0; i < chessBoard.size(); i++) {
+		for (int j = 0; j < chessBoard[i].size(); j++) {
+			outputFile << chessBoard[i][j] << " ";
+		}
+	}
+	outputFile << order;
+	outputFile.close();
+}
