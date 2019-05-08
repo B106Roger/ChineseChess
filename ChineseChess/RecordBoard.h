@@ -23,14 +23,17 @@ public:
 
 	// member function
 	void printBoard();
-	void writeMsg(record);
-	void printMsg();
-	void writeDetail(record);
-	void setRecord(COORD endPoint, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//從chinessChess呼叫傳資料給recordBoard
+	void regret(vector<vector<int>>& chessBoard);
+	void reduction(vector<vector<int>>& chessBoard);
+	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//從chinessChess呼叫傳資料給recordBoard
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
 	wstring BlkNum(int Xpos);
+	void writeDetail(record);
+	void writeMsg(record);
+	void clearBoard();
+	void printMsg();
 	int recordIndex;			//指向目前的recordBoard索引值
 };
 

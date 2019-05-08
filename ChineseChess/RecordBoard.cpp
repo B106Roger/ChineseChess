@@ -44,12 +44,12 @@ void RecordBoard::writeMsg(record tmp)
 {	
 	wstring tmpString;
 	//判斷第幾步
-	tmpString.insert(0, BlkNum(recordIndex + 1));
+	tmpString.insert(0, BlkNum(recordIndex));		//BlkNum會將n轉成n+1的中文數字輸出
 	tmpString.insert(1, L" 　");
 	//判斷紅黑方
 	tmp.whosTurn = (tmp.hunter < 8 && tmp.hunter > 0 ? 0 : 1);
 	tmpString.insert(2, tmp.whosTurn == 0 ? L"黑" : L"紅");
-	tmpString.insert(3, L" ");
+	tmpString.insert(3, L"：");
 	//判斷棋種
 	tmpString.insert(4, nameMap[tmp.hunter]);
 	tmpString.insert(5, L" ");
@@ -90,6 +90,19 @@ void RecordBoard::writeMsg(record tmp)
 	recordIndex++;
 }
 
+void RecordBoard::clearBoard()
+{
+	COORD point;
+	point.X = startX + 4;
+	point.Y = startY + 4;
+	for (int i = 0; i < 25; i++) {
+		for (int j = 0; j < 27; j++) {
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+			cout << " ";
+		}
+	}
+}
+
 void RecordBoard::printMsg()
 {
 	COORD point;
@@ -102,44 +115,72 @@ void RecordBoard::printMsg()
 		}
 	}
 	else{
+		int j = 0;
 		for (int i = recordIndex - 5; i < recordIndex; i++) {
-			point.Y = startY + i + 2;
+			point.Y = startY + j + 2;
+			j++;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			wcout << msgBoard[i] << endl;
 		}
 	}
 }
 
+void RecordBoard::regret(vector<vector<int>>& chessBoard)
+{
+	COORD endPoint, startPoint;
+	recordIndex--;
+	endPoint.X = detailBoard[recordIndex].deltaX + detailBoard[recordIndex].Xpos;
+	endPoint.Y = detailBoard[recordIndex].deltaY + detailBoard[recordIndex].Ypos;
+	startPoint.X = detailBoard[recordIndex].Xpos;
+	startPoint.Y = detailBoard[recordIndex].Ypos;
+	chessBoard[endPoint.Y][endPoint.X] = detailBoard[recordIndex].prey;
+	chessBoard[startPoint.Y][startPoint.X] = detailBoard[recordIndex].hunter;
+	recordIndex--;
+	endPoint.X = detailBoard[recordIndex].deltaX + detailBoard[recordIndex].Xpos;
+	endPoint.Y = detailBoard[recordIndex].deltaY + detailBoard[recordIndex].Ypos;
+	startPoint.X = detailBoard[recordIndex].Xpos;
+	startPoint.Y = detailBoard[recordIndex].Ypos;
+	chessBoard[endPoint.Y][endPoint.X] = detailBoard[recordIndex].prey;
+	chessBoard[startPoint.Y][startPoint.X] = detailBoard[recordIndex].hunter;
+	clearBoard();
+	printMsg();
+}
+
+void RecordBoard::reduction(vector<vector<int>>& chessBoard)
+{
+}
+
 void RecordBoard::writeDetail(record tmpRecord) {
 	detailBoard.push_back(tmpRecord);
 }
 
-void RecordBoard::setRecord(COORD endPoint, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard)
-{		//endPoint從0開始
+void RecordBoard::setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard)
+{	//endPoint從0開始
 	COORD startPoint, enemyPoint;
 	record newRecord;
 	for (int i = 0; i < colorBoard.size(); i++) {
 		for (int j = 0; j < colorBoard[i].size(); j++) {
-			if (colorBoard[i][j] == 1) {
+			if (colorBoard[i][j] == 1) {	//找到移動前的位置
 				startPoint.X = j;
 				startPoint.Y = i;
 			}
-			if (colorBoard[i][j] == -2 && endPoint.X == i && endPoint.Y == j) {
-				enemyPoint.X = endPoint.X;
-				enemyPoint.Y = endPoint.Y;
-				newRecord.prey = chessBoard[enemyPoint.X][enemyPoint.Y];
+			if (colorBoard[i][j] == -2 && x == j && y == i) {	//有吃掉敵人
+				enemyPoint.X = x;
+				enemyPoint.Y = y;
+				newRecord.prey = chessBoard[enemyPoint.Y][enemyPoint.X];
 			}
 		}
 	}
 	newRecord.Xpos = startPoint.X;
 	newRecord.Ypos = startPoint.Y;
-	newRecord.deltaX = endPoint.X - startPoint.X;
-	newRecord.deltaY = endPoint.Y - startPoint.Y;
-	newRecord.hunter = chessBoard[startPoint.X][startPoint.Y];
+	newRecord.deltaX = x - startPoint.X;
+	newRecord.deltaY = y - startPoint.Y;
+	newRecord.hunter = chessBoard[startPoint.Y][startPoint.X];
 	newRecord.whosTurn = (newRecord.hunter <= 7 && newRecord.hunter >= 0) ? 0 : 1;
-	writeMsg(newRecord);
-	printMsg();
 	writeDetail(newRecord);
+	writeMsg(newRecord);		//recordIndex會+1
+	printMsg();
+
 }
 
 
