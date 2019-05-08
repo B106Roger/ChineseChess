@@ -16,6 +16,11 @@ ChineseChess::ChineseChess()
 	:gameOver(false), order(0)
 {
 	mode = 0;  // 一開始設為主選單模式
+	subWindow = vector<int>(4, 0);
+	subWindow[0] = gameBoard.startX;
+	subWindow[1] = gameBoard.startY + 8;
+	subWindow[2] = gameBoard.width;
+	subWindow[3] = 5;
 }
 ChineseChess::~ChineseChess()
 {
@@ -230,21 +235,44 @@ void ChineseChess::gameStart(void)
 				}
 			}
 			// 按下 < 鍵後
-			else if (ch == '<')
+			else if (ch == ',')
 			{
 				// 悔棋 
-				recordBoard.regret(gameBoard.chessBoard);			//還在debug
+				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
+				setCursor(subWindow[0] + 2, subWindow[1] + 2);
+				while (true)
+				{
+					if (_kbhit())
+					{
+						if (_getch() == '\r')
+						{
+							break;
+						}
+					}
+				}
+				//recordBoard.regret(gameBoard.chessBoard);			//還在debug
 			}
 			// 按下 > 鍵後
-			else if (ch == '>')
+			else if (ch == '.')
 			{
 				// 還原
+				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　還 原");
+				while (true)
+				{
+					if (_kbhit())
+					{
+						if (_getch() == '\r')
+						{
+							break;
+						}
+					}
+				}
 				//recordBoard.reduction(gameBoard.chessBoard);
 			}
-			//// 悔棋
-			//else if (ch == '<' || ch == '>')
+
+			
 			//{
-			//	 印悔棋小視窗(member function)  default 否
+			//	印悔棋小視窗(member function)  default 否
 			//	while (true)
 			//	{
 			//		 切換是否
@@ -305,6 +333,7 @@ void ChineseChess::printFrame()
 // 印出邊框(可調參數)
 void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring title)
 {
+	SetColor();
 	wstring upper;
 	wstring lower(xsize - 2, L'＝');
 	wstring side(xsize - 2, L'　');
@@ -354,7 +383,6 @@ void ChineseChess::newGame()
 	recordBoard.detailBoard.clear();
 	fileName = "";
 }
-
 
 // 讀取視窗
 int ChineseChess::fileWindow()
@@ -487,6 +515,14 @@ int ChineseChess::readAndSetBoard(string name)
 	}
 }
 
+// 悔棋
+int ChineseChess::regretWindow()
+{
+	int returnValue = 1;
+	printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
+	setCursor(subWindow[0] + 2, subWindow[1] + 2);
+	return 1;
+}
 
 // static function
 // 設定座標

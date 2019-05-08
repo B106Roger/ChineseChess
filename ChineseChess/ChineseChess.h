@@ -37,6 +37,7 @@ public:
 	static EscBoard escBoard;
 	static MenuBoard maenuBoard;
 	static WinBoard winBoard;
+	vector<int> subWindow;   // X,Y,width,height
 	//static ReadFileBoard fileBoard;
 	static string fileName;
 	// member function
@@ -45,6 +46,7 @@ public:
 	void printFrame();
 	void printFrame(int xpos, int ypos, int xsize, int ysize, wstring title = L"");
 
+	int regretWindow();
 	int fileWindow();
 	int readAndSetBoard(string name);
 	void newGame();
