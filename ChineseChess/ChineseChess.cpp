@@ -233,13 +233,13 @@ void ChineseChess::gameStart(void)
 			else if (ch == '<')
 			{
 				// 悔棋 
-				recordBoard.regret(gameBoard.chessBoard);			//還在debug
+				recordBoard.regret(gameBoard.chessBoard);
 			}
 			// 按下 > 鍵後
 			else if (ch == '>')
 			{
 				// 還原
-				//recordBoard.reduction(gameBoard.chessBoard);
+				recordBoard.reduction(gameBoard.chessBoard);
 			}
 			//// 悔棋
 			//else if (ch == '<' || ch == '>')

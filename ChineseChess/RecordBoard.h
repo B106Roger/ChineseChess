@@ -33,6 +33,9 @@ private:
 	void writeDetail(record);
 	void writeMsg(record);
 	void clearBoard();
+	wstring numIntToStr(int);
+	wstring bigNum(int);
+	void SetColor(int);
 	void printMsg();
 	int recordIndex;			//指向目前的recordBoard索引值
 };
