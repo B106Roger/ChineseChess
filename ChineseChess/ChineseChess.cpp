@@ -358,8 +358,32 @@ int ChineseChess::fileWindow()
 	wstring title = L"請　輸　入　檔　名";
 	printFrame(xPos, yPos, windowWidth, 4, title);
 	ChineseChess::setCursor(xPos + 2, yPos + 2);
-	cin >> fileName;
-
+	fileName = "";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			char ch = _getch();
+			if (ch == '\r')
+			{
+				break;
+			}
+			else if (ch == '\b')
+			{
+				fileName.pop_back();
+				cout << "\b \b";
+			}
+			else if (fileName.length() > (windowWidth - 4) * 2)
+			{
+				continue;
+			}
+			else
+			{
+				fileName.push_back(ch);
+				cout << ch;
+			}
+		}
+	}
 	int returnValue;
 	if (readAndSetBoard(fileName) == true)
 	{

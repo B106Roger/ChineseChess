@@ -54,4 +54,3 @@ public:
 	void getCursor(int &x, int &y);
 	static void setCursorSize(bool visible, DWORD size); // visible = 0/1
 };
-
