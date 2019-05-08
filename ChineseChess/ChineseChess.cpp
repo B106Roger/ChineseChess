@@ -125,7 +125,7 @@ void ChineseChess::gameStart(void)
 					//
 					//if (gameBoard.movingChess(x, y) == true)
 					//{
-					//	if (hintBoard.memberfunction(order) == 1)
+					//	if (hintBoard.winMenu(order) == 1)
 					//	{
 					//		saveGame();
 					//	}
@@ -206,6 +206,13 @@ void ChineseChess::gameStart(void)
 				}
 				else if (escModeValue == 2) // 2.投降
 				{
+					if (hintBoard.winMenu(!order) == 0) { // 回主選單
+						mode = 0;
+					}
+					else { // 儲存遊戲，然後在回主選單
+						saveGame();
+						mode = 0;
+					}
 					// 印出投降提示
 					// 決定儲存遊戲 或 回主選單
 					// 未完成
@@ -478,4 +485,16 @@ void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible =
 	lpCursor.bVisible = visible;
 	lpCursor.dwSize = size;
 	SetConsoleCursorInfo(console, &lpCursor);
+}
+
+void ChineseChess::saveGame() {
+	if (fileName == "") { // 
+		time_t t = time(0);
+		char tmp[64];
+		strftime(tmp, sizeof(tmp), "%Y_%m_%d_%X", localtime(&t));
+		fileName = tmp;
+	}
+	else {
+
+	}
 }

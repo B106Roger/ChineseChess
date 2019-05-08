@@ -10,6 +10,7 @@
 #include<string>
 #include<conio.h>
 #include<Windows.h>
+#include <time.h>
 using namespace std;
 
 enum MODE { MenuMode = 0, GameMode, EscMode, ExitMode ,BackMode, ForwardMode };
@@ -47,7 +48,8 @@ public:
 	int fileWindow();
 	bool readAndSetBoard(string name);
 	void newGame();
-	
+	void saveGame();
+	static void setCursor(int x, int y);
 	// 0 黑, 1 藍, 2 綠, 3淺藍, 4 紅, 5 紫, 6土黃, 7 白灰, 8 灰, 9 亮藍,10亮綠, 11亮淺藍, 12淺紅, 13淺粉, 14淺黃 15 白
 	static void SetColor(int fontColor = 7, int backgroundColor = 0);
 	static void setCursor(int x, int y);
