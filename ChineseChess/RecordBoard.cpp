@@ -12,7 +12,7 @@ RecordBoard::RecordBoard()
 RecordBoard::~RecordBoard()
 {
 }
-// ¦Lrecord®Ø®Ø
+// ï¿½Lrecordï¿½Ø®ï¿½
 void RecordBoard::printBoard()
 {
 	COORD point;
@@ -41,7 +41,7 @@ void RecordBoard::printBoard()
 	}
 }
 
-// ¼g¦r¦ê¸ê®Æ¶ivector<wstring>
+// ï¿½gï¿½rï¿½ï¿½ï¿½Æ¶ivector<wstring>
 void RecordBoard::writeMsg(record tmp)
 {	
 	wstring tmpString;
@@ -92,7 +92,7 @@ void RecordBoard::writeMsg(record tmp)
 	recordIndex++;
 }
 
-// regret ¤§«á§â¦LªºªF¦è²MªÅ
+// regret ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½Fï¿½ï¿½Mï¿½ï¿½
 void RecordBoard::clearBoard()
 {
 	COORD point;
@@ -109,12 +109,12 @@ void RecordBoard::clearBoard()
 	}
 }
 
-// ¦L¥Xrecord index «e10­Ó
+// ï¿½Lï¿½Xrecord index ï¿½e10ï¿½ï¿½
 void RecordBoard::printMsg()
 {
 	COORD point;
 	point.X = startX + 4;
-	// ±q1
+	// ï¿½q1
 	if (recordIndex <= 10) {
 		for (int i = 0; i < recordIndex; i++) {
 			point.Y = startY + i + 2;
@@ -160,7 +160,7 @@ void RecordBoard::reduction(vector<vector<int>>& chessBoard)
 {
 }
 
-// ­«³]recordªº¸ê®Æ
+// ï¿½ï¿½ï¿½]recordï¿½ï¿½ï¿½ï¿½ï¿½
 void RecordBoard::resetRecordBoard()
 {
 	detailBoard.clear();
@@ -169,7 +169,7 @@ void RecordBoard::resetRecordBoard()
 }
 
 
-// §â°O¿ý¦s¶i°}¦Cvector<record>
+// ï¿½ï¿½Oï¿½ï¿½ï¿½sï¿½iï¿½}ï¿½Cvector<record>
 void RecordBoard::writeDetail(record tmpRecord) {
 	detailBoard.push_back(tmpRecord);
 }
