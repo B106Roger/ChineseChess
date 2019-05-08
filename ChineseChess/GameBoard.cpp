@@ -240,7 +240,7 @@ void GameBoard::resetColorBoard(void)
 }
 
 // 移動棋子 + 重印GameBoard
-void GameBoard::movingChess(int x, int y)
+int GameBoard::movingChess(int x, int y)
 {
 	// 1 => 帥被吃  2 => 將被吃  0 => 遊戲還沒結束
 	for (int i = 0; i < colorBoard.size(); i++)
@@ -249,12 +249,16 @@ void GameBoard::movingChess(int x, int y)
 		{
 			if (colorBoard[i][j] == 1)
 			{
-				int returnValue;
+				int returnValue = 0;
+				if (chessBoard[y][x] == 1 || chessBoard[y][x] == 8)
+				{
+					returnValue = 1;
+				}
 				chessBoard[y][x] = chessBoard[i][j];
 				chessBoard[i][j] = 0;
 				resetColorBoard();
 				printBoard();
-				return;
+				return returnValue;
 			}
 		}
 	}
@@ -930,7 +934,7 @@ void GameBoard::moveChessWithoutPrintBoard(int x, int y) {
 // 新遊戲
 void GameBoard::resetChessBoard()
 {
-	chessBoard[0] = { 5,4,3,2,1,2,3,4,5 };
+	chessBoard[0] = { 4,5,3,2,1,2,3,5,4 };
 	chessBoard[1] = { 0,0,0,0,0,0,0,0,0 };;
 	chessBoard[2] = { 0,6,0,0,0,0,0,6,0 };
 	chessBoard[3] = { 7,0,7,0,7,0,7,0,7 };

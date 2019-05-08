@@ -19,7 +19,7 @@ public:
 	// member function
 	void printBoard();
 	void moveChess(int x, int y);
-	void movingChess(int x, int y);
+	int movingChess(int x, int y);
 	void resetColorBoard(void);
 	void resetChessBoard(void);
 	bool isGeneral(int order); // 偵測order方(0黑1紅)是否被將軍
