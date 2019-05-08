@@ -2,14 +2,16 @@
 #include"RecordBoard.h"
 
 using namespace std;
-
+// static data member
 GameBoard ChineseChess::gameBoard = GameBoard();
 RecordBoard ChineseChess::recordBoard = RecordBoard();
 HintBoard ChineseChess::hintBoard = HintBoard();
 EscBoard ChineseChess::escBoard = EscBoard();
 MenuBoard ChineseChess::maenuBoard = MenuBoard();
 WinBoard ChineseChess::winBoard = WinBoard();
+//ReadFileBoard ChineseChess::fileBoard = ReadFileBoard();
 string ChineseChess::fileName;
+
 ChineseChess::ChineseChess()
 	:gameOver(false), order(0)
 {
@@ -22,7 +24,6 @@ ChineseChess::~ChineseChess()
 // 流程迴圈
 void ChineseChess::gameLoop(void)
 {
-	
 	while (mode != 4)    //  ExitMode
 	{
 		if (mode == 0)   // MenuMode
@@ -37,9 +38,8 @@ void ChineseChess::gameLoop(void)
 			}
 			else if (menuValue == 1)
 			{
-				// 未完成
-				readAndSetBoard();
-				mode = 1;  // GameMode
+				// 依據檔按讀取成功與失敗決定GameMode或MenuMode
+				mode = fileWindow();
 			}
 			else if (menuValue == 2)
 			{
@@ -125,7 +125,7 @@ void ChineseChess::gameStart(void)
 					//
 					//if (gameBoard.movingChess(x, y) == true)
 					//{
-					//	if (hintBoard.memberfunction(order) == 1)
+					//	if (hintBoard.winMenu(order) == 1)
 					//	{
 					//		saveGame();
 					//	}
@@ -206,6 +206,13 @@ void ChineseChess::gameStart(void)
 				}
 				else if (escModeValue == 2) // 2.投降
 				{
+					if (hintBoard.winMenu(!order) == 0) { // 回主選單
+						mode = 0;
+					}
+					else { // 儲存遊戲，然後在回主選單
+						saveGame();
+						mode = 0;
+					}
 					// 印出投降提示
 					// 決定儲存遊戲 或 回主選單
 					// 未完成
@@ -270,7 +277,6 @@ void ChineseChess::gameStart(void)
 			//{
 			//}
 		}
-		// b 
 	}
 	
 }
@@ -295,7 +301,47 @@ void ChineseChess::printFrame()
 			wcout << side;
 		}
 	}
-
+}
+// 印出邊框(可調參數)
+void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring title)
+{
+	wstring upper;
+	wstring lower(xsize - 2, L'＝');
+	wstring side(xsize - 2, L'　');
+	lower = L"●" + lower;
+	lower.push_back(L'●');
+	side = L"∥" + side;
+	side.push_back(L'∥');
+	if (int(title.size()) != 0)
+	{
+		int leftspace = (xsize - title.size() - 2) / 2;
+		int rightspace = xsize - title.size() - 2 - leftspace;
+		upper = title;
+		upper = wstring(leftspace, L'＝') + upper + wstring(rightspace, L'＝');
+		upper.insert(0, 1, L'●');
+		upper.push_back(L'●');
+	}
+	else
+	{
+		upper = lower;
+	}
+	
+	for (int i = 0; i < ysize; i++)
+	{
+		ChineseChess::setCursor(xpos, ypos + i);
+		if (i == 0 )
+		{
+			wcout << upper;
+		}
+		else if (i == ysize - 1)
+		{
+			wcout << lower;
+		}
+		else
+		{
+			wcout << side;
+		}
+	}
 }
 
 // 新遊戲
@@ -309,39 +355,77 @@ void ChineseChess::newGame()
 	fileName = "";
 }
 
-// 讀取檔案
-void ChineseChess::readAndSetBoard()
+
+// 讀取視窗
+int ChineseChess::fileWindow()
 {
-	ifstream in;
-	int cursorX = gameBoard.startX, cursorY = gameBoard.startY;
+	// 設定視窗大小
+	int xPos = gameBoard.startX, yPos = gameBoard.startY;
+	int windowWidth = gameBoard.width;
+	int windowHeight = 15;
+	// 印出視窗
 	wstring title = L"請　輸　入　檔　名";
-	int leftSpace = (gameBoard.width - 2 - title.size()) / 2;
-	int rightSpace = gameBoard.width - leftSpace - 2 - title.size();
-	wstring left(leftSpace, L'＝'), right(rightSpace, L'＝');
-	//   gameBoard.height / 3 = 6
-	for (int i = 0; i < gameBoard.height / 3; i++)
+	printFrame(xPos, yPos, windowWidth, 4, title);
+	ChineseChess::setCursor(xPos + 2, yPos + 2);
+	fileName = "";
+	while (true)
 	{
-		setCursor(cursorX, cursorY + i);
-		if (i == 0)
+		if (_kbhit())
 		{
-			wcout << L"●" << leftSpace << title << rightSpace << L"●";
-		}
-		else if (i == gameBoard.height / 3 - 1)
-		{
-			wstring tmp1(width - 2, L'＝');
-			wcout << L"●" << tmp1 << L"●";
-		}
-		else
-		{
-			wstring tmp2(width - 2, L'　');
-			wcout << L'∥' << tmp2 << L'∥';
+			char ch = _getch();
+			if (ch == '\r')
+			{
+				break;
+			}
+			else if (ch == '\b')
+			{
+				fileName.pop_back();
+				cout << "\b \b";
+			}
+			else if (fileName.length() > (windowWidth - 4) * 2)
+			{
+				continue;
+			}
+			else
+			{
+				fileName.push_back(ch);
+				cout << ch;
+			}
 		}
 	}
-	system("PAUSE");
+	int returnValue;
+	if (readAndSetBoard(fileName) == true)
+	{
+		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　成　功");
+		returnValue = 1; // GameMode
+	}
+	else
+	{
+		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　失　敗");
+		fileName = "";
+		returnValue = 0; // MenuMode
+	}
+	ChineseChess::setCursor(xPos + windowWidth / 2 - 4, yPos + 2);
+	wcout << L"按任意鍵以繼續操作";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			_getch();
+			return returnValue;
+		}
+	}
 
-	in.open(fileName);
+}
+
+// 讀取檔案
+bool ChineseChess::readAndSetBoard(string name)
+{
+	ifstream in;
+	in.open(name);
 	if (in.is_open())
 	{
+		fileName = name;
 		for (int i = 0; i < 10; i++)
 		{
 			for (int j = 0; j < 9; j++)
@@ -353,13 +437,17 @@ void ChineseChess::readAndSetBoard()
 		in >> order;
 		in.clear();
 		in.close();
+		return true;
 	}
 	else
 	{
-		cout << "fail!!\n";
+		fileName = "";
+		return false;
 	}
 }
 
+
+// static function
 // 設定座標
 void ChineseChess::setCursor(int x, int y)
 {
@@ -397,4 +485,16 @@ void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible =
 	lpCursor.bVisible = visible;
 	lpCursor.dwSize = size;
 	SetConsoleCursorInfo(console, &lpCursor);
+}
+
+void ChineseChess::saveGame() {
+	if (fileName == "") { // 
+		//time_t t = time(0);
+		//char tmp[64];
+		//strftime_s(tmp, sizeof(tmp), "%Y_%m_%d_%X", localtime(&t));
+		//fileName = tmp;
+	}
+	else {
+
+	}
 }
