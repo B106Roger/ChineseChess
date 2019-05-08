@@ -11,7 +11,7 @@ RecordBoard::RecordBoard()
 RecordBoard::~RecordBoard()
 {
 }
-
+// 印record框框
 void RecordBoard::printBoard()
 {
 	COORD point;
@@ -40,6 +40,7 @@ void RecordBoard::printBoard()
 	}
 }
 
+// 寫字串資料進vector<wstring>
 void RecordBoard::writeMsg(record tmp)
 {	
 	wstring tmpString;
@@ -90,6 +91,7 @@ void RecordBoard::writeMsg(record tmp)
 	recordIndex++;
 }
 
+// regret 之後把印的東西清空
 void RecordBoard::clearBoard()
 {
 	COORD point;
@@ -106,10 +108,12 @@ void RecordBoard::clearBoard()
 	}
 }
 
+// 印出record index 前10個
 void RecordBoard::printMsg()
 {
 	COORD point;
 	point.X = startX + 4;
+	// 從1
 	if (recordIndex <= 10) {
 		for (int i = 0; i < recordIndex; i++) {
 			point.Y = startY + i + 2;
@@ -155,6 +159,7 @@ void RecordBoard::reduction(vector<vector<int>>& chessBoard)
 {
 }
 
+// 把記錄存進陣列vector<record>
 void RecordBoard::writeDetail(record tmpRecord) {
 	detailBoard.push_back(tmpRecord);
 }

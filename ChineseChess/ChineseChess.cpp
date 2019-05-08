@@ -393,15 +393,21 @@ int ChineseChess::fileWindow()
 			}
 		}
 	}
-	int returnValue;
-	if (readAndSetBoard(fileName) == true)
+	int returnValue, readFileResult = readAndSetBoard(fileName);
+	if (readFileResult == 1)
 	{
 		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　成　功");
 		returnValue = 1; // GameMode
 	}
-	else
+	else if (readFileResult == 0)
 	{
 		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　失　敗");
+		fileName = "";
+		returnValue = 0; // MenuMode
+	}
+	else if (readFileResult == 2)
+	{
+		printFrame(xPos, yPos, windowWidth, 4, L"此　賽　局　已　結　束");
 		fileName = "";
 		returnValue = 0; // MenuMode
 	}
@@ -419,30 +425,65 @@ int ChineseChess::fileWindow()
 }
 
 // 讀取檔案
-bool ChineseChess::readAndSetBoard(string name)
+// 0 讀檔失敗 1 讀檔成功 2 賽局已結束
+int ChineseChess::readAndSetBoard(string name)
 {
-	ifstream in;
-	in.open(name);
-	if (in.is_open())
+	ifstream inBoard, inRecord;
+	string boardName = name, recordName = name;
+
+	inBoard.open(boardName);
+	if (inBoard.is_open())
 	{
-		fileName = name;
+		int offset = boardName.find(".txt");
+		recordName.insert(offset, "Rec");
+		inRecord.open(recordName);
+		if (inRecord.is_open())
+		{
+			int gameOverBit;
+			inRecord >> gameOverBit;
+			if (gameOverBit == 1)
+			{
+				inRecord.close();
+				inBoard.close();
+				fileName = "";
+				return 2;
+			}
+			else
+			{
+				// 讀取下棋記錄
+				record tmpRec;
+				recordBoard.detailBoard.clear();
+				while (inRecord >> tmpRec.hunter)
+				{
+					inRecord >> tmpRec.Xpos
+						>> tmpRec.Ypos
+						>> tmpRec.whosTurn
+						>> tmpRec.deltaX
+						>> tmpRec.deltaY
+						>> tmpRec.prey;
+					recordBoard.detailBoard.push_back(tmpRec);
+				}
+			}
+		}
+		// 讀取棋盤資料的
 		for (int i = 0; i < 10; i++)
 		{
 			for (int j = 0; j < 9; j++)
 			{
-				in >> gameBoard.chessBoard[i][j];
-				gameBoard.colorBoard[i][j] = 0;
+				inBoard >> gameBoard.chessBoard[i][j];
 			}
 		}
-		in >> order;
-		in.clear();
-		in.close();
-		return true;
+		inBoard >> order;
+		fileName = boardName;
+
+		inRecord.close();
+		inBoard.close();
+		return 1;
 	}
 	else
 	{
 		fileName = "";
-		return false;
+		return 0;
 	}
 }
 

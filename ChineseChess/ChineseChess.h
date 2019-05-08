@@ -46,7 +46,7 @@ public:
 	void printFrame(int xpos, int ypos, int xsize, int ysize, wstring title = L"");
 
 	int fileWindow();
-	bool readAndSetBoard(string name);
+	int readAndSetBoard(string name);
 	void newGame();
 	void saveGame();
 	// 0 黑, 1 藍, 2 綠, 3淺藍, 4 紅, 5 紫, 6土黃, 7 白灰, 8 灰, 9 亮藍,10亮綠, 11亮淺藍, 12淺紅, 13淺粉, 14淺黃 15 白
