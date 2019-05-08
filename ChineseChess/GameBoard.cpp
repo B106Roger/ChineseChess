@@ -870,6 +870,7 @@ bool GameBoard::isGeneral(int order) {
 				}
 			}
 		}
+		if (generalY == -1 && generalX == -1) return false;
 		for (int boardY = 0; boardY <= 9; boardY++) { // 步驟二：將敵方掃過一輪
 			for (int boardX = 0; boardX <= 8; boardX++) {
 				if (0 < chessBoard[boardY][boardX] && chessBoard[boardY][boardX] <= 7) {
