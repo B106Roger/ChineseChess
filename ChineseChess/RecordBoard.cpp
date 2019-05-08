@@ -44,99 +44,54 @@ void RecordBoard::printBoard()
 // �g�r���ƶivector<wstring>
 void RecordBoard::writeMsg(record tmp)
 {	
-	//record�����ޭ�+1
+	//recordIndex + 1
 	recordIndex++;
 
 	wstring tmpString;
-<<<<<<< HEAD
-	//�P�_�ĴX�B
+	//判斷第幾步
 	tmpString = numIntToStr(recordIndex);
 	tmpString += L" ";
-	//�P�_���¤�
-	tmp.whosTurn = (tmp.hunter < 8 && tmp.hunter > 0 ? 0 : 1);
-	tmpString += tmp.whosTurn == 0 ? L"��" : L"��";
-	tmpString += L"�G";
-	//�P�_�Ѻ�
-	tmpString += nameMap[tmp.hunter];
-	tmpString += L" ";
-	//�P�_���©M�_�l��m
-=======
-	//判斷第幾步
-	tmpString.insert(0, BlkNum(recordIndex));		//BlkNum會將n轉成n+1的中文數字輸出
-	tmpString.insert(1, L" 　");
 	//判斷紅黑方
 	tmp.whosTurn = (tmp.hunter < 8 && tmp.hunter > 0 ? 0 : 1);
-	tmpString.insert(2, tmp.whosTurn == 0 ? L"黑" : L"紅");
-	tmpString.insert(3, L"：");
+	tmpString += tmp.whosTurn == 0 ? L"黑" : L"紅";
+	tmpString += L"：";
 	//判斷棋種
-	tmpString.insert(4, nameMap[tmp.hunter]);
-	tmpString.insert(5, L" ");
+	tmpString += nameMap[tmp.hunter];
+	tmpString += L" ";
 	//判斷紅黑和起始位置
->>>>>>> f1081c1f33c583bb613fce5b4c1b2ffeea7a96f0
 	if (tmp.whosTurn == 0)
 		tmpString += BlkNum(tmp.Xpos);
 	else
-<<<<<<< HEAD
 		tmpString += RedNum(tmp.Xpos);
 	tmpString += L" ";
-	//�P�_�e�i��h�ξ�V����
+	//判斷是紅方還是黑方的進平退
 	if (tmp.whosTurn == 0) {				//�¤詹�U���O�i�A���W���O�h�A�G���M������}�P�_
 		if (tmp.deltaY > 0)
-			tmpString += L"�i";
+			tmpString += L"進";
 		else if (tmp.deltaY == 0)
-			tmpString += L"��";
+			tmpString += L"平";
 		else if (tmp.deltaY < 0)
-			tmpString += L"�h";
+			tmpString += L"退";
 		tmpString += L" ";
 	}
 	else {
 		if (tmp.deltaY < 0)
-			tmpString += L"�i";
+			tmpString += L"進";
 		else if (tmp.deltaY == 0)
-			tmpString += L"��";
+			tmpString += L"平";
 		else if (tmp.deltaY > 0)
-			tmpString += L"�h";
+			tmpString += L"退";
 		tmpString += L" ";
-=======
-		tmpString.insert(6, RedNum(tmp.Xpos));
-	tmpString.insert(7, L" ");
-	//判斷前進後退或橫向移動
-	if (tmp.whosTurn == 0) {				//黑方往下走是進，往上走是退，故須和紅方分開判斷
-		if (tmp.deltaY > 0)
-			tmpString.insert(8, L"進");
-		else if (tmp.deltaY == 0)
-			tmpString.insert(8, L"平");
-		else if (tmp.deltaY < 0)
-			tmpString.insert(8, L"退");
-		tmpString.insert(9, L" ");
-	}
-	else {
-		if (tmp.deltaY < 0)
-			tmpString.insert(8, L"進");
-		else if (tmp.deltaY == 0)
-			tmpString.insert(8, L"平");
-		else if (tmp.deltaY > 0)
-			tmpString.insert(8, L"退");
-		tmpString.insert(9, L" ");
->>>>>>> f1081c1f33c583bb613fce5b4c1b2ffeea7a96f0
 	}
 
 	//判斷目的位置
 	if (tmp.whosTurn == 0)
 		tmpString += BlkNum(tmp.Xpos + tmp.deltaX);
 	else
-<<<<<<< HEAD
 		tmpString += RedNum(tmp.Xpos + tmp.deltaX);
-	//�N�զX�����������s�JmsgBoard
 	msgBoard.push_back(tmpString);
-
-=======
-		tmpString.insert(10, RedNum(tmp.Xpos + tmp.deltaX));
 	//將組合完成的紀錄存入msgBoard
 	msgBoard.push_back(tmpString);
-	//record的索引值在存入後+1
-	recordIndex++;
->>>>>>> f1081c1f33c583bb613fce5b4c1b2ffeea7a96f0
 }
 
 // regret �����L���F��M��
@@ -156,7 +111,6 @@ void RecordBoard::clearBoard()
 	}
 }
 
-<<<<<<< HEAD
 wstring RecordBoard::numIntToStr(int num)
 {
 	vector<int> digits;
@@ -172,9 +126,6 @@ wstring RecordBoard::numIntToStr(int num)
 	return String;
 }
 
-=======
-// �L�Xrecord index �e10��
->>>>>>> f1081c1f33c583bb613fce5b4c1b2ffeea7a96f0
 void RecordBoard::printMsg()
 {
 	COORD point;
@@ -186,7 +137,7 @@ void RecordBoard::printMsg()
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			for (int j = 0; j < msgBoard[i].size(); j++) {
 				//�p�G�O����U�ѴN�N"��"�r��������
-				if (msgBoard[i][j] == L'��') {
+				if (msgBoard[i][j] == L'紅') {
 					SetColor(12);
 					wcout << msgBoard[i][j];
 				}
@@ -206,7 +157,7 @@ void RecordBoard::printMsg()
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
 			for (int j = 0; j < msgBoard[i].size(); j++) {
 				//�p�G�O����U�ѴN�N"��"�r��������
-				if (msgBoard[i][j] == L'��') {
+				if (msgBoard[i][j] == L'紅') {
 					SetColor(12);
 					wcout << msgBoard[i][j];
 				}
@@ -264,7 +215,18 @@ void RecordBoard::reduction(vector<vector<int>>& chessBoard)
 	printMsg();
 }
 
+
 // ��O���s�i�}�Cvector<record>
+// ���]record�����
+void RecordBoard::resetRecordBoard()
+{
+	detailBoard.clear();
+	msgBoard.clear();
+	recordIndex = 0;
+}
+
+
+//寫進vector<record>
 void RecordBoard::writeDetail(record tmpRecord) {
 	detailBoard.push_back(tmpRecord);
 }
@@ -302,8 +264,6 @@ void RecordBoard::setRecord(int x, int y, const vector<vector<int>>& chessBoard,
 	printMsg();
 
 }
-
-
 
 wstring RecordBoard::RedNum(int Xpos)
 {
@@ -356,51 +316,30 @@ wstring RecordBoard::BlkNum(int Xpos)
 wstring RecordBoard::bigNum(int num)
 {
 	if (num == 1)
-		return L"��";
+		return L"１";
 	else if (num == 2)
-		return L"��";
+		return L"２";
 	else if (num == 3)
-		return L"��";
+		return L"３";
 	else if (num == 4)
-		return L"��";
+		return L"４";
 	else if (num == 5)
-		return L"��";
+		return L"５";
 	else if (num == 6)
-		return L"��";
+		return L"６";
 	else if (num == 7)
-		return L"��";
+		return L"７";
 	else if (num == 8)
-		return L"��";
+		return L"８";
 	else if (num == 9)
-		return L"��";
+		return L"９";
 	else if (num == 0)
-		return L"��";
+		return L"０";
 	else
 		return L"";
 }
+
 map<int, wstring>RecordBoard::nameMap = {
-<<<<<<< HEAD
-	pair<int,wstring>(1,L"�N"),
-	pair<int,wstring>(2,L"�h"),
-	pair<int,wstring>(3,L"�H"),
-	pair<int,wstring>(4,L"��"),
-	pair<int,wstring>(5,L"��"),
-	pair<int,wstring>(6,L"�]"),
-	pair<int,wstring>(7,L"��"),
-	pair<int,wstring>(8,L"��"),
-	pair<int,wstring>(9,L"�K"),
-	pair<int,wstring>(10,L"��"),
-	pair<int,wstring>(11,L"��"),
-	pair<int,wstring>(12,L"�X"),
-	pair<int,wstring>(13,L"��"),
-	pair<int,wstring>(14,L"�L"),
-};
-void RecordBoard::SetColor(int color = 7)
-{
-	HANDLE hConsole;
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsole, color);
-=======
 	pair<int,wstring>(1,L"將"),
 	pair<int,wstring>(2,L"士"),
 	pair<int,wstring>(3,L"象"),
@@ -415,7 +354,15 @@ void RecordBoard::SetColor(int color = 7)
 	pair<int,wstring>(12,L"傌"),
 	pair<int,wstring>(13,L"炮"),
 	pair<int,wstring>(14,L"兵"),
+
 };
+
+void RecordBoard::SetColor(int color = 7)
+{
+	HANDLE hConsole;
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, color);
+}
 
 void RecordBoard::saveRecord(string fileName, int finished) {
 	size_t index = fileName.find(".txt");
@@ -434,5 +381,5 @@ void RecordBoard::saveRecord(string fileName, int finished) {
 	}
 
 	outputFile.close();
->>>>>>> f1081c1f33c583bb613fce5b4c1b2ffeea7a96f0
+
 }
