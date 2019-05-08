@@ -23,6 +23,7 @@ public:
 	void resetColorBoard(void);
 	void resetChessBoard(void);
 	bool isGeneral(int order); // 偵測order方(0黑1紅)是否被將軍
+	void saveChessBoard(string fileName, int order);
 private:
 	void printRow(int y);
 	wstring getPrintedChar(int x, int y);

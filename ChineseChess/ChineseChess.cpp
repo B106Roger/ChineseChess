@@ -16,6 +16,11 @@ ChineseChess::ChineseChess()
 	:gameOver(false), order(0)
 {
 	mode = 0;  // 一開始設為主選單模式
+	subWindow = vector<int>(4, 0);
+	subWindow[0] = gameBoard.startX;
+	subWindow[1] = gameBoard.startY + 8;
+	subWindow[2] = gameBoard.width;
+	subWindow[3] = 5;
 }
 ChineseChess::~ChineseChess()
 {
@@ -121,17 +126,16 @@ void ChineseChess::gameStart(void)
 				{
 					// 座標上的旗子被吃 ，輪下一回合
 					recordBoard.setRecord(x, y, gameBoard.chessBoard, gameBoard.colorBoard);
-					gameBoard.movingChess(x, y);
-					//
-					//if (gameBoard.movingChess(x, y) == true)
-					//{
-					//	if (hintBoard.winMenu(order) == 1)
-					//	{
-					//		saveGame();
-					//	}
-					//	mode = 0;
-					//}
-					//
+					
+					if (gameBoard.movingChess(x, y) == 1) // 敵對王被吃了
+					{
+						if (hintBoard.winMenu(order) == 1) // 印出本方勝利，如果儲存
+						{
+							saveGame(1);
+						}
+						mode = 0; // 儲存或回主選單都要mode = 0(跳回主選單)
+					}
+					
 					order = !order;
 					hintBoard.printHint1(order);
 					hintBoard.hideHint2();
@@ -206,13 +210,10 @@ void ChineseChess::gameStart(void)
 				}
 				else if (escModeValue == 2) // 2.投降
 				{
-					if (hintBoard.winMenu(!order) == 0) { // 回主選單
-						mode = 0;
+					if (hintBoard.winMenu(!order) == 1) { //儲存遊戲
+						saveGame(0);
 					}
-					else { // 儲存遊戲，然後在回主選單
-						saveGame();
-						mode = 0;
-					}
+					mode = 0; // +回主選單
 					// 印出投降提示
 					// 決定儲存遊戲 或 回主選單
 					// 未完成
@@ -221,6 +222,7 @@ void ChineseChess::gameStart(void)
 				else if (escModeValue == 3) // 3.儲存遊戲
 				{
 					// 儲存遊戲
+					saveGame(0);
 					// 未完成
 					gameBoard.printBoard();
 				}
@@ -230,21 +232,44 @@ void ChineseChess::gameStart(void)
 				}
 			}
 			// 按下 < 鍵後
-			else if (ch == '<')
+			else if (ch == ',')
 			{
 				// 悔棋 
-				recordBoard.regret(gameBoard.chessBoard);
+				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
+				setCursor(subWindow[0] + 2, subWindow[1] + 2);
+				while (true)
+				{
+					if (_kbhit())
+					{
+						if (_getch() == '\r')
+						{
+							break;
+						}
+					}
+				}
+				//recordBoard.regret(gameBoard.chessBoard);			//還在debug
 			}
 			// 按下 > 鍵後
-			else if (ch == '>')
+			else if (ch == '.')
 			{
 				// 還原
-				recordBoard.reduction(gameBoard.chessBoard);
+				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　還 原");
+				while (true)
+				{
+					if (_kbhit())
+					{
+						if (_getch() == '\r')
+						{
+							break;
+						}
+					}
+				}
+				//recordBoard.reduction(gameBoard.chessBoard);
 			}
-			//// 悔棋
-			//else if (ch == '<' || ch == '>')
+
+			
 			//{
-			//	 印悔棋小視窗(member function)  default 否
+			//	印悔棋小視窗(member function)  default 否
 			//	while (true)
 			//	{
 			//		 切換是否
@@ -305,6 +330,7 @@ void ChineseChess::printFrame()
 // 印出邊框(可調參數)
 void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring title)
 {
+	SetColor();
 	wstring upper;
 	wstring lower(xsize - 2, L'＝');
 	wstring side(xsize - 2, L'　');
@@ -355,7 +381,6 @@ void ChineseChess::newGame()
 	fileName = "";
 }
 
-
 // 讀取視窗
 int ChineseChess::fileWindow()
 {
@@ -393,15 +418,21 @@ int ChineseChess::fileWindow()
 			}
 		}
 	}
-	int returnValue;
-	if (readAndSetBoard(fileName) == true)
+	int returnValue, readFileResult = readAndSetBoard(fileName);
+	if (readFileResult == 1)
 	{
 		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　成　功");
 		returnValue = 1; // GameMode
 	}
-	else
+	else if (readFileResult == 0)
 	{
 		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　失　敗");
+		fileName = "";
+		returnValue = 0; // MenuMode
+	}
+	else if (readFileResult == 2)
+	{
+		printFrame(xPos, yPos, windowWidth, 4, L"此　賽　局　已　結　束");
 		fileName = "";
 		returnValue = 0; // MenuMode
 	}
@@ -419,33 +450,76 @@ int ChineseChess::fileWindow()
 }
 
 // 讀取檔案
-bool ChineseChess::readAndSetBoard(string name)
+// 0 讀檔失敗 1 讀檔成功 2 賽局已結束
+int ChineseChess::readAndSetBoard(string name)
 {
-	ifstream in;
-	in.open(name);
-	if (in.is_open())
+	ifstream inBoard, inRecord;
+	string boardName = name, recordName = name;
+
+	inBoard.open(boardName);
+	if (inBoard.is_open())
 	{
-		fileName = name;
+		int offset = boardName.find(".txt");
+		recordName.insert(offset, "Rec");
+		inRecord.open(recordName);
+		if (inRecord.is_open())
+		{
+			int gameOverBit;
+			inRecord >> gameOverBit;
+			if (gameOverBit == 1)
+			{
+				inRecord.close();
+				inBoard.close();
+				fileName = "";
+				return 2;
+			}
+			else
+			{
+				// 讀取下棋記錄
+				record tmpRec;
+				recordBoard.detailBoard.clear();
+				while (inRecord >> tmpRec.hunter)
+				{
+					inRecord >> tmpRec.Xpos
+						>> tmpRec.Ypos
+						>> tmpRec.whosTurn
+						>> tmpRec.deltaX
+						>> tmpRec.deltaY
+						>> tmpRec.prey;
+					recordBoard.detailBoard.push_back(tmpRec);
+				}
+			}
+		}
+		// 讀取棋盤資料的
 		for (int i = 0; i < 10; i++)
 		{
 			for (int j = 0; j < 9; j++)
 			{
-				in >> gameBoard.chessBoard[i][j];
-				gameBoard.colorBoard[i][j] = 0;
+				inBoard >> gameBoard.chessBoard[i][j];
 			}
 		}
-		in >> order;
-		in.clear();
-		in.close();
-		return true;
+		inBoard >> order;
+		fileName = boardName;
+
+		inRecord.close();
+		inBoard.close();
+		return 1;
 	}
 	else
 	{
 		fileName = "";
-		return false;
+		return 0;
 	}
 }
 
+// 悔棋
+int ChineseChess::regretWindow()
+{
+	int returnValue = 1;
+	printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
+	setCursor(subWindow[0] + 2, subWindow[1] + 2);
+	return 1;
+}
 
 // static function
 // 設定座標
@@ -487,14 +561,19 @@ void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible =
 	SetConsoleCursorInfo(console, &lpCursor);
 }
 
-void ChineseChess::saveGame() {
+void ChineseChess::saveGame(int finished) {
 	if (fileName == "") { // 
-		//time_t t = time(0);
-		//char tmp[64];
-		//strftime_s(tmp, sizeof(tmp), "%Y_%m_%d_%X", localtime(&t));
-		//fileName = tmp;
+		char tmp[20];
+		time_t time_seconds = time(0);
+		tm now_time;
+		localtime_s(&now_time, &time_seconds);
+		strftime(tmp, sizeof(tmp), "%Y_%m_%d_%H_%M_%S", &now_time);
+		fileName = tmp + static_cast<string>(".txt");
+		gameBoard.saveChessBoard(fileName, order);
+		recordBoard.saveRecord(fileName, finished);
 	}
 	else {
-
+		gameBoard.saveChessBoard(fileName, order);
+		recordBoard.saveRecord(fileName, finished);
 	}
 }
