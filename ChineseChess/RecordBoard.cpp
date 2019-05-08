@@ -159,6 +159,15 @@ void RecordBoard::reduction(vector<vector<int>>& chessBoard)
 {
 }
 
+// 重設record的資料
+void RecordBoard::resetRecordBoard()
+{
+	detailBoard.clear();
+	msgBoard.clear();
+	recordIndex = 0;
+}
+
+
 // 把記錄存進陣列vector<record>
 void RecordBoard::writeDetail(record tmpRecord) {
 	detailBoard.push_back(tmpRecord);

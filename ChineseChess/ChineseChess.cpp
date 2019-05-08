@@ -36,6 +36,7 @@ void ChineseChess::gameLoop(void)
 			printFrame();
 			int menuValue = maenuBoard.mainMenu();
 			//  0. 雙人遊戲  1. 繼續遊戲(讀取棋盤)  2. 重播棋局  3. 離開遊戲
+			newGame();
 			if (menuValue == 0)       
 			{
 				newGame();
@@ -238,35 +239,14 @@ void ChineseChess::gameStart(void)
 			else if (ch == ',')
 			{
 				// 悔棋 
-				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
-				setCursor(subWindow[0] + 2, subWindow[1] + 2);
-				while (true)
-				{
-					if (_kbhit())
-					{
-						if (_getch() == '\r')
-						{
-							break;
-						}
-					}
-				}
+				int returnValue = smallWindow(L"確　認　悔　棋");
 				//recordBoard.regret(gameBoard.chessBoard);			//還在debug
 			}
 			// 按下 > 鍵後
 			else if (ch == '.')
 			{
 				// 還原
-				printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　還 原");
-				while (true)
-				{
-					if (_kbhit())
-					{
-						if (_getch() == '\r')
-						{
-							break;
-						}
-					}
-				}
+				int returnValue = smallWindow(L"確　認　還　原");
 				//recordBoard.reduction(gameBoard.chessBoard);
 			}
 
@@ -330,6 +310,7 @@ void ChineseChess::printFrame()
 		}
 	}
 }
+
 // 印出邊框(可調參數)
 void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring title)
 {
@@ -379,8 +360,7 @@ void ChineseChess::newGame()
 	order = 0;
 	gameBoard.resetColorBoard();
 	gameBoard.resetChessBoard();
-	recordBoard.msgBoard.clear();
-	recordBoard.detailBoard.clear();
+	recordBoard.resetRecordBoard();
 	fileName = "";
 }
 
@@ -516,12 +496,51 @@ int ChineseChess::readAndSetBoard(string name)
 }
 
 // 悔棋
-int ChineseChess::regretWindow()
+int ChineseChess::smallWindow(wstring title)
 {
+	// 1是  0否
 	int returnValue = 1;
-	printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"確　認　悔 棋");
+	setCursorSize(false, 0);
+	printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], title);
+	// 印是否
+	SetColor();
+	if (returnValue == 0) SetColor(0,15);
 	setCursor(subWindow[0] + 2, subWindow[1] + 2);
-	return 1;
+	wcout << L"否";
+	SetColor();
+	if (returnValue == 1) SetColor(0, 15);
+	setCursor(subWindow[0] + subWindow[2], subWindow[1] + 2);
+	wcout << L"是";
+
+	while (true)
+	{
+		if (_kbhit())
+		{
+			char ch = _getch();
+			if (ch == '\r')
+			{
+				setCursorSize(true, 0);
+				return returnValue;
+			}
+			else if (ch == 224)
+			{
+				ch = _getch();
+				if (ch == 77 || ch == 75)
+				{
+					returnValue != returnValue;
+				}
+			}
+
+			SetColor();
+			if (returnValue == 0) SetColor(0, 15);
+			setCursor(subWindow[0] + 2, subWindow[1] + 2);
+			wcout << L"否";
+			SetColor();
+			if (returnValue == 1) SetColor(0, 15);
+			setCursor(subWindow[0] + subWindow[2], subWindow[1] + 2);
+			wcout << L"是";
+		}
+	}
 }
 
 // static function

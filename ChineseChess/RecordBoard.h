@@ -26,6 +26,7 @@ public:
 	void regret(vector<vector<int>>& chessBoard);
 	void reduction(vector<vector<int>>& chessBoard);
 	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//從chinessChess呼叫傳資料給recordBoard
+	void resetRecordBoard();
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);

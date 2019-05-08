@@ -46,7 +46,7 @@ public:
 	void printFrame();
 	void printFrame(int xpos, int ypos, int xsize, int ysize, wstring title = L"");
 
-	int regretWindow();
+	int smallWindow(wstring title);
 	int fileWindow();
 	int readAndSetBoard(string name);
 	void newGame();
