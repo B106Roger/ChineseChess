@@ -109,6 +109,7 @@ void ChineseChess::gameStart(void)
 				else if (gameBoard.colorBoard[y][x] == -1)
 				{
 					// 移動棋子 ，輪下一回合
+					recordBoard.setRecord(x, y, gameBoard.chessBoard, gameBoard.colorBoard);
 					gameBoard.movingChess(x, y);
 					order = !order;
 					hintBoard.printHint1(order); // 輪轉時，hint1換方，hint2隱藏，hint3判斷
@@ -119,6 +120,7 @@ void ChineseChess::gameStart(void)
 				else if (gameBoard.colorBoard[y][x] == -2)
 				{
 					// 座標上的旗子被吃 ，輪下一回合
+					recordBoard.setRecord(x, y, gameBoard.chessBoard, gameBoard.colorBoard);
 					gameBoard.movingChess(x, y);
 					//
 					//if (gameBoard.movingChess(x, y) == true)
@@ -224,13 +226,13 @@ void ChineseChess::gameStart(void)
 			else if (ch == '<')
 			{
 				// 悔棋 
-				recordBoard.printMsg();
+				//recordBoard.regret(gameBoard.chessBoard);			還在debug
 			}
-			// 按下 < 鍵後
+			// 按下 > 鍵後
 			else if (ch == '>')
 			{
 				// 還原
-				recordBoard.printMsg();
+				//recordBoard.reduction(gameBoard.chessBoard);
 			}
 			//// 悔棋
 			//else if (ch == '<' || ch == '>')
