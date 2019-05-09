@@ -42,6 +42,7 @@ private:
 	void SetColor(int);
 	void printMsg();
 	int recordIndex;			//指向目前的recordBoard索引值
+	void rebaseRecord();
 };
 
 struct record

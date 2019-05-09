@@ -265,6 +265,21 @@ void RecordBoard::setRecord(int x, int y, const vector<vector<int>>& chessBoard,
 
 }
 
+void RecordBoard::rebaseRecord()
+{
+	vector<vector<int>> chessBoard = ChineseChess::gameBoard.chessBoard;
+	recordIndex = int(detailBoard.size()) - 1;
+	for (int i = recordIndex; i <= 0; i--)
+	{
+		record & tmpRec = detailBoard[i];
+		int after = chessBoard[tmpRec.Ypos][tmpRec.Xpos];
+		chessBoard[tmpRec.Ypos][tmpRec.Xpos] = chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX];
+		chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX] = after;
+
+	}
+	
+}
+
 wstring RecordBoard::RedNum(int Xpos)
 {
 	if (Xpos == 0)
