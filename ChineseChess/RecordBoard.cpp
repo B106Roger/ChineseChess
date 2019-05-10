@@ -39,6 +39,7 @@ void RecordBoard::printBoard()
 				wcout << L"＝";
 		}
 	}
+	printMsg();
 }
 
 //棋子移動後寫入record
@@ -431,8 +432,25 @@ void RecordBoard::printMsg()
 		}
 	}
 }
-
-
+//重頭產生中世記譜法
+void RecordBoard::rebaseRecord()
+{
+	vector<vector<int>> chessBoard = ChineseChess::gameBoard.chessBoard;
+	recordIndex = int(detailBoard.size()) - 1;
+	for (; recordIndex >= 0; recordIndex--)
+	{
+		record & tmpRec = detailBoard[recordIndex];
+		int after = chessBoard[tmpRec.Ypos][tmpRec.Xpos];
+		chessBoard[tmpRec.Ypos][tmpRec.Xpos] = chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX];
+		chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX] = after;
+		wstring firstTwo = twoWords(chessBoard, whichCase(tmpRec, chessBoard), tmpRec);
+		++recordIndex;
+		msgBoard.insert(msgBoard.begin(), getMsg(tmpRec, firstTwo));
+		--recordIndex;
+	}
+	recordIndex = int(detailBoard.size());
+	return;
+}
 
 
 //悔棋

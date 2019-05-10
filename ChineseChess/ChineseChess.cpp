@@ -239,7 +239,24 @@ void ChineseChess::gameStart(void)
 				int returnValue = smallWindow(L"確　認　悔　棋");
 				if (returnValue == 1)
 				{
-					recordBoard.regret(gameBoard.chessBoard);
+					if (recordBoard.regret(gameBoard.chessBoard) == 1)
+					{
+						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"悔　棋　成　功");
+					} 
+					else
+					{
+						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"悔　棋　失　敗");
+					}
+				}
+				setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 3);
+				wcout << L"按任意鍵以繼續操作";
+				while (true)
+				{
+					if (_kbhit())
+					{
+						_getch();
+						break;
+					}
 				}
 				gameBoard.printBoard();
 			}
@@ -250,7 +267,24 @@ void ChineseChess::gameStart(void)
 				int returnValue = smallWindow(L"確　認　還　原");
 				if (returnValue == 1)
 				{
-					recordBoard.reduction(gameBoard.chessBoard);
+					if (recordBoard.reduction(gameBoard.chessBoard) == 1)
+					{
+						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"還　原　成　功");
+					}
+					else
+					{
+						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"還　原　失　敗");
+					}
+				}
+				setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 3);
+				wcout << L"按任意鍵以繼續操作";
+				while (true)
+				{
+					if (_kbhit())
+					{
+						_getch();
+						break;
+					}
 				}
 				gameBoard.printBoard();
 			}
@@ -357,8 +391,11 @@ int ChineseChess::fileWindow()
 			}
 			else if (ch == '\b')
 			{
-				fileName.pop_back();
-				cout << "\b \b";
+				if (fileName.size() > 0)
+				{
+					fileName.pop_back();
+					cout << "\b \b";
+				}
 			}
 			else if (fileName.length() > (windowWidth - 4) * 2)
 			{
@@ -441,6 +478,7 @@ int ChineseChess::readAndSetBoard(string name)
 						>> tmpRec.prey;
 					recordBoard.detailBoard.push_back(tmpRec);
 				}
+				recordBoard.rebaseRecord();
 			}
 		}
 		// 讀取棋盤資料的
