@@ -43,7 +43,6 @@ public:
 	// member function
 	void gameLoop(void);
 	void gameStart(void);
-	void printFrame();
 	void printFrame(int xpos, int ypos, int xsize, int ysize, wstring title = L"");
 
 	int smallWindow(wstring title);

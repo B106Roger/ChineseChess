@@ -33,7 +33,7 @@ void ChineseChess::gameLoop(void)
 	{
 		if (mode == 0)   // MenuMode
 		{
-			printFrame();
+			printFrame(startX, startY, width, height);
 			int menuValue = maenuBoard.mainMenu();
 			//  0. 雙人遊戲  1. 繼續遊戲(讀取棋盤)  2. 重播棋局  3. 離開遊戲
 			newGame();
@@ -73,7 +73,7 @@ void ChineseChess::gameLoop(void)
 // 遊戲迴圈
 void ChineseChess::gameStart(void)
 {
-	printFrame(); // 要將其他不需要的東西刷掉
+	printFrame(startX, startY, width, height); // 要將其他不需要的東西刷掉
 	recordBoard.printBoard();
 	gameBoard.printBoard();
 	hintBoard.printBoard(); // hintBoard基本框
@@ -293,28 +293,6 @@ void ChineseChess::gameStart(void)
 	
 }
 
-// 印出邊框
-void ChineseChess::printFrame()
-{
-	wstring edge(width - 2, L'＝'),side(width - 2, L'　');
-	edge = L"●" + edge;
-	edge.push_back(L'●');
-	side = L"∥" + side;
-	side.push_back(L'∥');
-	for (int i = 0; i < height; i++)
-	{
-		ChineseChess::setCursor(startX, startY + i);
-		if (i == 0 || i == height - 1)
-		{
-			wcout << edge;
-		}
-		else
-		{
-			wcout << side;
-		}
-	}
-}
-
 // 印出邊框(可調參數)
 void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring title)
 {
@@ -440,7 +418,7 @@ int ChineseChess::fileWindow()
 }
 
 // 讀取檔案
-// 0 讀檔失敗 1 讀檔成功 2 賽局已結束
+// 0 讀檔失敗、 1 讀檔成功、 2 賽局已結束
 int ChineseChess::readAndSetBoard(string name)
 {
 	ifstream inBoard, inRecord;
@@ -553,6 +531,24 @@ int ChineseChess::smallWindow(wstring title)
 	}
 }
 
+// 儲存遊戲
+void ChineseChess::saveGame(int finished) {
+	if (fileName == "") { // 
+		char tmp[20];
+		time_t time_seconds = time(0);
+		tm now_time;
+		localtime_s(&now_time, &time_seconds);
+		strftime(tmp, sizeof(tmp), "%Y_%m_%d_%H_%M_%S", &now_time);
+		fileName = tmp + static_cast<string>(".txt");
+		gameBoard.saveChessBoard(fileName, order);
+		recordBoard.saveRecord(fileName, finished);
+	}
+	else {
+		gameBoard.saveChessBoard(fileName, order);
+		recordBoard.saveRecord(fileName, finished);
+	}
+}
+
 // static function
 // 設定座標
 void ChineseChess::setCursor(int x, int y)
@@ -593,19 +589,3 @@ void ChineseChess::setCursorSize(bool visible, DWORD size) // set bool visible =
 	SetConsoleCursorInfo(console, &lpCursor);
 }
 
-void ChineseChess::saveGame(int finished) {
-	if (fileName == "") { // 
-		char tmp[20];
-		time_t time_seconds = time(0);
-		tm now_time;
-		localtime_s(&now_time, &time_seconds);
-		strftime(tmp, sizeof(tmp), "%Y_%m_%d_%H_%M_%S", &now_time);
-		fileName = tmp + static_cast<string>(".txt");
-		gameBoard.saveChessBoard(fileName, order);
-		recordBoard.saveRecord(fileName, finished);
-	}
-	else {
-		gameBoard.saveChessBoard(fileName, order);
-		recordBoard.saveRecord(fileName, finished);
-	}
-}
