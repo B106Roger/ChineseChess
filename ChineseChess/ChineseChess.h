@@ -46,8 +46,11 @@ public:
 	void printFrame(int xpos, int ypos, int xsize, int ysize, wstring title = L"");
 
 	int smallWindow(wstring title);
-	int fileWindow();
+	int fileWindow();                  // 以下兩個函數for 繼續遊戲
 	int readAndSetBoard(string name);
+	int replayWindow();                // 以下三個函數for 重播遊戲
+	int readAndSetBoard2(string name);
+	void replayMode();
 	void newGame();
 	void saveGame(int finished);
 	// 0 黑, 1 藍, 2 綠, 3淺藍, 4 紅, 5 紫, 6土黃, 7 白灰, 8 灰, 9 亮藍,10亮綠, 11亮淺藍, 12淺紅, 13淺粉, 14淺黃 15 白

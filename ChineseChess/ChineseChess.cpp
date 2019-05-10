@@ -49,7 +49,6 @@ void ChineseChess::gameLoop(void)
 			}
 			else if (menuValue == 2)
 			{
-				// 未完成
 				mode = 3;  // ReplayMode
 			}
 			else if (menuValue == 3)
@@ -64,8 +63,15 @@ void ChineseChess::gameLoop(void)
 		else if (mode == 3)    // ReplayMode
 		{
 			// 未完成
-			// 先換成menuMode，因為還沒做完
-			mode = 0;
+			if (replayWindow() == 1)
+			{
+				replayMode();
+			}
+			else
+			{
+				mode = 0;
+			}
+			
 		}
 	}
 }
@@ -160,41 +166,38 @@ void ChineseChess::gameStart(void)
 			else if (ch == 224)
 			{
 				ch = _getch();
-				// 取得目前位置
-				CONSOLE_SCREEN_BUFFER_INFO consoleinfo;
-				GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &consoleinfo);
-				// 移動到20,20印座標
-				COORD point;
-				ChineseChess::setCursor(40, 30);
+				int x, y;
+				getCursor(x, y);
 				
 				switch(ch)
 				{
 				case 72: // 上
-					point.Y = (consoleinfo.dwCursorPosition.Y <= gameBoard.startY ? gameBoard.startY + gameBoard.height - 1 : consoleinfo.dwCursorPosition.Y - 2);
-					point.X = consoleinfo.dwCursorPosition.X;
+					y = (y <= gameBoard.startY ? gameBoard.startY + gameBoard.height - 1 : y - 2);
+					x = x;
 					break;  
 				case 80: // 下
-					point.Y = (consoleinfo.dwCursorPosition.Y >= gameBoard.startY + gameBoard.height - 1 ? gameBoard.startY : consoleinfo.dwCursorPosition.Y + 2);
-					point.X = consoleinfo.dwCursorPosition.X;
+					y = (y >= gameBoard.startY + gameBoard.height - 1 ? gameBoard.startY : y + 2);
+					x = x;
 					break; 
 				case 75: // 左
-					point.X = (consoleinfo.dwCursorPosition.X <= gameBoard.startX ? (gameBoard.startX + (gameBoard.width- 1)*2 ) : consoleinfo.dwCursorPosition.X - 4);
-					point.Y = consoleinfo.dwCursorPosition.Y;
+					x = (x <= gameBoard.startX ? (gameBoard.startX + (gameBoard.width- 1)*2 ) : x - 4);
+					y = y;
 					break; 
 				case 77: // 右
-					point.X = (consoleinfo.dwCursorPosition.X >= (gameBoard.startX + (gameBoard.width - 1)*2)? gameBoard.startX : consoleinfo.dwCursorPosition.X + 4);
-					point.Y = consoleinfo.dwCursorPosition.Y;
+					x = (x >= (gameBoard.startX + (gameBoard.width - 1)*2)? gameBoard.startX : x + 4);
+					y = y;
 					break;
 				};
 				/* start 印出棋子在window的座標 */
+				ChineseChess::setCursor(40, 30);
 				cout << "X: ";
 				cout.width(3);
-				cout << point.X << "    Y: ";
+				cout << x << "    Y: ";
 				cout.width(3);
-				cout << point.Y;
-				// 回到原本的座標
+				cout << y;
 				/* end 印出棋子在window的座標 */
-				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
+				// 回到原本的座標
+				setCursor(x, y);
 			}
 			// 按下Esc鍵後     
 			else if (ch == 27)
@@ -417,7 +420,7 @@ int ChineseChess::fileWindow()
 
 }
 
-// 讀取檔案
+// 讀取檔案for繼續遊戲
 // 0 讀檔失敗、 1 讀檔成功、 2 賽局已結束
 int ChineseChess::readAndSetBoard(string name)
 {
@@ -456,7 +459,6 @@ int ChineseChess::readAndSetBoard(string name)
 						>> tmpRec.prey;
 					recordBoard.detailBoard.push_back(tmpRec);
 				}
-				recordBoard.rebaseRecord();
 			}
 		}
 		// 讀取棋盤資料的
@@ -466,6 +468,10 @@ int ChineseChess::readAndSetBoard(string name)
 			{
 				inBoard >> gameBoard.chessBoard[i][j];
 			}
+		}
+		if (inRecord.is_open())
+		{
+			recordBoard.rebaseRecord();
 		}
 		inBoard >> order;
 		fileName = boardName;
@@ -481,7 +487,7 @@ int ChineseChess::readAndSetBoard(string name)
 	}
 }
 
-// 悔棋
+// 印出 是否 的字
 int ChineseChess::smallWindow(wstring title)
 {
 	// 1是  0否
@@ -548,6 +554,173 @@ void ChineseChess::saveGame(int finished) {
 		recordBoard.saveRecord(fileName, finished);
 	}
 }
+
+// 重播遊戲讀檔視窗
+int ChineseChess::replayWindow()
+{
+	// 設定視窗大小
+	int xPos = gameBoard.startX, yPos = gameBoard.startY;
+	int windowWidth = gameBoard.width;
+	int windowHeight = 15;
+	// 印出視窗
+	wstring title = L"請　輸　入　檔　名";
+	printFrame(xPos, yPos, windowWidth, 4, title);
+	ChineseChess::setCursor(xPos + 2, yPos + 2);
+	fileName = "";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			char ch = _getch();
+			if (ch == '\r')
+			{
+				break;
+			}
+			else if (ch == '\b')
+			{
+				if (fileName.size() > 0)
+				{
+					fileName.pop_back();
+					cout << "\b \b";
+				}
+			}
+			else if (fileName.length() > (windowWidth - 4) * 2)
+			{
+				continue;
+			}
+			else
+			{
+				fileName.push_back(ch);
+				cout << ch;
+			}
+		}
+	}
+	int resultBit, readFileResult = readAndSetBoard2(fileName);
+	if (readFileResult == 1)
+	{
+		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　成　功");
+		resultBit = 1;
+	}
+	else if (readFileResult == 0)
+	{
+		printFrame(xPos, yPos, windowWidth, 4, L"讀　取　檔　案　失　敗");
+		fileName = "";
+		resultBit = 0;
+	}
+	ChineseChess::setCursor(xPos + windowWidth / 2 - 4, yPos + 2);
+	wcout << L"按任意鍵以繼續操作";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			_getch();
+			break;
+		}
+	}
+	return resultBit;
+}
+
+// 讀取檔案for重播模式。       0 讀檔其中一個失敗、 1 讀檔成功
+int ChineseChess::readAndSetBoard2(string name)
+{
+	ifstream inBoard, inRecord;
+	string boardName = name, recordName = name;
+
+	inBoard.open(boardName);
+	if (inBoard.is_open())
+	{
+		int offset = boardName.find(".txt");
+		recordName.insert(offset, "Rec");
+		inRecord.open(recordName);
+		if (inRecord.is_open())
+		{
+			int gameOverBit;
+			inRecord >> gameOverBit;
+			recordBoard.detailBoard.clear();
+			// 讀取下棋記錄
+			record tmpRec;
+			while (inRecord >> tmpRec.hunter)
+			{
+				inRecord >> tmpRec.Xpos
+					>> tmpRec.Ypos
+					>> tmpRec.whosTurn
+					>> tmpRec.deltaX
+					>> tmpRec.deltaY
+					>> tmpRec.prey;
+				recordBoard.detailBoard.push_back(tmpRec);
+			}
+			recordBoard.rebaseRecord();
+			// 讀取棋盤資料的
+			for (int i = 0; i < 10; i++)
+			{
+				for (int j = 0; j < 9; j++)
+				{
+					inBoard >> gameBoard.chessBoard[i][j];
+				}
+			}
+			inBoard >> order;
+			fileName = boardName;
+
+			inRecord.close();
+			inBoard.close();
+			return 1;
+		}
+		else
+		{
+			inBoard.close();
+			fileName = "";
+			return 0;
+		}
+
+	}
+	else
+	{
+		fileName = "";
+		return 0;
+	}
+}
+
+// 重播遊戲loop
+void ChineseChess::replayMode()
+{
+	printFrame(startX, startY, width, height);
+	recordBoard.rebaseRecord();
+	recordBoard.printBoard();
+	gameBoard.printBoard();
+	hintBoard.printBoard();
+	while (true)
+	{
+		if (_kbhit())
+		{
+			int ch = _getch();
+			if (ch == 224)
+			{
+				ch = _getch();
+				if (ch == 75) //左
+				{
+					recordBoard.regret(gameBoard.chessBoard);
+					gameBoard.printBoard();
+				}
+				else if (ch == 77)
+				{
+					recordBoard.reduction(gameBoard.chessBoard);
+					gameBoard.printBoard();
+				}
+			}
+			else if (ch == 27) // Esc
+			{
+				mode = 0;
+				return;
+			}
+		}
+	}
+}
+
+
+
+
+
+
 
 // static function
 // 設定座標

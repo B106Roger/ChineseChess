@@ -540,7 +540,7 @@ void RecordBoard::saveRecord(string fileName, int finished) {
 	if (index != string::npos) fileName.insert(index, "Rec");
 
 	fstream outputFile(fileName, ios::out);
-	outputFile << finished << " ";
+	outputFile << finished << " " << endl;
 	for (int i = 0; i < recordIndex; i++) {
 		outputFile << detailBoard[i].hunter << " "
 			<< detailBoard[i].Xpos << " "
@@ -548,7 +548,7 @@ void RecordBoard::saveRecord(string fileName, int finished) {
 			<< detailBoard[i].whosTurn << " "
 			<< detailBoard[i].deltaX << " "
 			<< detailBoard[i].deltaY << " "
-			<< detailBoard[i].prey << " ";
+			<< detailBoard[i].prey << " " << endl;
 	}
 
 	outputFile.close();
