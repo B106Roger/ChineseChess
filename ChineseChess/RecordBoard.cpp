@@ -541,7 +541,7 @@ void RecordBoard::saveRecord(string fileName, int finished) {
 
 	fstream outputFile(fileName, ios::out);
 	outputFile << finished << " ";
-	for (int i = 0; i < detailBoard.size(); i++) {
+	for (int i = 0; i < recordIndex; i++) {
 		outputFile << detailBoard[i].hunter << " "
 			<< detailBoard[i].Xpos << " "
 			<< detailBoard[i].Ypos << " "
