@@ -133,11 +133,11 @@ void ChineseChess::gameStart(void)
 				{
 					// 座標上的旗子被吃 ，輪下一回合
 					recordBoard.setRecord(x, y, gameBoard.chessBoard, gameBoard.colorBoard);
-					
 					if (gameBoard.movingChess(x, y) == 1) // 敵對王被吃了
 					{
 						if (hintBoard.winMenu(order) == 1) // 印出本方勝利，如果儲存
 						{
+							order = !order;               // 確定是哪一方勝利時，儲存其盤仍要換另外一方下
 							saveGame(1);
 						}
 						mode = 0; // 儲存或回主選單都要mode = 0(跳回主選單)
@@ -220,14 +220,12 @@ void ChineseChess::gameStart(void)
 					mode = 0; // +回主選單
 					// 印出投降提示
 					// 決定儲存遊戲 或 回主選單
-					// 未完成
 					gameBoard.printBoard();
 				}
 				else if (escModeValue == 3) // 3.儲存遊戲
 				{
 					// 儲存遊戲
 					saveGame(0);
-					// 未完成
 					gameBoard.printBoard();
 				}
 				else if (escModeValue == 4) // 4.回主選單
@@ -550,10 +548,12 @@ void ChineseChess::saveGame(int finished) {
 		fileName = tmp + static_cast<string>(".txt");
 		gameBoard.saveChessBoard(fileName, order);
 		recordBoard.saveRecord(fileName, finished);
+		saveGameSuccess();
 	}
 	else {
 		gameBoard.saveChessBoard(fileName, order);
 		recordBoard.saveRecord(fileName, finished);
+		saveGameSuccess();
 	}
 }
 
@@ -736,7 +736,24 @@ void ChineseChess::replayMode()
 
 }
 
-
+// 提示檔名視窗
+void ChineseChess::saveGameSuccess(void)
+{
+	printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3] + 2, L"檔　案　儲　存　成　功");
+	setCursor(subWindow[0] + 2, subWindow[1] + 2);
+	wcout << L"檔名: ";
+	cout << fileName;
+	setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 5);
+	wcout << L"按任意鍵以繼續操作";
+	while (true)
+	{
+		if (_kbhit())
+		{
+			_getch();
+			break;
+		}
+	}
+}
 
 
 

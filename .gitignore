@@ -8,3 +8,5 @@
 *.tlog
 *.idb
 *.pdb
+/ChineseChess/*.txt
+!/ChineseChess/ForDemo.txt

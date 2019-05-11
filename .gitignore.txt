@@ -1,3 +1,0 @@
-ChineseChess/*.txt
-!ForDemo.txt
-!gitignore.txt

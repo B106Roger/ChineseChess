@@ -20,76 +20,89 @@ GameBoard::~GameBoard()
 // 印出整個棋盤
 void GameBoard::printBoard()
 {
+	printRow(-1);
 	for (int i = 0; i < height; i++)
 	{
 		printRow(i);
 	}
+	printRow(height);
 	ChineseChess::setCursor(startX, startY);
 }
 
 // 印出棋盤的每一行 + 顏色  
 void GameBoard::printRow(int rowIndex)
 {
-	// 楚河漢界
+	
 	ChineseChess::setCursor(startX, startY + rowIndex);
-	if (rowIndex == 9)
+	if (rowIndex == -1)                     // １２３４５６７８９
+	{
+		ChineseChess::SetColor(4, 15);
+		wcout << L"１　２　３　４　５　６　７　８　９";
+	}
+	else if (rowIndex == 9)                 // 楚河漢界
 	{
 		ChineseChess::SetColor(0, 15);
 		wcout << L"∥　　　楚河　　　　　漢界　　　∥";
-		return;
 	}
-	// 其他row
-	for (int j = 0; j < width; j++)
+	else if (rowIndex == height)        // 九八七六五四三二一
 	{
-		// 不可能有棋子的狀況
-		if (rowIndex % 2 == 1 || j % 2 == 1)
+		ChineseChess::SetColor(4, 15);
+		wcout << L"九　八　七　六　五　四　三　二　一";
+	}
+	else                                   // 其他row
+	{
+		for (int j = 0; j < width; j++)
 		{
-			ChineseChess::SetColor(0, 15);
-		}
-		// 有可能有棋子的狀況
-		else
-		{
-			int x = j / 2, y = rowIndex / 2;
-			int fontColor, backgroundColor;
-			// 如果上面有旗子
-			if (chessBoard[y][x] != 0)
+			// 不可能有棋子的狀況
+			if (rowIndex % 2 == 1 || j % 2 == 1)
 			{
-				// 而且是可以被吃掉的旗子
-				if (colorBoard[y][x] == -2)
-				{
-					//                         灰底紅字:灰底黑字
-					backgroundColor = 9;
-					fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
-				}
-				// 如果是不能被吃掉的旗子
-				else// if (colorBoard[y][x] == 0)
-				{
-					// 正常的棋子              灰底紅字:灰底黑色
-					backgroundColor = 7;
-					fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
-				}
+				ChineseChess::SetColor(0, 15);
 			}
-			// 如果上面沒棋子
+			// 有可能有棋子的狀況
 			else
 			{
-				// 可移動的格子
-				if (colorBoard[y][x] == -1)
+				int x = j / 2, y = rowIndex / 2;
+				int fontColor, backgroundColor;
+				// 如果上面有旗子
+				if (chessBoard[y][x] != 0)
 				{
-					// 空白部分 白底灰字
-					fontColor = 0;
-					backgroundColor = 7;
+					// 而且是可以被吃掉的旗子
+					if (colorBoard[y][x] == -2)
+					{
+						//                         灰底紅字:灰底黑字
+						backgroundColor = 9;
+						fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
+					}
+					// 如果是不能被吃掉的旗子
+					else// if (colorBoard[y][x] == 0)
+					{
+						// 正常的棋子              灰底紅字:灰底黑色
+						backgroundColor = 7;
+						fontColor = (chessBoard[y][x] > 7 ? 12 : 0);
+					}
 				}
-				// 不可移動的格子
+				// 如果上面沒棋子
 				else
 				{
-					// 空白部分 白底黑字
-					fontColor = 0;
-					backgroundColor = 15;
+					// 可移動的格子
+					if (colorBoard[y][x] == -1)
+					{
+						// 空白部分 白底灰字
+						fontColor = 0;
+						backgroundColor = 7;
+					}
+					// 不可移動的格子
+					else
+					{
+						// 空白部分 白底黑字
+						fontColor = 0;
+						backgroundColor = 15;
+					}
 				}
+				ChineseChess::SetColor(fontColor, backgroundColor);
 			}
-			ChineseChess::SetColor(fontColor, backgroundColor);
+			wcout << getPrintedChar(rowIndex, j);
 		}
-		wcout << getPrintedChar(rowIndex, j);
 	}
 	ChineseChess::SetColor();
 }
