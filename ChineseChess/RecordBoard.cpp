@@ -39,7 +39,6 @@ void RecordBoard::printBoard()
 				wcout << L"＝";
 		}
 	}
-	printMsg();
 }
 
 //棋子移動後寫入record
@@ -440,9 +439,8 @@ void RecordBoard::rebaseRecord()
 	for (; recordIndex >= 0; recordIndex--)
 	{
 		record & tmpRec = detailBoard[recordIndex];
-		int after = chessBoard[tmpRec.Ypos][tmpRec.Xpos];
 		chessBoard[tmpRec.Ypos][tmpRec.Xpos] = chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX];
-		chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX] = after;
+		chessBoard[tmpRec.Ypos + tmpRec.deltaY][tmpRec.Xpos + tmpRec.deltaX] = tmpRec.prey;
 		wstring firstTwo = twoWords(chessBoard, whichCase(tmpRec, chessBoard), tmpRec);
 		++recordIndex;
 		msgBoard.insert(msgBoard.begin(), getMsg(tmpRec, firstTwo));
@@ -453,10 +451,23 @@ void RecordBoard::rebaseRecord()
 }
 
 
-//悔棋
+//悔棋(2步)
 bool RecordBoard::regret(vector<vector<int>>& chessBoard)
 {	
 	if (recordIndex < 2)
+		return false;
+	else {
+		regretSingle(chessBoard);
+		regretSingle(chessBoard);
+		clearBoard();
+		printMsg();
+		return true;
+	}
+}
+//悔棋(1步)
+bool RecordBoard::regretSingle(vector<vector<int>>& chessBoard)
+{
+	if (recordIndex == 0)
 		return false;
 	else {
 		COORD endPoint, startPoint;
@@ -468,19 +479,10 @@ bool RecordBoard::regret(vector<vector<int>>& chessBoard)
 		chessBoard[endPoint.Y][endPoint.X] = detailBoard[detailIndex].prey;
 		chessBoard[startPoint.Y][startPoint.X] = detailBoard[detailIndex].hunter;
 		recordIndex--;
-		detailIndex = recordIndex - 1;
-		endPoint.X = detailBoard[detailIndex].deltaX + detailBoard[detailIndex].Xpos;
-		endPoint.Y = detailBoard[detailIndex].deltaY + detailBoard[detailIndex].Ypos;
-		startPoint.X = detailBoard[detailIndex].Xpos;
-		startPoint.Y = detailBoard[detailIndex].Ypos;
-		chessBoard[endPoint.Y][endPoint.X] = detailBoard[detailIndex].prey;
-		chessBoard[startPoint.Y][startPoint.X] = detailBoard[detailIndex].hunter;
-		recordIndex--;
-		clearBoard();
-		printMsg();
 		return true;
 	}
 }
+
 // regret 後清除recordBoard
 void RecordBoard::clearBoard()
 {
@@ -499,9 +501,21 @@ void RecordBoard::clearBoard()
 }
 
 
-//還原
+//還原(2步)
 bool RecordBoard::reduction(vector<vector<int>>& chessBoard)
 {	
+	if (recordIndex == detailBoard.size())
+		return false;
+	else {
+		reductionSingle(chessBoard);
+		reductionSingle(chessBoard);
+		printMsg();
+		return true;
+	}
+}
+//還原(1步)
+bool RecordBoard::reductionSingle(vector<vector<int>>& chessBoard)
+{
 	if (recordIndex == detailBoard.size())
 		return false;
 	else {
@@ -514,19 +528,9 @@ bool RecordBoard::reduction(vector<vector<int>>& chessBoard)
 		startPoint.Y = detailBoard[detailIndex].Ypos;
 		chessBoard[endPoint.Y][endPoint.X] = detailBoard[detailIndex].hunter;
 		chessBoard[startPoint.Y][startPoint.X] = 0;
-		recordIndex++;
-		detailIndex = recordIndex - 1;
-		endPoint.X = detailBoard[detailIndex].deltaX + detailBoard[detailIndex].Xpos;
-		endPoint.Y = detailBoard[detailIndex].deltaY + detailBoard[detailIndex].Ypos;
-		startPoint.X = detailBoard[detailIndex].Xpos;
-		startPoint.Y = detailBoard[detailIndex].Ypos;
-		chessBoard[endPoint.Y][endPoint.X] = detailBoard[detailIndex].hunter;
-		chessBoard[startPoint.Y][startPoint.X] = 0;
-		printMsg();
 		return true;
 	}
 }
-
 //清空detailBoard, msgBoard, recordIndex歸零
 void RecordBoard::resetRecordBoard()
 {

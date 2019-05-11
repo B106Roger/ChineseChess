@@ -24,23 +24,28 @@ public:
 	// member function
 	void printBoard();
 	bool regret(vector<vector<int>>& chessBoard);
+	bool regretSingle(vector<vector<int>>& chessBoard);
 	bool reduction(vector<vector<int>>& chessBoard);
+	bool reductionSingle(vector<vector<int>>& chessBoard);
 	void resetRecordBoard();
 	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//從chinessChess呼叫傳資料給recordBoard
 	void saveRecord(string fileName, int finished);
 	void rebaseRecord();
+
+	void clearBoard();
+	void printMsg();
 private:
 	static map<int, wstring> nameMap;
 	wstring RedNum(int Xpos);
 	wstring BlkNum(int Xpos);
 	void writeDetail(record);
 	wstring getMsg(record, wstring);
-	void clearBoard();
+	
 	wstring numIntToStr(int);
 	wstring bigNum(int);
 	wstring twoWords(vector<vector<int>>, int, record);
 	int whichCase(record, vector<vector<int>>);
-	void printMsg();
+	
 	int recordIndex;			//指向目前的recordBoard索引值
 };
 

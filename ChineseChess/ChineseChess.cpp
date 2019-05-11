@@ -389,6 +389,7 @@ int ChineseChess::fileWindow()
 			}
 		}
 	}
+	setCursorSize(false, 0);
 	int returnValue, readFileResult = readAndSetBoard(fileName);
 	if (readFileResult == 1)
 	{
@@ -414,6 +415,7 @@ int ChineseChess::fileWindow()
 		if (_kbhit())
 		{
 			_getch();
+			setCursorSize(true, 0);
 			return returnValue;
 		}
 	}
@@ -595,6 +597,7 @@ int ChineseChess::replayWindow()
 			}
 		}
 	}
+	setCursorSize(false, 0);
 	int resultBit, readFileResult = readAndSetBoard2(fileName);
 	if (readFileResult == 1)
 	{
@@ -614,6 +617,7 @@ int ChineseChess::replayWindow()
 		if (_kbhit())
 		{
 			_getch();
+			setCursorSize(true, 0);
 			break;
 		}
 	}
@@ -649,7 +653,7 @@ int ChineseChess::readAndSetBoard2(string name)
 					>> tmpRec.prey;
 				recordBoard.detailBoard.push_back(tmpRec);
 			}
-			recordBoard.rebaseRecord();
+			
 			// 讀取棋盤資料的
 			for (int i = 0; i < 10; i++)
 			{
@@ -659,35 +663,32 @@ int ChineseChess::readAndSetBoard2(string name)
 				}
 			}
 			inBoard >> order;
-			fileName = boardName;
+			fileName = "";
+			//recordBoard.rebaseRecord();
 
 			inRecord.close();
 			inBoard.close();
 			return 1;
 		}
-		else
-		{
-			inBoard.close();
-			fileName = "";
-			return 0;
-		}
-
 	}
-	else
-	{
-		fileName = "";
-		return 0;
-	}
+	inBoard.close();
+	fileName = "";
+	return 0;
 }
 
 // 重播遊戲loop
 void ChineseChess::replayMode()
 {
+	setCursorSize(false, 0);
 	printFrame(startX, startY, width, height);
+	gameBoard.chessBoard;
+	recordBoard.detailBoard;
 	recordBoard.rebaseRecord();
 	recordBoard.printBoard();
+	recordBoard.printMsg();
 	gameBoard.printBoard();
 	hintBoard.printBoard();
+	hintBoard.printHint1(order); // 輪轉時，hint1換方，hint2隱藏，hint3判斷
 	while (true)
 	{
 		if (_kbhit())
@@ -698,13 +699,30 @@ void ChineseChess::replayMode()
 				ch = _getch();
 				if (ch == 75) //左
 				{
-					recordBoard.regret(gameBoard.chessBoard);
-					gameBoard.printBoard();
+					if (recordBoard.regretSingle(gameBoard.chessBoard) == true)
+					{
+						gameBoard.printBoard();
+						order = !order;
+						hintBoard.printHint1(order); // 輪轉時，hint1換方，hint2隱藏，hint3判斷
+						recordBoard.clearBoard();
+						recordBoard.printMsg();
+						if (gameBoard.isGeneral(order)) hintBoard.printHint3(order);
+						else hintBoard.hideHint3();
+						
+					}
 				}
 				else if (ch == 77)
 				{
-					recordBoard.reduction(gameBoard.chessBoard);
-					gameBoard.printBoard();
+					if (recordBoard.reductionSingle(gameBoard.chessBoard) == true)
+					{
+						gameBoard.printBoard();
+						order = !order;
+						hintBoard.printHint1(order); // 輪轉時，hint1換方，hint2隱藏，hint3判斷
+						recordBoard.clearBoard();
+						recordBoard.printMsg();
+						if (gameBoard.isGeneral(order)) hintBoard.printHint3(order);
+						else hintBoard.hideHint3();
+					}
 				}
 			}
 			else if (ch == 27) // Esc
@@ -714,6 +732,8 @@ void ChineseChess::replayMode()
 			}
 		}
 	}
+	setCursorSize(true, 0);
+
 }
 
 
