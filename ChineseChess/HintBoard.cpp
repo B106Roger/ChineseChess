@@ -136,7 +136,7 @@ void HintBoard::hideHint3() {
 	}
 }
 
-void HintBoard::printLowerBoard() {
+void HintBoard::printLowerBoard(int mode) {
 	int frameWidth = lowerBoardSize[0];
 	int frameHeight = lowerBoardSize[1];
 	// cout << lowerBoardCursor[1] << endl;
@@ -160,19 +160,31 @@ void HintBoard::printLowerBoard() {
 			}
 			else // 中
 			{
-				ChineseChess::setCursor(lowerBoardCursor[0] + 4, lowerBoardCursor[1] + i);
-				if (i == 2)      wcout << L"ＥＳＣ選單　　＜悔棋　　＞還原";
-				else if (i == 4)  wcout << L"　　　ＥＮＴＥＲ　　選取棋子";
-				else if (i == 6)  wcout << L"　　　　　↑　　　　　　　　　";
-				else if (i == 8)  wcout << L"　　　　←　→　　方向鍵控制游標";
-				else if (i == 10)  wcout << L"　　　　　↓　　　　　　　　　";
-				break;
+				if (mode == 3) {
+					ChineseChess::setCursor(lowerBoardCursor[0] + 4, lowerBoardCursor[1] + i);
+					if (i == 2)      wcout << L"ＥＳＣ離開重播模式　　";
+					//else if (i == 4)  wcout << L"　　　ＥＮＴＥＲ　　選取棋子";
+					else if (i == 6)  wcout << L"　　　　←前一步　　下一步→";
+					//else if (i == 8)  wcout << L"　　　　←　→　　方向鍵控制游標";
+					//else if (i == 10)  wcout << L"　　　　　↓　　　　　　　　　";
+					break;
+				}
+				else {
+					ChineseChess::setCursor(lowerBoardCursor[0] + 4, lowerBoardCursor[1] + i);
+					if (i == 2)      wcout << L"ＥＳＣ選單　　＜悔棋　　＞還原";
+					else if (i == 4)  wcout << L"　　　ＥＮＴＥＲ　　選取棋子";
+					else if (i == 6)  wcout << L"　　　　　↑　　　　　　　　　";
+					else if (i == 8)  wcout << L"　　　　←　→　　方向鍵控制游標";
+					else if (i == 10)  wcout << L"　　　　　↓　　　　　　　　　";
+					break;
+				}
+				
 			}
 		}
 	}
 }
 
-void HintBoard::printBoard() {
+void HintBoard::printBoard(int mode) {
 
 	int frameWidth = size[0];
 	int frameHeight = size[1];
@@ -223,7 +235,7 @@ void HintBoard::printBoard() {
 			}
 		}
 	}
-	printLowerBoard();
+	printLowerBoard(mode);
 	// printHint1(0);
 	// printHint2(0, 5);
 	// hideHint2();

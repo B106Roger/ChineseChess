@@ -687,7 +687,7 @@ void ChineseChess::replayMode()
 	recordBoard.printBoard();
 	recordBoard.printMsg();
 	gameBoard.printBoard();
-	hintBoard.printBoard();
+	hintBoard.printBoard(mode);
 	hintBoard.printHint1(order); // 輪轉時，hint1換方，hint2隱藏，hint3判斷
 	while (true)
 	{

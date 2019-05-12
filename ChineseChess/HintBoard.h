@@ -16,7 +16,7 @@ public:
 	~HintBoard();
 
 	// member function
-	void printBoard();
+	void printBoard(int mode = 0);
 	
 	// when change order(black: 0/red: 1), call this
 	void printHint1(int order);
@@ -37,6 +37,6 @@ private:
 	WinBoard winBoard;
 	int order;
 	//helper function
-	void printLowerBoard();
+	void printLowerBoard(int mode = 0);
 };
 
