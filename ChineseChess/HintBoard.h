@@ -30,10 +30,10 @@ public:
 	int winMenu(int order);
 private:
 	// data member
-	vector<int> cursor;
-	vector<int> size;
-	vector<int> lowerBoardCursor;
-	vector<int> lowerBoardSize;
+	vector<int> cursor;             // 視窗左上角x,y座標
+	vector<int> size;               // 視窗長寬
+	vector<int> lowerBoardCursor;   // 視窗下方部分左上角x,y座標
+	vector<int> lowerBoardSize;     // 視窗下方部分長寬
 	WinBoard winBoard;
 	int order;
 	//helper function

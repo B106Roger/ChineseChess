@@ -8,12 +8,10 @@ RecordBoard ChineseChess::recordBoard = RecordBoard();
 HintBoard ChineseChess::hintBoard = HintBoard();
 EscBoard ChineseChess::escBoard = EscBoard();
 MenuBoard ChineseChess::maenuBoard = MenuBoard();
-WinBoard ChineseChess::winBoard = WinBoard();
-//ReadFileBoard ChineseChess::fileBoard = ReadFileBoard();
 string ChineseChess::fileName;
 
 ChineseChess::ChineseChess()
-	:gameOver(false), order(0)
+	: order(0)
 {
 	mode = 0;  // 一開始設為主選單模式
 	subWindow = vector<int>(4, 0);
@@ -81,6 +79,7 @@ void ChineseChess::gameStart(void)
 {
 	printFrame(startX, startY, width, height); // 要將其他不需要的東西刷掉
 	recordBoard.printBoard();
+	recordBoard.printMsg();
 	gameBoard.printBoard();
 	hintBoard.printBoard(); // hintBoard基本框
 	hintBoard.printHint1(order); // 輪到誰
@@ -307,8 +306,8 @@ void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring 
 	side.push_back(L'∥');
 	if (int(title.size()) != 0)
 	{
-		int leftspace = (xsize - title.size() - 2) / 2;
-		int rightspace = xsize - title.size() - 2 - leftspace;
+		int leftspace = (xsize - int(title.size()) - 2) / 2;
+		int rightspace = xsize - int(title.size()) - 2 - leftspace;
 		upper = title;
 		upper = wstring(leftspace, L'＝') + upper + wstring(rightspace, L'＝');
 		upper.insert(0, 1, L'●');
@@ -430,7 +429,7 @@ int ChineseChess::readAndSetBoard(string name)
 	inBoard.open(boardName);
 	if (inBoard.is_open())
 	{
-		int offset = boardName.find(".txt");
+		int offset = (int)boardName.find(".txt");
 		recordName.insert(offset, "Rec");
 		inRecord.open(recordName);
 		if (inRecord.is_open())
@@ -633,7 +632,7 @@ int ChineseChess::readAndSetBoard2(string name)
 	inBoard.open(boardName);
 	if (inBoard.is_open())
 	{
-		int offset = boardName.find(".txt");
+		int offset = (int)boardName.find(".txt");
 		recordName.insert(offset, "Rec");
 		inRecord.open(recordName);
 		if (inRecord.is_open())

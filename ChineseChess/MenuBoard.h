@@ -14,9 +14,9 @@ public:
 
 
 private:
-	vector<int> cursor;   // 0 => xPost, 1 => yPos
-	vector<int> size;     // 0 => width, 1 => height
-	int mode;
+	vector<int> cursor;   // 視窗左上角x,y座標
+	vector<int> size;     // 視窗長寬
+	int mode;             // 0 雙人遊戲;  1 繼續遊戲(讀取棋盤);  2 重播棋局; 3 離開遊戲; 	
 	bool breakOut;
-	// 0. 雙人遊戲  1. 繼續遊戲(讀取棋盤)  2. 重播棋局  3. 離開遊戲 	
+	
 };

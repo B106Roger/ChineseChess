@@ -12,8 +12,8 @@ public:
 	void printWord();
 
 private:
-	vector<int> cursor;
-	vector<int> size;
-	int mode;
+	vector<int> cursor;       // 視窗左上角x,y座標
+	vector<int> size;         // 視窗長寬
+	int mode;                 // 0 繼續遊戲; 1 重新開始; 2 我方投降; 3 儲存遊戲; 4 回主選單
 };
 

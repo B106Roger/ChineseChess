@@ -188,7 +188,7 @@ wstring RecordBoard::twoWords(vector<vector<int>> chessBoard, int caseNum, recor
 			//如果是黑方，從下往上算分別是前二三四五
 			else if (tmpRecord.whosTurn == 0) {
 				bool found = false;
-				for (int i = chessBoard.size() - 1; i >= 0 && !found; i--) {
+				for (int i = int(chessBoard.size()) - 1; i >= 0 && !found; i--) {
 					if (chessBoard[i][tmpRecord.Xpos] == tmpRecord.hunter) {
 						sortPos++;
 						if (i == tmpRecord.Ypos)
@@ -381,7 +381,7 @@ wstring RecordBoard::numIntToStr(int num)
 		num /= 10;
 	}
 	digits.push_back(num);
-	for (int i = digits.size() - 1; i >= 0; i--) {
+	for (int i = int(digits.size()) - 1; i >= 0; i--) {
 		String += bigNum(digits[i]);
 	}
 	return String;

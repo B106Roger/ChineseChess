@@ -28,9 +28,9 @@ public:
 	bool reduction(vector<vector<int>>& chessBoard);
 	bool reductionSingle(vector<vector<int>>& chessBoard);
 	void resetRecordBoard();
-	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		//從chinessChess呼叫傳資料給recordBoard
-	void saveRecord(string fileName, int finished);
-	void rebaseRecord();
+	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		// // 遊戲模式: 產生record結構，record結構+棋盤可以推出中式記譜法
+	void saveRecord(string fileName, int finished);  // 遊戲模式: 儲存遊戲紀錄程式
+	void rebaseRecord();                             // 重播模式: 重新產生中世記譜法
 
 	void clearBoard();
 	void printMsg();
@@ -39,13 +39,11 @@ private:
 	wstring RedNum(int Xpos);
 	wstring BlkNum(int Xpos);
 	void writeDetail(record);
-	wstring getMsg(record, wstring);
-	
+	wstring getMsg(record, wstring);                 // 產生中式記譜法
 	wstring numIntToStr(int);
 	wstring bigNum(int);
 	wstring twoWords(vector<vector<int>>, int, record);
 	int whichCase(record, vector<vector<int>>);
-	
 	int recordIndex;			//指向目前的recordBoard索引值
 };
 
