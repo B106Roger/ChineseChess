@@ -41,6 +41,8 @@ public:
 	void gameLoop(void);     // 遊戲流程迴圈
 	void gameStart(void);    // 遊戲模式: 遊戲開始迴圈
 	void printFrame(int xpos, int ypos, int xsize, int ysize, wstring title = L""); // 印出框框
+	void printArtSleep();
+	void printArt();
 
 	int smallWindow(wstring title);    // 印出悔棋還原的確認視窗
 	int fileWindow();                  // 主選單模式-繼續遊戲: 輸入檔名視窗

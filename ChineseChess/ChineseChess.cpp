@@ -22,16 +22,28 @@ ChineseChess::ChineseChess()
 }
 ChineseChess::~ChineseChess()
 {
-
+	//wcout << L"　　　　　中　　　　　　　";
+	//wcout << L"　中中中中中中中中中　　　　　　　";
+	//wcout << L"　中　　　中　　　中　　　　";
+	//wcout << L"　　　　　中　　　　　　　";
+	//wcout << L"　　　　　中　　　　　　　";
+	//wcout << L"　　　　　中　　　　　　　";
+	//wcout << L"　　　　　中　　　　　　　";
+	// wcout << L"　　　　　中　　　　　　　";
 }
 // 流程迴圈
 void ChineseChess::gameLoop(void)
 {
+	bool firstIn =true;
 	while (mode != 4)    //  ExitMode
 	{
+
 		if (mode == 0)   // MenuMode
 		{
+			
 			printFrame(startX, startY, width, height);
+			if(firstIn) printArtSleep();
+			else printArt();
 			int menuValue = maenuBoard.mainMenu();
 			//  0. 雙人遊戲  1. 繼續遊戲(讀取棋盤)  2. 重播棋局  3. 離開遊戲
 			newGame();
@@ -71,6 +83,7 @@ void ChineseChess::gameLoop(void)
 			}
 			
 		}
+		firstIn = false;
 	}
 }
 
@@ -321,7 +334,7 @@ void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring 
 	for (int i = 0; i < ysize; i++)
 	{
 		ChineseChess::setCursor(xpos, ypos + i);
-		if (i == 0 )
+		if (i == 0)
 		{
 			wcout << upper;
 		}
@@ -334,6 +347,66 @@ void ChineseChess::printFrame(int xpos, int ypos, int xsize, int ysize, wstring 
 			wcout << side;
 		}
 	}
+}
+
+void ChineseChess::printArt() {
+	fstream inputChina("chung.txt", ios::in);
+	fstream inputChess("guo.txt", ios::in);
+	setCursorSize(false, 0);
+
+	string line;
+	int yPos = 3;
+
+	SetColor(6, 0);
+	while (getline(inputChina, line)) {
+		setCursor(3, yPos);
+		cout << line << endl;
+		yPos++;
+	}
+
+
+	yPos = 3;
+	SetColor(6, 0);
+	while (getline(inputChess, line)) {
+		setCursor(70, yPos);
+		cout << line << endl;
+		yPos++;
+	}
+
+	inputChina.close();
+	inputChess.close();
+	SetColor();
+}
+
+void ChineseChess::printArtSleep() {
+	fstream inputChina("chung.txt", ios::in);
+	fstream inputChess("guo.txt", ios::in);
+	setCursorSize(false, 0);
+
+	string line;
+	int yPos = 3;
+
+	SetColor(6, 0);
+	while (getline(inputChina, line)) {
+		setCursor(3, yPos);
+		cout << line << endl;
+		yPos++;
+		Sleep(100);
+	}
+
+
+	yPos = 3;
+	SetColor(6, 0);
+	while (getline(inputChess, line)) {
+		setCursor(70, yPos);
+		cout << line << endl;
+		yPos++;
+		Sleep(100);
+	}
+	
+	inputChina.close();
+	inputChess.close();
+	SetColor();
 }
 
 // 新遊戲
