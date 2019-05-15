@@ -212,7 +212,8 @@ void ChineseChess::gameStart(void)
 				else if (escModeValue == 2) // 2.投降
 				{
 					if (hintBoard.winMenu(!order) == 1) { //儲存遊戲
-						saveGame(0);
+						order = !order;               // 確定是哪一方勝利時，儲存其盤仍要換另外一方下
+						saveGame(1);
 					}
 					mode = 0; // +回主選單
 					// 印出投降提示
