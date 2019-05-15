@@ -114,13 +114,6 @@ void ChineseChess::gameStart(void)
 				getCursor(x, y);
 				x = (x - gameBoard.startX) / 4;
 				y = (y - gameBoard.startY) / 2;
-				ChineseChess::setCursor(40, 25);
-				cout << "X: ";
-				cout.width(3);
-				cout << x;
-				cout << "  Y: ";
-				cout.width(3);
-				cout << y << endl;
 				/* end 取出目前游標在棋盤的位置 */
 
 				if (gameBoard.colorBoard[y][x] == 1 || (gameBoard.colorBoard[y][x] == 0 && gameBoard.chessBoard[y][x] == 0))
@@ -200,14 +193,6 @@ void ChineseChess::gameStart(void)
 					y = y;
 					break;
 				};
-				/* start 印出棋子在window的座標 */
-				ChineseChess::setCursor(40, 30);
-				cout << "X: ";
-				cout.width(3);
-				cout << x << "    Y: ";
-				cout.width(3);
-				cout << y;
-				/* end 印出棋子在window的座標 */
 				// 回到原本的座標
 				setCursor(x, y);
 			}
