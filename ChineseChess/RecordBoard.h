@@ -30,7 +30,7 @@ public:
 	void resetRecordBoard();
 	void setRecord(int x, int y, const vector<vector<int>>& chessBoard, const vector<vector<int>>& colorBoard);		// // 遊戲模式: 產生record結構，record結構+棋盤可以推出中式記譜法
 	void saveRecord(string fileName, int finished);  // 遊戲模式: 儲存遊戲紀錄程式
-	void rebaseRecord();                             // 重播模式: 重新產生中世記譜法
+	void rebaseRecord(int shouldResetRec = false);                             // 重播模式: 重新產生中世記譜法
 
 	void clearBoard();
 	void printMsg();

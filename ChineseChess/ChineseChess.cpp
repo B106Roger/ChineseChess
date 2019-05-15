@@ -736,8 +736,6 @@ int ChineseChess::readAndSetBoard2(string name)
 			}
 			inBoard >> order;
 			fileName = "";
-			//recordBoard.rebaseRecord();
-
 			inRecord.close();
 			inBoard.close();
 			return 1;
@@ -754,7 +752,7 @@ void ChineseChess::replayMode()
 	setCursorSize(false, 0);
 	printFrame(startX, startY, width, height);
 	
-	recordBoard.rebaseRecord();
+	recordBoard.rebaseRecord(true);
 	recordBoard.printBoard();
 	recordBoard.printMsg();
 	gameBoard.printBoard();

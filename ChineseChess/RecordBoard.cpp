@@ -432,7 +432,7 @@ void RecordBoard::printMsg()
 	}
 }
 //重頭產生中世記譜法
-void RecordBoard::rebaseRecord()
+void RecordBoard::rebaseRecord(int shouldResetRec)
 {
 	vector<vector<int>> chessBoard = ChineseChess::gameBoard.chessBoard;
 	recordIndex = int(detailBoard.size()) - 1;
@@ -446,8 +446,11 @@ void RecordBoard::rebaseRecord()
 		msgBoard.insert(msgBoard.begin(), getMsg(tmpRec, firstTwo));
 		--recordIndex;
 	}
-	recordIndex = 0;
-	ChineseChess::gameBoard.chessBoard = chessBoard;
+	if (shouldResetRec == true)
+	{
+		recordIndex = 0;
+		ChineseChess::gameBoard.chessBoard = chessBoard;
+	}
 	return;
 }
 
