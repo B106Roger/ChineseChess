@@ -171,7 +171,7 @@ void EscBoard::printWordReplay() {
 	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 3);
 	if (mode == 1) ChineseChess::SetColor(0, 15);
 	else ChineseChess::SetColor();
-	wcout << L"儲存遊戲";
+	wcout << L"另存重播";
 	ChineseChess::setCursor(cursor[0] + 8, cursor[1] + 5);
 	if (mode == 2) ChineseChess::SetColor(0, 15);
 	else ChineseChess::SetColor();
