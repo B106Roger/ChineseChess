@@ -16,6 +16,7 @@ EscBoard::~EscBoard()
 }
 
 int EscBoard::escMenu() {
+	mode = 0;
 	printBoard(); // 印出選單
 	while (true) {
 		if (_kbhit())
@@ -51,6 +52,7 @@ int EscBoard::escMenu() {
 }
 
 int EscBoard::escMenuReplay() {
+	mode = 0;
 	printBoardReplay(); // 印出選單
 	while (true) {
 		if (_kbhit())
