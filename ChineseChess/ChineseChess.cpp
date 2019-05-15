@@ -256,6 +256,10 @@ void ChineseChess::gameStart(void)
 					{
 						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"悔　棋　成　功");
 					} 
+					else
+					{
+						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"悔　棋　失　敗");
+					}
 					
 				}
 				else
@@ -285,7 +289,10 @@ void ChineseChess::gameStart(void)
 					{
 						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"還　原　成　功");
 					}
-					
+					else
+					{
+						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"還　原　失　敗");
+					}
 				}
 				else
 				{
