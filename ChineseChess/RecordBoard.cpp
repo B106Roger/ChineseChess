@@ -5,7 +5,7 @@
 
 
 RecordBoard::RecordBoard()
-	:startX(4), startY(1), width(29), height(31), recordIndex(0)		//從(4,1)開始畫到(30, 32)
+	:recordIndex(0)		//從(4,1)開始畫到(30, 32)
 {
 }
 
@@ -391,8 +391,8 @@ void RecordBoard::printMsg()
 {
 	COORD point;
 	point.X = startX + 4;
-	//小於10筆資料
-	if (recordIndex <= 10) {
+	//小於20筆資料
+	if (recordIndex <= 20) {
 		for (int i = 0; i < recordIndex; i++) {
 			point.Y = startY + i + 2;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
@@ -413,7 +413,7 @@ void RecordBoard::printMsg()
 	//大於10筆資料就印最新10筆
 	else{
 		int j = 0;
-		for (int i = recordIndex - 10; i < recordIndex; i++) {
+		for (int i = recordIndex - 20; i < recordIndex; i++) {
 			point.Y = startY + j + 2;
 			j++;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), point);
@@ -489,7 +489,7 @@ void RecordBoard::clearBoard()
 	COORD point;
 	ChineseChess::SetColor();
 	point.Y = startY + 1;
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 20; i++) {
 		point.X = startX + 3;
 		point.Y++;
 		for (int j = 0; j < 20; j++) {

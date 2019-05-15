@@ -27,8 +27,8 @@ public:
 
 	const int startX = 0;     // 視窗左上角x,y視窗
 	const int startY = 0;     
-	const int width = 65;     // 視窗長寬
-	const int height = 35;
+	const int width = 64;     // 視窗長寬
+	const int height = 36;
 	static GameBoard gameBoard;
 	static RecordBoard recordBoard;
 	static HintBoard hintBoard;

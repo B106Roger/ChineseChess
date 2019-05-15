@@ -350,7 +350,7 @@ void ChineseChess::newGame()
 int ChineseChess::fileWindow()
 {
 	// 設定視窗大小
-	int xPos = gameBoard.startX, yPos = gameBoard.startY;
+	int xPos = gameBoard.startX + 12, yPos = gameBoard.startY;
 	int windowWidth = gameBoard.width;
 	int windowHeight = 15;
 	// 印出視窗
@@ -560,7 +560,7 @@ void ChineseChess::saveGame(int finished) {
 int ChineseChess::replayWindow()
 {
 	// 設定視窗大小
-	int xPos = gameBoard.startX, yPos = gameBoard.startY;
+	int xPos = gameBoard.startX + 12, yPos = gameBoard.startY;
 	int windowWidth = gameBoard.width;
 	int windowHeight = 15;
 	// 印出視窗

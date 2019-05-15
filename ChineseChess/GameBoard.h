@@ -11,8 +11,8 @@ public:
 	// data member
 	vector<vector<int>> chessBoard;
 	vector<vector<int>> colorBoard;
-	const int startX = 40;
-	const int startY = 3;
+	const int startX = 36;
+	const int startY = 4;
 	const int width = 17;
 	const int height = 19;
 

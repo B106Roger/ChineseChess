@@ -16,10 +16,10 @@ public:
 	// data member
 	vector<wstring> msgBoard;
 	vector<record> detailBoard;
-	const int startX;
-	const int startY;
-	const int width;
-	const int height;
+	const int startX = 4;
+	const int startY = 2;
+	const int width = 29;
+	const int height = 32;
 
 	// member function
 	void printBoard();
