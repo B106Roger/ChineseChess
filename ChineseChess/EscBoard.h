@@ -8,9 +8,11 @@ public:
 	EscBoard(int cursorX = 44, int cursorY = 7, int sizeX = 12, int sizeY = 11, int iniMode = 0);
 	~EscBoard();
 	int escMenu();
+	int escMenuReplay();
 	void printBoard();
+	void printBoardReplay();
 	void printWord();
-
+	void printWordReplay();
 private:
 	vector<int> cursor;       // 視窗左上角x,y座標
 	vector<int> size;         // 視窗長寬

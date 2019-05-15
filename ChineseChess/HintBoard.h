@@ -28,6 +28,7 @@ public:
 	void hideHint3();
 
 	int winMenu(int order);
+
 private:
 	// data member
 	vector<int> cursor;             // 視窗左上角x,y座標

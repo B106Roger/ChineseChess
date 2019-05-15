@@ -796,8 +796,23 @@ void ChineseChess::replayMode()
 			}
 			else if (ch == 27) // Esc
 			{
-				mode = 0;
-				return;
+				int escModeValue = escBoard.escMenuReplay();
+				if (escModeValue == 0)      // 0.繼續遊戲
+				{
+					gameBoard.printBoard();
+				}
+				else if (escModeValue == 1) // 1.儲存遊戲
+				{
+					// 儲存遊戲
+					fileName = "";
+					saveGame(0);
+					gameBoard.printBoard();
+				}
+				else if (escModeValue == 2) // 2.回主選單
+				{
+					mode = 0;
+					return;
+				}
 			}
 		}
 	}
@@ -823,10 +838,6 @@ void ChineseChess::saveGameSuccess(void)
 		}
 	}
 }
-
-
-
-
 
 // static function
 // 設定座標
