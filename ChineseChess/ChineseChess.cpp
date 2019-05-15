@@ -261,7 +261,7 @@ void ChineseChess::gameStart(void)
 						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"悔　棋　失　敗");
 					}
 				}
-				setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 3);
+				/*setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 3);
 				wcout << L"按任意鍵以繼續操作";
 				while (true)
 				{
@@ -270,7 +270,7 @@ void ChineseChess::gameStart(void)
 						_getch();
 						break;
 					}
-				}
+				}*/
 				gameBoard.printBoard();
 			}
 			// 按下 > 鍵後
@@ -289,7 +289,7 @@ void ChineseChess::gameStart(void)
 						printFrame(subWindow[0], subWindow[1], subWindow[2], subWindow[3], L"還　原　失　敗");
 					}
 				}
-				setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 3);
+				/*setCursor(subWindow[0] + subWindow[2] - 10, subWindow[1] + 3);
 				wcout << L"按任意鍵以繼續操作";
 				while (true)
 				{
@@ -298,7 +298,7 @@ void ChineseChess::gameStart(void)
 						_getch();
 						break;
 					}
-				}
+				}*/
 				gameBoard.printBoard();
 			}
 		}

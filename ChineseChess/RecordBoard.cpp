@@ -451,6 +451,10 @@ void RecordBoard::rebaseRecord(int shouldResetRec)
 		recordIndex = 0;
 		ChineseChess::gameBoard.chessBoard = chessBoard;
 	}
+	else
+	{
+		recordIndex = int(detailBoard.size());
+	}
 	return;
 }
 
@@ -459,7 +463,11 @@ void RecordBoard::rebaseRecord(int shouldResetRec)
 bool RecordBoard::regret(vector<vector<int>>& chessBoard)
 {	
 	if (recordIndex < 2)
+	{
+		clearBoard();
 		return false;
+
+	}
 	else {
 		regretSingle(chessBoard);
 		regretSingle(chessBoard);
