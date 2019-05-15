@@ -162,7 +162,7 @@ void HintBoard::printLowerBoard(int mode) {
 			{
 				if (mode == 3) {
 					ChineseChess::setCursor(lowerBoardCursor[0] + 4, lowerBoardCursor[1] + i);
-					if (i == 2)      wcout << L"ＥＳＣ離開重播模式　　";
+					if (i == 2)      wcout << L"ＥＳＣ選單　　";
 					//else if (i == 4)  wcout << L"　　　ＥＮＴＥＲ　　選取棋子";
 					else if (i == 6)  wcout << L"　　　　←前一步　　下一步→";
 					//else if (i == 8)  wcout << L"　　　　←　→　　方向鍵控制游標";
