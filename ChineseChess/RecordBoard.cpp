@@ -446,7 +446,8 @@ void RecordBoard::rebaseRecord()
 		msgBoard.insert(msgBoard.begin(), getMsg(tmpRec, firstTwo));
 		--recordIndex;
 	}
-	recordIndex = int(detailBoard.size());
+	recordIndex = 0;
+	ChineseChess::gameBoard.chessBoard = chessBoard;
 	return;
 }
 

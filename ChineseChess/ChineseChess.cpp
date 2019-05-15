@@ -753,8 +753,7 @@ void ChineseChess::replayMode()
 {
 	setCursorSize(false, 0);
 	printFrame(startX, startY, width, height);
-	gameBoard.chessBoard;
-	recordBoard.detailBoard;
+	
 	recordBoard.rebaseRecord();
 	recordBoard.printBoard();
 	recordBoard.printMsg();
